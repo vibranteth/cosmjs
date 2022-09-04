@@ -160,7 +160,7 @@ export class SigningStargateClient extends StargateClient {
 
   public async simulate(
     signerAddress: string,
-    messages: readonly any[],
+    messages: readonly EncodeObject[],
     memo: string | undefined,
   ): Promise<number> {
     const anyMsgs = messages.map((m) => this.registry.encodeAsAny(m));
