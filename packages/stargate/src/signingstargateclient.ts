@@ -279,7 +279,7 @@ export class SigningStargateClient extends StargateClient {
 
   public async signAndBroadcast(
     signerAddress: string,
-    messages: readonly any[],
+    messages: readonly EncodeObject[],
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<DeliverTxResponse> {
@@ -309,7 +309,7 @@ export class SigningStargateClient extends StargateClient {
    */
   public async sign(
     signerAddress: string,
-    messages: readonly any[],
+    messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
     explicitSignerData?: SignerData,
@@ -334,7 +334,7 @@ export class SigningStargateClient extends StargateClient {
 
   private async signAmino(
     signerAddress: string,
-    messages: readonly any[],
+    messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
@@ -377,7 +377,7 @@ export class SigningStargateClient extends StargateClient {
 
   private async signDirect(
     signerAddress: string,
-    messages: readonly any[],
+    messages: readonly EncodeObject[],
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
