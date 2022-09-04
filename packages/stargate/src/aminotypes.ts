@@ -6,6 +6,7 @@ export interface AminoConverter {
   readonly aminoType: string;
   readonly toAmino: (value: any) => any;
   readonly fromAmino: (value: any) => any;
+  readonly requiresCustomAminoType?: boolean;
 }
 
 /** A map from protobuf type URL to the AminoConverter implementation if supported on chain */
@@ -32,7 +33,7 @@ export class AminoTypes {
     this.register = types;
   }
 
-  public toAmino({ typeUrl, value }: EncodeObject): AminoMsg {
+  public toAmino({ typeUrl, value }: EncodeObject): AminoMsg | any {
     const converter = this.register[typeUrl];
     if (converter === "not_supported_by_chain") {
       throw new Error(
@@ -46,6 +47,11 @@ export class AminoTypes {
           "If you think this message type should be included by default, please open an issue at https://github.com/cosmos/cosmjs/issues.",
       );
     }
+
+    if (converter.requiresCustomAminoType) {
+      return converter.toAmino(value);
+    }
+
     return {
       type: converter.aminoType,
       value: converter.toAmino(value),

@@ -160,7 +160,7 @@ export class SigningStargateClient extends StargateClient {
 
   public async simulate(
     signerAddress: string,
-    messages: readonly EncodeObject[],
+    messages: readonly any[],
     memo: string | undefined,
   ): Promise<number> {
     const anyMsgs = messages.map((m) => this.registry.encodeAsAny(m));
@@ -279,7 +279,7 @@ export class SigningStargateClient extends StargateClient {
 
   public async signAndBroadcast(
     signerAddress: string,
-    messages: readonly EncodeObject[],
+    messages: readonly any[],
     fee: StdFee | "auto" | number,
     memo = "",
   ): Promise<DeliverTxResponse> {
@@ -309,7 +309,7 @@ export class SigningStargateClient extends StargateClient {
    */
   public async sign(
     signerAddress: string,
-    messages: readonly EncodeObject[],
+    messages: readonly any[],
     fee: StdFee,
     memo: string,
     explicitSignerData?: SignerData,
@@ -334,7 +334,7 @@ export class SigningStargateClient extends StargateClient {
 
   private async signAmino(
     signerAddress: string,
-    messages: readonly EncodeObject[],
+    messages: readonly any[],
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
@@ -352,7 +352,7 @@ export class SigningStargateClient extends StargateClient {
     const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
     const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
     const signedTxBody = {
-      messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
+      messages: messages,
       memo: signed.memo,
     };
     const signedTxBodyEncodeObject: TxBodyEncodeObject = {
@@ -377,7 +377,7 @@ export class SigningStargateClient extends StargateClient {
 
   private async signDirect(
     signerAddress: string,
-    messages: readonly EncodeObject[],
+    messages: readonly any[],
     fee: StdFee,
     memo: string,
     { accountNumber, sequence, chainId }: SignerData,
