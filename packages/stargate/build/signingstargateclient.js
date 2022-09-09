@@ -208,7 +208,7 @@ class SigningStargateClient extends stargateclient_1.StargateClient {
         const signDoc = (0, amino_1.makeSignDoc)(msgs, fee, chainId, memo, accountNumber, sequence);
         const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
         const signedTxBody = {
-            messages: messages,
+            messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
             memo: signed.memo,
         };
         const signedTxBodyEncodeObject = {
