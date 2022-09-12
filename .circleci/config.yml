@@ -28,13 +28,13 @@ workflows:
             - build
           matrix:
             parameters:
-              simapp: ["simapp42", "simapp44"]
+              simapp: ["simapp44", "simapp46"]
       - test-node:
           requires:
             - build
           matrix:
             parameters:
-              node-version: ["12", "14", "16"]
+              node-version: ["14", "16"]
       - test-chrome:
           requires:
             - build
@@ -120,7 +120,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -157,8 +157,8 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp42" ] && export SIMAPP42_ENABLED=1 SLOW_SIMAPP42_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
+            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             yarn test --stream
       - run:
           name: Run CLI selftest
@@ -176,8 +176,8 @@ jobs:
             SKIP_BUILD: 1
             WASMD_ENABLED: 1
           command: |
-            [ "<< parameters.simapp >>" = "simapp42" ] && export SIMAPP42_ENABLED=1 SLOW_SIMAPP42_ENABLED=1
             [ "<< parameters.simapp >>" = "simapp44" ] && export SIMAPP44_ENABLED=1 SLOW_SIMAPP44_ENABLED=1
+            [ "<< parameters.simapp >>" = "simapp46" ] && export SIMAPP46_ENABLED=1 SLOW_SIMAPP46_ENABLED=1
             ./run_examples.sh
       - run:
           name: Stop chains
@@ -201,6 +201,7 @@ jobs:
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-2004:202107-02
+    resource_class: large
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -215,11 +216,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp42/start.sh
+          command: ./scripts/simapp44/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp42/slow_start.sh
+          command: ./scripts/simapp44/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -242,7 +243,6 @@ jobs:
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
             declare -A node_links=(
-              ["12"]="https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb"
               ["14"]="https://deb.nodesource.com/node_14.x/pool/main/n/nodejs/nodejs_14.18.0-deb-1nodesource1_amd64.deb"
               ["16"]="https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb"
             )
@@ -277,8 +277,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP42_ENABLED: 1
-            SLOW_SIMAPP42_ENABLED: 1
+            SIMAPP44_ENABLED: 1
+            SLOW_SIMAPP44_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -296,8 +296,8 @@ jobs:
           working_directory: packages/cli
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP42_ENABLED: 1
-            SLOW_SIMAPP42_ENABLED: 1
+            SIMAPP44_ENABLED: 1
+            SLOW_SIMAPP44_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -309,8 +309,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp42/stop.sh
-            ./scripts/simapp42/slow_stop.sh
+            ./scripts/simapp44/stop.sh
+            ./scripts/simapp44/slow_stop.sh
             ./scripts/wasmd/stop.sh
   test-chrome:
     machine:
@@ -322,6 +322,7 @@ jobs:
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-2004:202107-02
+    resource_class: large
     steps:
       - browser-tools/install-chrome # Slow because apt update but what can you do 🤷‍
       - run:
@@ -337,11 +338,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp42/start.sh
+          command: ./scripts/simapp44/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp42/slow_start.sh
+          command: ./scripts/simapp44/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -363,7 +364,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -394,8 +395,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP42_ENABLED: 1
-            SLOW_SIMAPP42_ENABLED: 1
+            SIMAPP44_ENABLED: 1
+            SLOW_SIMAPP44_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -407,8 +408,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp42/stop.sh
-            ./scripts/simapp42/slow_stop.sh
+            ./scripts/simapp44/stop.sh
+            ./scripts/simapp44/slow_stop.sh
             ./scripts/wasmd/stop.sh
   coverage:
     machine:
@@ -420,6 +421,7 @@ jobs:
       #
       # Available images: https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
       image: ubuntu-2004:202107-02
+    resource_class: large
     steps:
       - run:
           name: Install Git Large File Storage (LFS)
@@ -434,11 +436,11 @@ jobs:
           background: true
       - run:
           name: Start simapp
-          command: ./scripts/simapp42/start.sh
+          command: ./scripts/simapp44/start.sh
           background: true
       - run:
           name: Start slow simapp
-          command: ./scripts/simapp42/slow_start.sh
+          command: ./scripts/simapp44/slow_start.sh
           background: true
       - run:
           name: Start Tendermint blockchains
@@ -460,7 +462,7 @@ jobs:
           name: Install nodejs
           # In the current image, `sudo apt install nodejs` requires `sudo apt update` which is too slow
           command: |
-            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_12.x/pool/main/n/nodejs/nodejs_12.22.1-deb-1nodesource1_amd64.deb
+            wget -O "$HOME/nodejs.deb" https://deb.nodesource.com/node_16.x/pool/main/n/nodejs/nodejs_16.13.2-deb-1nodesource1_amd64.deb
             sudo dpkg -i "$HOME/nodejs.deb"
       - run:
           name: Install yarn
@@ -491,8 +493,8 @@ jobs:
       - run:
           environment:
             HTTPSERVER_ENABLED: 1
-            SIMAPP42_ENABLED: 1
-            SLOW_SIMAPP42_ENABLED: 1
+            SIMAPP44_ENABLED: 1
+            SLOW_SIMAPP44_ENABLED: 1
             TENDERMINT_ENABLED: 1
             SOCKETSERVER_ENABLED: 1
             SKIP_BUILD: 1
@@ -507,8 +509,8 @@ jobs:
             ./scripts/httpserver/stop.sh
             ./scripts/socketserver/stop.sh
             ./scripts/tendermint/all_stop.sh
-            ./scripts/simapp42/stop.sh
-            ./scripts/simapp42/slow_stop.sh
+            ./scripts/simapp44/stop.sh
+            ./scripts/simapp44/slow_stop.sh
             ./scripts/wasmd/stop.sh
   docs-build:
     docker:

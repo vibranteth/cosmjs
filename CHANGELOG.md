@@ -6,9 +6,90 @@ and this project adheres to
 
 ## [Unreleased]
 
-## [0.28.13] - 2022-08-18
+### Added
 
-Fixes the accidental release of version 0.28.12-0.
+- @cosmjs/stargate: Add `makeMultisignedTxBytes` which is like
+  `makeMultisignedTx` but returns bytes ready to broadcast ([#1176]).
+- @cosmjs/tendermint-rpc: Add Tendermint 0.35 client (private, unusable). This
+  is currently not used by higher level clients as Cosmos SDK 0.42-0.46 use
+  Tendermint 0.34. It may become public or evolve into a Tendermint 0.36+ client
+  from here. If you need this client, please comment in [#1225] or open a new
+  issue. ([#1154] and [#1225])
+- @cosmjs/tendermint-rpc: Add fields `codespace` and `info` to
+  `AbciQueryResponse`.
+- @cosmjs/cosmwasm-stargate: Add `SigningCosmWasmClient.executeMultiple`
+  ([#1072]).
+- @cosmjs/math: Add `{Uint32,Int53,Uint53,Uint64}.toBigInt` converter methods.
+- @cosmjs/stargate: Add missing exports `AminoMsgTransfer`/`isAminoMsgTransfer`.
+- @cosmjs/stargate: Add support for `MsgVoteWeighted` (register by default and
+  create Amino JSON converters) ([#1224]).
+- @cosmjs/stargate: Add Amino JSON support for `MsgCreateVestingAccount`.
+- @cosmjs/stargate and @cosmjs/cosmwasm-stargate: Create and use
+  BroadcastTxError ([#1096]).
+- @cosmjs/stargate: Add height parameter to `QueryClient.queryUnverified`
+  ([#1250]).
+- @cosmjs/faucet: Allow configuring the cooldown value via
+  `FAUCET_COOLDOWN_TIME` environment variable.
+- @cosmjs/stargate: Add missing exports `setupAuthzExtension`,
+  `setupFeegrantExtension` and `setupSlashingExtension` ([#1261]).
+- @cosmjs/stargate: Add missing exports `createCrysisAminoConverters`,
+  `createEvidenceAminoConverters`, `createSlashingAminoConverters` and
+  `createVestingAminoConverters` ([#1261]).
+
+[#1072]: https://github.com/cosmos/cosmjs/issues/1072
+[#1096]: https://github.com/cosmos/cosmjs/issues/1096
+[#1154]: https://github.com/cosmos/cosmjs/issues/1154
+[#1176]: https://github.com/cosmos/cosmjs/pull/1176
+[#1224]: https://github.com/cosmos/cosmjs/pull/1224
+[#1225]: https://github.com/cosmos/cosmjs/issues/1225
+[#1250]: https://github.com/cosmos/cosmjs/issues/1250
+[#1261]: https://github.com/cosmos/cosmjs/pull/1261
+
+### Fixed
+
+- @cosmjs/stargate: Fix valid values of `BondStatusString` for `validators`
+  query ([#1170]).
+- @cosmjs/tendermint-rpc: Fix decoding validator updates due to slashing
+  ([#1177]).
+- @cosmjs/math: Check for negative values in `Decimal.fromAtomics` ([#1188]).
+- @cosmjs/tendermint-rpc: Fix `key` and `value` type in `RpcAbciQueryResponse`
+  to also include the `null` option.
+- @cosmjs/tendermint-rpc: Fix decoding events without attributes ([#1198]).
+
+[#1170]: https://github.com/cosmos/cosmjs/issues/1170
+[#1177]: https://github.com/cosmos/cosmjs/issues/1177
+[#1188]: https://github.com/cosmos/cosmjs/pull/1188
+[#1198]: https://github.com/cosmos/cosmjs/pull/1198
+
+### Changed
+
+- all: Upgrade cosmjs-types to 0.5 ([#1131]).
+- all: Drop support for Node.js < 14.
+- all: Use caret version for internal dependencies' version ranges ([#1254]).
+- @cosmjs/stargate: Change `packetCommitment` parameter `sequence` type from
+  `Long` to `number` ([#1168]).
+- @cosmjs/tendermint-rpc: The type of `votingPower` fields was changed from
+  `number` to `bigint` as those values can exceed the safe integer range
+  ([#1133]).
+- @cosmjs/stargate: Remove Cosmos SDK 0.42 support ([#1094]).
+- @cosmjs/tendermint-rpc: Change spelling of field `codeSpace` to `codespace` in
+  `TxData` and `BroadcastTxSyncResponse` ([#1234]).
+- @cosmjs/stargate: `BankExtension.totalSupply` now takes a pagination key
+  argument and returns the full `QueryTotalSupplyResponse` including the next
+  pagination key ([#1095]).
+- @cosmjs/proto-signing: `makeAuthInfoBytes` now expects a fee granter and fee
+  payer argument in position 4 and 5.
+- @cosmjs/stargate: Rename exported function `createFreegrantAminoConverters` to
+  `createFeegrantAminoConverters` due to a typo ([#1261).
+
+[#1131]: https://github.com/cosmos/cosmjs/pull/1131
+[#1168]: https://github.com/cosmos/cosmjs/pull/1168
+[#1133]: https://github.com/cosmos/cosmjs/issues/1133
+[#1094]: https://github.com/cosmos/cosmjs/issues/1094
+[#1234]: https://github.com/cosmos/cosmjs/issues/1234
+[#1095]: https://github.com/cosmos/cosmjs/issues/1095
+[#1254]: https://github.com/cosmos/cosmjs/issues/1254
+[#1261]: https://github.com/cosmos/cosmjs/pull/1261
 
 ## [0.28.11] - 2022-07-13
 

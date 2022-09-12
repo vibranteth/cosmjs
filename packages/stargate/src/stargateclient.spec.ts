@@ -15,6 +15,7 @@ import { ReadonlyDate } from "readonly-date";
 
 import {
   assertIsDeliverTxSuccess,
+  BroadcastTxError,
   isDeliverTxFailure,
   isDeliverTxSuccess,
   PrivateStargateClient,
@@ -28,6 +29,7 @@ import {
   pendingWithoutSimapp,
   pendingWithoutSlowSimapp,
   simapp,
+  simapp44Enabled,
   slowSimapp,
   tendermintIdMatcher,
   unused,
@@ -362,7 +364,15 @@ describe("StargateClient", () => {
       const { accountNumber, sequence } = (await client.getSequence(address))!;
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
-      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit);
+      const feeGranter = undefined;
+      const feePayer = undefined;
+      const authInfoBytes = makeAuthInfoBytes(
+        [{ pubkey, sequence }],
+        feeAmount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+      );
 
       const chainId = await client.getChainId();
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
@@ -419,7 +429,16 @@ describe("StargateClient", () => {
       const { accountNumber, sequence } = (await client.getSequence(address))!;
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
-      const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], feeAmount, gasLimit, sequence);
+      const feeGranter = undefined;
+      const feePayer = undefined;
+      const authInfoBytes = makeAuthInfoBytes(
+        [{ pubkey, sequence }],
+        feeAmount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+        sequence,
+      );
 
       const chainId = await client.getChainId();
       const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
@@ -431,7 +450,17 @@ describe("StargateClient", () => {
       });
       const txRawBytes = Uint8Array.from(TxRaw.encode(txRaw).finish());
 
-      await expectAsync(client.broadcastTx(txRawBytes)).toBeRejectedWithError(/invalid recipient address/i);
+      try {
+        await client.broadcastTx(txRawBytes);
+        assert(false, "Expected broadcastTx to throw");
+      } catch (error: any) {
+        expect(error).toMatch(
+          simapp44Enabled() ? /invalid recipient address/i : /Broadcasting transaction failed with code 7/i,
+        );
+        assert(error instanceof BroadcastTxError);
+        expect(error.code).toEqual(7);
+        expect(error.codespace).toEqual("sdk");
+      }
 
       client.disconnect();
     });
@@ -470,9 +499,17 @@ describe("StargateClient", () => {
       const chainId = await client.getChainId();
       const feeAmount = coins(2000, "ucosm");
       const gasLimit = 200000;
+      const feeGranter = undefined;
+      const feePayer = undefined;
 
       const { accountNumber: accountNumber1, sequence: sequence1 } = (await client.getSequence(address))!;
-      const authInfoBytes1 = makeAuthInfoBytes([{ pubkey, sequence: sequence1 }], feeAmount, gasLimit);
+      const authInfoBytes1 = makeAuthInfoBytes(
+        [{ pubkey, sequence: sequence1 }],
+        feeAmount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+      );
       const signDoc1 = makeSignDoc(txBodyBytes, authInfoBytes1, chainId, accountNumber1);
       const { signature: signature1 } = await wallet.signDirect(address, signDoc1);
       const txRaw1 = TxRaw.fromPartial({
@@ -486,7 +523,13 @@ describe("StargateClient", () => {
       assertIsDeliverTxSuccess(txResult);
 
       const { accountNumber: accountNumber2, sequence: sequence2 } = (await client.getSequence(address))!;
-      const authInfoBytes2 = makeAuthInfoBytes([{ pubkey, sequence: sequence2 }], feeAmount, gasLimit);
+      const authInfoBytes2 = makeAuthInfoBytes(
+        [{ pubkey, sequence: sequence2 }],
+        feeAmount,
+        gasLimit,
+        feeGranter,
+        feePayer,
+      );
       const signDoc2 = makeSignDoc(txBodyBytes, authInfoBytes2, chainId, accountNumber2);
       const { signature: signature2 } = await wallet.signDirect(address, signDoc2);
       const txRaw2 = TxRaw.fromPartial({

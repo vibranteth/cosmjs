@@ -135,6 +135,12 @@ export interface MigrateResult {
   readonly gasUsed: number;
 }
 
+export interface ExecuteInstruction {
+  contractAddress: string;
+  msg: Record<string, unknown>;
+  funds?: readonly Coin[];
+}
+
 export interface ExecuteResult {
   readonly logs: readonly logs.Log[];
   /** Block height in which the transaction is included */
@@ -396,16 +402,33 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     memo = "",
     funds?: readonly Coin[],
   ): Promise<ExecuteResult> {
-    const executeContractMsg: MsgExecuteContractEncodeObject = {
+    const instruction: ExecuteInstruction = {
+      contractAddress: contractAddress,
+      msg: msg,
+      funds: funds,
+    };
+    return this.executeMultiple(senderAddress, [instruction], fee, memo);
+  }
+
+  /**
+   * Like `execute` but allows executing multiple messages in one transaction.
+   */
+  public async executeMultiple(
+    senderAddress: string,
+    instructions: readonly ExecuteInstruction[],
+    fee: StdFee | "auto" | number,
+    memo = "",
+  ): Promise<ExecuteResult> {
+    const msgs: MsgExecuteContractEncodeObject[] = instructions.map((i) => ({
       typeUrl: "/cosmwasm.wasm.v1.MsgExecuteContract",
       value: MsgExecuteContract.fromPartial({
         sender: senderAddress,
-        contract: contractAddress,
-        msg: toUtf8(JSON.stringify(msg)),
-        funds: [...(funds || [])],
+        contract: i.contractAddress,
+        msg: toUtf8(JSON.stringify(i.msg)),
+        funds: [...(i.funds || [])],
       }),
-    };
-    const result = await this.signAndBroadcast(senderAddress, [executeContractMsg], fee, memo);
+    }));
+    const result = await this.signAndBroadcast(senderAddress, msgs, fee, memo);
     if (isDeliverTxFailure(result)) {
       throw new Error(createDeliverTxResponseErrorMessage(result));
     }
@@ -563,6 +586,8 @@ export class SigningCosmWasmClient extends CosmWasmClient {
       [{ pubkey, sequence: signedSequence }],
       signed.fee.amount,
       signedGasLimit,
+      signed.fee.granter,
+      signed.fee.payer,
       signMode,
     );
     return TxRaw.fromPartial({
@@ -596,7 +621,13 @@ export class SigningCosmWasmClient extends CosmWasmClient {
     };
     const txBodyBytes = this.registry.encode(txBody);
     const gasLimit = Int53.fromString(fee.gas).toNumber();
-    const authInfoBytes = makeAuthInfoBytes([{ pubkey, sequence }], fee.amount, gasLimit);
+    const authInfoBytes = makeAuthInfoBytes(
+      [{ pubkey, sequence }],
+      fee.amount,
+      gasLimit,
+      fee.granter,
+      fee.payer,
+    );
     const signDoc = makeSignDoc(txBodyBytes, authInfoBytes, chainId, accountNumber);
     const { signature, signed } = await this.signer.signDirect(signerAddress, signDoc);
     return TxRaw.fromPartial({

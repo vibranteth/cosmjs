@@ -57,7 +57,7 @@ export class Webserver {
           }
 
           // context.request.body is set by the bodyParser() plugin
-          const requestBody = context.request.body;
+          const requestBody = (context.request as any).body;
           const creditBody = RequestParser.parseCreditBody(requestBody);
           const { address, denom } = creditBody;
 
@@ -67,11 +67,11 @@ export class Webserver {
 
           const entry = this.addressCounter.get(address);
           if (entry !== undefined) {
-            const cooldownMs = constants.cooldown * 3600 * 1000;
-            if (entry.getTime() + cooldownMs > Date.now()) {
+            const cooldownTimeMs = constants.cooldownTime * 1000;
+            if (entry.getTime() + cooldownTimeMs > Date.now()) {
               throw new HttpError(
                 405,
-                `Too many request for the same address. Blocked to prevent draining. Please wait ${constants.cooldown}h and try it again!`,
+                `Too many request for the same address. Blocked to prevent draining. Please wait ${constants.cooldownTime} seconds and try it again!`,
               );
             }
           }

@@ -28,9 +28,9 @@ describe("AuthExtension", () => {
       expect(account.typeUrl).toEqual("/cosmos.auth.v1beta1.BaseAccount");
       expect(BaseAccount.decode(account.value)).toEqual({
         address: unused.address,
-        // pubKey not set
+        pubKey: undefined,
         accountNumber: Long.fromNumber(unused.accountNumber, true),
-        sequence: Long.fromNumber(0, true),
+        sequence: Long.UZERO,
       });
 
       tmClient.disconnect();
@@ -46,7 +46,7 @@ describe("AuthExtension", () => {
       expect(BaseAccount.decode(account.value)).toEqual({
         address: validator.delegatorAddress,
         pubKey: Any.fromPartial(encodePubkey(validator.pubkey)),
-        accountNumber: Long.fromNumber(0, true),
+        accountNumber: Long.UZERO,
         sequence: Long.fromNumber(validator.sequence, true),
       });
 

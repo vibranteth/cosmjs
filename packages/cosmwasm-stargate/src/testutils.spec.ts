@@ -55,6 +55,7 @@ export const wasmd = {
 export const defaultSigningClientOptions: SigningCosmWasmClientOptions = {
   broadcastPollIntervalMs: 300,
   broadcastTimeoutMs: 8_000,
+  gasPrice: defaultGasPrice,
 };
 
 export function getHackatom(): ContractUploadInstructions {
@@ -224,6 +225,8 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
     }));
     const modifiedFeeAmount = coins(3000, "ucosm");
     const modifiedGasLimit = 333333;
+    const modifiedFeeGranter = undefined;
+    const modifiedFeePayer = undefined;
     const modifiedSignDoc = {
       ...signDoc,
       bodyBytes: Uint8Array.from(TxBody.encode(modifiedTxBody).finish()),
@@ -231,6 +234,8 @@ export class ModifyingDirectSecp256k1HdWallet extends DirectSecp256k1HdWallet {
         signers,
         modifiedFeeAmount,
         modifiedGasLimit,
+        modifiedFeeGranter,
+        modifiedFeePayer,
         SignMode.SIGN_MODE_DIRECT,
       ),
     };

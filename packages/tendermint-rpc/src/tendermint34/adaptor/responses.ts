@@ -4,6 +4,7 @@ import { JsonRpcSuccessResponse } from "@cosmjs/json-rpc";
 import { assert } from "@cosmjs/utils";
 
 import { DateWithNanoseconds, fromRfc3339WithNanoseconds } from "../../dates";
+import { apiToBigInt, apiToSmallInt } from "../../inthelpers";
 import { SubscriptionEvent } from "../../rpcclients";
 import { BlockIdFlag, CommitSignature, ValidatorPubkey } from "../../types";
 import {
@@ -15,9 +16,7 @@ import {
   assertSet,
   assertString,
   dictionaryToStringMap,
-  Integer,
   may,
-  optional,
 } from "../encodings";
 import { hashTx } from "../hasher";
 import * as responses from "../responses";
@@ -36,7 +35,7 @@ interface RpcAbciInfoResponse {
 function decodeAbciInfo(data: RpcAbciInfoResponse): responses.AbciInfoResponse {
   return {
     data: data.data,
-    lastBlockHeight: may(Integer.parse, data.last_block_height),
+    lastBlockHeight: may(apiToSmallInt, data.last_block_height),
     lastBlockAppHash: may(fromBase64, data.last_block_app_hash),
   };
 }
@@ -68,26 +67,41 @@ function decodeQueryProof(data: RpcQueryProof): responses.QueryProof {
 }
 
 interface RpcAbciQueryResponse {
-  /** base64 encoded */
-  readonly key: string;
-  /** base64 encoded */
-  readonly value?: string;
-  readonly proofOps?: RpcQueryProof;
+  /**
+   * Base64 encoded
+   *
+   * This can be null since this iy a byte slice and due to
+   * https://github.com/tendermint/tendermint/blob/v0.34.19/abci/types/result.go#L50
+   */
+  readonly key?: string | null;
+  /**
+   * Base64 encoded
+   *
+   * This can be null since this is a byte slice and due to
+   * https://github.com/tendermint/tendermint/blob/v0.34.19/abci/types/result.go#L50
+   */
+  readonly value?: string | null;
+  readonly proofOps?: RpcQueryProof | null;
   readonly height?: string;
+  /** An integer; can be negative */
   readonly index?: string;
-  readonly code?: string; // only for errors
+  readonly code?: number; // only for errors
+  readonly codespace?: string;
   readonly log?: string;
+  readonly info?: string;
 }
 
 function decodeAbciQuery(data: RpcAbciQueryResponse): responses.AbciQueryResponse {
   return {
-    key: fromBase64(optional(data.key, "")),
-    value: fromBase64(optional(data.value, "")),
+    key: fromBase64(assertString(data.key ?? "")),
+    value: fromBase64(assertString(data.value ?? "")),
     proof: may(decodeQueryProof, data.proofOps),
-    height: may(Integer.parse, data.height),
-    code: may(Integer.parse, data.code),
-    index: may(Integer.parse, data.index),
+    height: may(apiToSmallInt, data.height),
+    code: may(apiToSmallInt, data.code),
+    codespace: assertString(data.codespace ?? ""),
+    index: may(apiToSmallInt, data.index),
     log: data.log,
+    info: assertString(data.info ?? ""),
   };
 }
 
@@ -95,13 +109,13 @@ interface RpcAttribute {
   /** base64 encoded */
   readonly key: string;
   /** base64 encoded */
-  readonly value: string;
+  readonly value?: string | null;
 }
 
 function decodeAttribute(attribute: RpcAttribute): responses.Attribute {
   return {
     key: fromBase64(assertNotEmpty(attribute.key)),
-    value: fromBase64(optional(attribute.value, "")),
+    value: fromBase64(assertString(attribute.value ?? "")),
   };
 }
 
@@ -139,13 +153,13 @@ interface RpcTxData {
 
 function decodeTxData(data: RpcTxData): responses.TxData {
   return {
-    code: Integer.parse(assertNumber(optional<number>(data.code, 0))),
-    codeSpace: data.codespace,
+    code: apiToSmallInt(assertNumber(data.code ?? 0)),
+    codespace: data.codespace,
     log: data.log,
     data: may(fromBase64, data.data),
     events: data.events ? decodeEvents(data.events) : [],
-    gasWanted: Integer.parse(optional<string>(data.gas_wanted, "0")),
-    gasUsed: Integer.parse(optional<string>(data.gas_used, "0")),
+    gasWanted: apiToSmallInt(data.gas_wanted ?? "0"),
+    gasUsed: apiToSmallInt(data.gas_used ?? "0"),
   };
 }
 
@@ -207,8 +221,8 @@ interface RpcBlockParams {
  */
 function decodeBlockParams(data: RpcBlockParams): responses.BlockParams {
   return {
-    maxBytes: Integer.parse(assertNotEmpty(data.max_bytes)),
-    maxGas: Integer.parse(assertNotEmpty(data.max_gas)),
+    maxBytes: apiToSmallInt(assertNotEmpty(data.max_bytes)),
+    maxGas: apiToSmallInt(assertNotEmpty(data.max_gas)),
   };
 }
 
@@ -219,8 +233,8 @@ interface RpcEvidenceParams {
 
 function decodeEvidenceParams(data: RpcEvidenceParams): responses.EvidenceParams {
   return {
-    maxAgeNumBlocks: Integer.parse(assertNotEmpty(data.max_age_num_blocks)),
-    maxAgeDuration: Integer.parse(assertNotEmpty(data.max_age_duration)),
+    maxAgeNumBlocks: apiToSmallInt(assertNotEmpty(data.max_age_num_blocks)),
+    maxAgeDuration: apiToSmallInt(assertNotEmpty(data.max_age_duration)),
   };
 }
 
@@ -265,7 +279,7 @@ interface RpcValidatorUpdate {
 export function decodeValidatorUpdate(data: RpcValidatorUpdate): responses.ValidatorUpdate {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(data.power ?? 0),
+    votingPower: apiToBigInt(data.power ?? "0"),
   };
 }
 
@@ -280,7 +294,7 @@ interface RpcBlockResultsResponse {
 
 function decodeBlockResults(data: RpcBlockResultsResponse): responses.BlockResultsResponse {
   return {
-    height: Integer.parse(assertNotEmpty(data.height)),
+    height: apiToSmallInt(assertNotEmpty(data.height)),
     results: (data.txs_results || []).map(decodeTxData),
     validatorUpdates: (data.validator_updates || []).map(decodeValidatorUpdate),
     consensusUpdates: may(decodeConsensusParams, data.consensus_param_updates),
@@ -316,8 +330,8 @@ interface RpcBlockVersion {
 
 function decodeBlockVersion(data: RpcBlockVersion): responses.Version {
   return {
-    block: Integer.parse(data.block),
-    app: Integer.parse(data.app ?? 0),
+    block: apiToSmallInt(data.block),
+    app: apiToSmallInt(data.app ?? 0),
   };
 }
 
@@ -355,7 +369,7 @@ function decodeHeader(data: RpcHeader): responses.Header {
   return {
     version: decodeBlockVersion(data.version),
     chainId: assertNotEmpty(data.chain_id),
-    height: Integer.parse(assertNotEmpty(data.height)),
+    height: apiToSmallInt(assertNotEmpty(data.height)),
     time: fromRfc3339WithNanoseconds(assertNotEmpty(data.time)),
 
     // When there is no last block ID (i.e. this block's height is 1), we get an empty structure like this:
@@ -386,9 +400,9 @@ interface RpcBlockMeta {
 function decodeBlockMeta(data: RpcBlockMeta): responses.BlockMeta {
   return {
     blockId: decodeBlockId(data.block_id),
-    blockSize: Integer.parse(assertNotEmpty(data.block_size)),
+    blockSize: apiToSmallInt(assertNotEmpty(data.block_size)),
     header: decodeHeader(data.header),
-    numTxs: Integer.parse(assertNotEmpty(data.num_txs)),
+    numTxs: apiToSmallInt(assertNotEmpty(data.num_txs)),
   };
 }
 
@@ -399,7 +413,7 @@ interface RpcBlockchainResponse {
 
 function decodeBlockchain(data: RpcBlockchainResponse): responses.BlockchainResponse {
   return {
-    lastHeight: Integer.parse(assertNotEmpty(data.last_height)),
+    lastHeight: apiToSmallInt(assertNotEmpty(data.last_height)),
     blockMetas: assertArray(data.block_metas).map(decodeBlockMeta),
   };
 }
@@ -426,7 +440,7 @@ interface RpcBroadcastTxCommitResponse {
 
 function decodeBroadcastTxCommit(data: RpcBroadcastTxCommitResponse): responses.BroadcastTxCommitResponse {
   return {
-    height: Integer.parse(data.height),
+    height: apiToSmallInt(data.height),
     hash: fromHex(assertNotEmpty(data.hash)),
     checkTx: decodeTxData(assertObject(data.check_tx)),
     deliverTx: may(decodeTxData, data.deliver_tx),
@@ -480,8 +494,8 @@ interface RpcCommit {
 function decodeCommit(data: RpcCommit): responses.Commit {
   return {
     blockId: decodeBlockId(assertObject(data.block_id)),
-    height: Integer.parse(assertNotEmpty(data.height)),
-    round: Integer.parse(data.round),
+    height: apiToSmallInt(assertNotEmpty(data.height)),
+    round: apiToSmallInt(data.round),
     signatures: assertArray(data.signatures).map(decodeCommitSignature),
   };
 }
@@ -514,7 +528,7 @@ export function decodeValidatorGenesis(data: RpcValidatorGenesis): responses.Val
   return {
     address: fromHex(assertNotEmpty(data.address)),
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(assertNotEmpty(data.power)),
+    votingPower: apiToBigInt(assertNotEmpty(data.power)),
   };
 }
 
@@ -557,9 +571,9 @@ interface RpcValidatorInfo {
 export function decodeValidatorInfo(data: RpcValidatorInfo): responses.Validator {
   return {
     pubkey: decodePubkey(assertObject(data.pub_key)),
-    votingPower: Integer.parse(assertNotEmpty(data.voting_power)),
+    votingPower: apiToBigInt(assertNotEmpty(data.voting_power)),
     address: fromHex(assertNotEmpty(data.address)),
-    proposerPriority: data.proposer_priority ? Integer.parse(data.proposer_priority) : undefined,
+    proposerPriority: data.proposer_priority ? apiToSmallInt(data.proposer_priority) : undefined,
   };
 }
 
@@ -597,9 +611,9 @@ function decodeNodeInfo(data: RpcNodeInfo): responses.NodeInfo {
     moniker: assertNotEmpty(data.moniker),
     other: dictionaryToStringMap(data.other),
     protocolVersion: {
-      app: Integer.parse(assertNotEmpty(data.protocol_version.app)),
-      block: Integer.parse(assertNotEmpty(data.protocol_version.block)),
-      p2p: Integer.parse(assertNotEmpty(data.protocol_version.p2p)),
+      app: apiToSmallInt(assertNotEmpty(data.protocol_version.app)),
+      block: apiToSmallInt(assertNotEmpty(data.protocol_version.block)),
+      p2p: apiToSmallInt(assertNotEmpty(data.protocol_version.p2p)),
     },
   };
 }
@@ -619,7 +633,7 @@ function decodeSyncInfo(data: RpcSyncInfo): responses.SyncInfo {
     latestBlockHash: fromHex(assertNotEmpty(data.latest_block_hash)),
     latestAppHash: fromHex(assertNotEmpty(data.latest_app_hash)),
     latestBlockTime: fromRfc3339WithNanoseconds(assertNotEmpty(data.latest_block_time)),
-    latestBlockHeight: Integer.parse(assertNotEmpty(data.latest_block_height)),
+    latestBlockHeight: apiToSmallInt(assertNotEmpty(data.latest_block_height)),
     catchingUp: assertBoolean(data.catching_up),
   };
 }
@@ -671,8 +685,8 @@ function decodeTxProof(data: RpcTxProof): responses.TxProof {
     data: fromBase64(assertNotEmpty(data.data)),
     rootHash: fromHex(assertNotEmpty(data.root_hash)),
     proof: {
-      total: Integer.parse(assertNotEmpty(data.proof.total)),
-      index: Integer.parse(assertNotEmpty(data.proof.index)),
+      total: apiToSmallInt(assertNotEmpty(data.proof.total)),
+      index: apiToSmallInt(assertNotEmpty(data.proof.index)),
       leafHash: fromBase64(assertNotEmpty(data.proof.leaf_hash)),
       aunts: assertArray(data.proof.aunts).map(fromBase64),
     },
@@ -694,8 +708,8 @@ function decodeTxResponse(data: RpcTxResponse): responses.TxResponse {
   return {
     tx: fromBase64(assertNotEmpty(data.tx)),
     result: decodeTxData(assertObject(data.tx_result)),
-    height: Integer.parse(assertNotEmpty(data.height)),
-    index: Integer.parse(assertNumber(data.index)),
+    height: apiToSmallInt(assertNotEmpty(data.height)),
+    index: apiToSmallInt(assertNumber(data.index)),
     hash: fromHex(assertNotEmpty(data.hash)),
     proof: may(decodeTxProof, data.proof),
   };
@@ -708,7 +722,7 @@ interface RpcTxSearchResponse {
 
 function decodeTxSearch(data: RpcTxSearchResponse): responses.TxSearchResponse {
   return {
-    totalCount: Integer.parse(assertNotEmpty(data.total_count)),
+    totalCount: apiToSmallInt(assertNotEmpty(data.total_count)),
     txs: assertArray(data.txs).map(decodeTxResponse),
   };
 }
@@ -728,8 +742,8 @@ function decodeTxEvent(data: RpcTxEvent): responses.TxEvent {
     tx: tx,
     hash: hashTx(tx),
     result: decodeTxData(data.result),
-    height: Integer.parse(assertNotEmpty(data.height)),
-    index: may(Integer.parse, data.index),
+    height: apiToSmallInt(assertNotEmpty(data.height)),
+    index: may(apiToSmallInt, data.index),
   };
 }
 
@@ -742,10 +756,10 @@ interface RpcValidatorsResponse {
 
 function decodeValidators(data: RpcValidatorsResponse): responses.ValidatorsResponse {
   return {
-    blockHeight: Integer.parse(assertNotEmpty(data.block_height)),
+    blockHeight: apiToSmallInt(assertNotEmpty(data.block_height)),
     validators: assertArray(data.validators).map(decodeValidatorInfo),
-    count: Integer.parse(assertNotEmpty(data.count)),
-    total: Integer.parse(assertNotEmpty(data.total)),
+    count: apiToSmallInt(assertNotEmpty(data.count)),
+    total: apiToSmallInt(assertNotEmpty(data.total)),
   };
 }
 
@@ -799,7 +813,7 @@ interface RpcBlockSearchResponse {
 
 function decodeBlockSearch(data: RpcBlockSearchResponse): responses.BlockSearchResponse {
   return {
-    totalCount: Integer.parse(assertNotEmpty(data.total_count)),
+    totalCount: apiToSmallInt(assertNotEmpty(data.total_count)),
     blocks: assertArray(data.blocks).map(decodeBlockResponse),
   };
 }
@@ -811,8 +825,8 @@ interface RpcNumUnconfirmedTxsResponse {
 
 function decodeNumUnconfirmedTxs(data: RpcNumUnconfirmedTxsResponse): responses.NumUnconfirmedTxsResponse {
   return {
-    total: Integer.parse(assertNotEmpty(data.total)),
-    totalBytes: Integer.parse(assertNotEmpty(data.total_bytes)),
+    total: apiToSmallInt(assertNotEmpty(data.total)),
+    totalBytes: apiToSmallInt(assertNotEmpty(data.total_bytes)),
   };
 }
 

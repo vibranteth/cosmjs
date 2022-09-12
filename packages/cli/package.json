@@ -1,6 +1,6 @@
 {
   "name": "@cosmjs/cli",
-  "version": "0.28.13",
+  "version": "0.29.0-rc.1",
   "description": "Command line interface",
   "contributors": [
     "IOV SAS <admin@iov.one>",
@@ -40,24 +40,24 @@
     "!**/testdata/"
   ],
   "dependencies": {
-    "@cosmjs/amino": "workspace:packages/amino",
-    "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate",
-    "@cosmjs/crypto": "workspace:packages/crypto",
-    "@cosmjs/encoding": "workspace:packages/encoding",
-    "@cosmjs/faucet-client": "workspace:packages/faucet-client",
-    "@cosmjs/math": "workspace:packages/math",
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing",
-    "@cosmjs/stargate": "workspace:packages/stargate",
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc",
-    "@cosmjs/utils": "workspace:packages/utils",
+    "@cosmjs/amino": "workspace:^",
+    "@cosmjs/cosmwasm-stargate": "workspace:^",
+    "@cosmjs/crypto": "workspace:^",
+    "@cosmjs/encoding": "workspace:^",
+    "@cosmjs/faucet-client": "workspace:^",
+    "@cosmjs/math": "workspace:^",
+    "@cosmjs/proto-signing": "workspace:^",
+    "@cosmjs/stargate": "workspace:^",
+    "@cosmjs/tendermint-rpc": "workspace:^",
+    "@cosmjs/utils": "workspace:^",
     "axios": "^0.21.2",
     "babylon": "^6.18.0",
     "chalk": "^4",
-    "cosmjs-types": "^0.4.0",
+    "cosmjs-types": "^0.5.0",
     "diff": "^4",
     "recast": "^0.20",
     "ts-node": "^8",
-    "typescript": "~4.4",
+    "typescript": "~4.6",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
@@ -65,7 +65,7 @@
     "@types/babylon": "^6.16.3",
     "@types/diff": "^4",
     "@types/eslint-plugin-prettier": "^3",
-    "@types/jasmine": "^3.8",
+    "@types/jasmine": "^4",
     "@types/node": "^15.0.1",
     "@types/yargs": "^15.0.4",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
@@ -77,10 +77,11 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "esm": "^3.2.25",
-    "jasmine": "^3.99",
+    "jasmine": "^4",
     "jasmine-spec-reporter": "^6",
     "nyc": "^15.1.0",
     "prettier": "^2.4.1",
     "source-map-support": "^0.5.19"
-  }
+  },
+  "stableVersion": "0.28.11"
 }

@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 5
+  version: 6
   cacheKey: 8
 
 "@agoric/babel-standalone@npm:^7.9.5":
@@ -293,17 +293,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmjs/amino@workspace:packages/amino":
+"@cosmjs/amino@workspace:^, @cosmjs/amino@workspace:packages/amino":
   version: 0.0.0-use.local
   resolution: "@cosmjs/amino@workspace:packages/amino"
   dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -317,12 +317,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -330,7 +330,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -340,21 +340,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/cli@workspace:packages/cli"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/faucet-client": "workspace:packages/faucet-client"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/cosmwasm-stargate": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/faucet-client": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/tendermint-rpc": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/babylon": ^6.16.3
     "@types/diff": ^4
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/node": ^15.0.1
     "@types/yargs": ^15.0.4
     "@typescript-eslint/eslint-plugin": ^5.13.0
@@ -362,7 +362,7 @@ __metadata:
     axios: ^0.21.2
     babylon: ^6.18.0
     chalk: ^4
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     diff: ^4
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
@@ -371,35 +371,35 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     nyc: ^15.1.0
     prettier: ^2.4.1
     recast: ^0.20
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.4
+    typescript: ~4.6
     yargs: ^15.3.1
   bin:
     cosmjs-cli: bin/cosmjs-cli
   languageName: unknown
   linkType: soft
 
-"@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate":
+"@cosmjs/cosmwasm-stargate@workspace:^, @cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate":
   version: 0.0.0-use.local
   resolution: "@cosmjs/cosmwasm-stargate@workspace:packages/cosmwasm-stargate"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/tendermint-rpc": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -408,7 +408,7 @@ __metadata:
     "@types/pako": ^1.0.1
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -417,12 +417,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
@@ -434,25 +434,25 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/crypto@workspace:packages/crypto":
+"@cosmjs/crypto@workspace:^, @cosmjs/crypto@workspace:packages/crypto":
   version: 0.0.0-use.local
   resolution: "@cosmjs/crypto@workspace:packages/crypto"
   dependencies:
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@noble/hashes": ^1
     "@types/bn.js": ^5
     "@types/elliptic": ^6.4.12
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -471,12 +471,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     libsodium-wrappers: ^0.7.6
     nyc: ^15.1.0
@@ -485,20 +485,20 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/encoding@workspace:packages/encoding":
+"@cosmjs/encoding@workspace:^, @cosmjs/encoding@workspace:packages/encoding":
   version: 0.0.0-use.local
   resolution: "@cosmjs/encoding@workspace:packages/encoding"
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/base64-js": ^1.2.5
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -515,12 +515,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -529,19 +529,19 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/faucet-client@workspace:packages/faucet-client":
+"@cosmjs/faucet-client@workspace:^, @cosmjs/faucet-client@workspace:packages/faucet-client":
   version: 0.0.0-use.local
   resolution: "@cosmjs/faucet-client@workspace:packages/faucet-client"
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -557,12 +557,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -570,7 +570,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -580,19 +580,19 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/faucet@workspace:packages/faucet"
   dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
-    "@koa/cors": ^3.0.0
+    "@koa/cors": ^3.3
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
-    "@types/koa": ^2.11.0
-    "@types/koa-bodyparser": ^4.3.0
-    "@types/koa__cors": ^3.0.1
+    "@types/jasmine": ^4
+    "@types/koa": ^2.13
+    "@types/koa-bodyparser": ^4.3
+    "@types/koa__cors": ^3.3
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
     eslint: ^7.5
@@ -602,16 +602,16 @@ __metadata:
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
-    koa: ^2.11.0
-    koa-bodyparser: ^4.2.1
+    koa: ^2.13
+    koa-bodyparser: ^4.3
     nyc: ^15.1.0
     prettier: ^2.4.1
     ses: ^0.11.0
     source-map-support: ^0.5.19
     ts-node: ^8
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   bin:
@@ -619,14 +619,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/json-rpc@workspace:packages/json-rpc":
+"@cosmjs/json-rpc@workspace:^, @cosmjs/json-rpc@workspace:packages/json-rpc":
   version: 0.0.0-use.local
   resolution: "@cosmjs/json-rpc@workspace:packages/json-rpc"
   dependencies:
-    "@cosmjs/stream": "workspace:packages/stream"
+    "@cosmjs/stream": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -640,12 +640,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -653,7 +653,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
@@ -664,18 +664,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@cosmjs/ledger-amino@workspace:packages/ledger-amino"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/stargate": "workspace:packages/stargate"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@ledgerhq/hw-transport": ^5.25.0
     "@ledgerhq/hw-transport-node-hid": ^5.25.0
     "@ledgerhq/hw-transport-webusb": ^5.25.0
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/ledgerhq__hw-transport": ^4.21.3
     "@types/ledgerhq__hw-transport-node-hid": ^4.22.2
     "@types/ledgerhq__hw-transport-webusb": ^4.70.1
@@ -690,7 +690,7 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     ledger-cosmos-js: ^2.1.8
     nyc: ^15.1.0
@@ -700,20 +700,20 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/math@workspace:packages/math":
+"@cosmjs/math@workspace:^, @cosmjs/math@workspace:packages/math":
   version: 0.0.0-use.local
   resolution: "@cosmjs/math@workspace:packages/math"
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/bn.js": ^5
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -729,12 +729,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -742,24 +742,24 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/proto-signing@workspace:packages/proto-signing":
+"@cosmjs/proto-signing@workspace:^, @cosmjs/proto-signing@workspace:packages/proto-signing":
   version: 0.0.0-use.local
   resolution: "@cosmjs/proto-signing@workspace:packages/proto-signing"
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -767,7 +767,7 @@ __metadata:
     "@types/node": ^15.0.1
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -776,12 +776,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
@@ -791,20 +791,20 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/socket@workspace:packages/socket":
+"@cosmjs/socket@workspace:^, @cosmjs/socket@workspace:packages/socket":
   version: 0.0.0-use.local
   resolution: "@cosmjs/socket@workspace:packages/socket"
   dependencies:
-    "@cosmjs/stream": "workspace:packages/stream"
+    "@cosmjs/stream": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -820,12 +820,12 @@ __metadata:
     esm: ^3.2.25
     glob: ^7.1.6
     isomorphic-ws: ^4.0.1
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -833,7 +833,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     ws: ^7
@@ -841,22 +841,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cosmjs/stargate@workspace:packages/stargate":
+"@cosmjs/stargate@workspace:^, @cosmjs/stargate@workspace:packages/stargate":
   version: 0.0.0-use.local
   resolution: "@cosmjs/stargate@workspace:packages/stargate"
   dependencies:
     "@confio/ics23": ^0.6.8
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stream": "workspace:packages/stream"
-    "@cosmjs/tendermint-rpc": "workspace:packages/tendermint-rpc"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stream": "workspace:^"
+    "@cosmjs/tendermint-rpc": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -864,7 +864,7 @@ __metadata:
     "@types/node": ^15.0.1
     "@typescript-eslint/eslint-plugin": ^5.13.0
     "@typescript-eslint/parser": ^5.13.0
-    cosmjs-types: ^0.4.0
+    cosmjs-types: ^0.5.0
     eslint: ^7.5
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-node: ^0.3.4
@@ -873,12 +873,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     long: ^4.0.0
     nyc: ^15.1.0
@@ -889,20 +889,20 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/stream@workspace:packages/stream":
+"@cosmjs/stream@workspace:^, @cosmjs/stream@workspace:packages/stream":
   version: 0.0.0-use.local
   resolution: "@cosmjs/stream@workspace:packages/stream"
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -917,12 +917,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -930,27 +930,27 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/tendermint-rpc@workspace:packages/tendermint-rpc":
+"@cosmjs/tendermint-rpc@workspace:^, @cosmjs/tendermint-rpc@workspace:packages/tendermint-rpc":
   version: 0.0.0-use.local
   resolution: "@cosmjs/tendermint-rpc@workspace:packages/tendermint-rpc"
   dependencies:
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/json-rpc": "workspace:packages/json-rpc"
-    "@cosmjs/math": "workspace:packages/math"
-    "@cosmjs/socket": "workspace:packages/socket"
-    "@cosmjs/stream": "workspace:packages/stream"
-    "@cosmjs/utils": "workspace:packages/utils"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/json-rpc": "workspace:^"
+    "@cosmjs/math": "workspace:^"
+    "@cosmjs/socket": "workspace:^"
+    "@cosmjs/stream": "workspace:^"
+    "@cosmjs/utils": "workspace:^"
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -966,12 +966,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -980,20 +980,20 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
     xstream: ^11.14.0
   languageName: unknown
   linkType: soft
 
-"@cosmjs/utils@workspace:packages/utils":
+"@cosmjs/utils@workspace:^, @cosmjs/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@cosmjs/utils@workspace:packages/utils"
   dependencies:
     "@istanbuljs/nyc-config-typescript": ^1.0.1
     "@types/eslint-plugin-prettier": ^3
-    "@types/jasmine": ^3.8
+    "@types/jasmine": ^4
     "@types/karma-firefox-launcher": ^2
     "@types/karma-jasmine": ^4
     "@types/karma-jasmine-html-reporter": ^1
@@ -1009,12 +1009,12 @@ __metadata:
     eslint-plugin-simple-import-sort: ^7.0.0
     esm: ^3.2.25
     glob: ^7.1.6
-    jasmine: ^3.99
+    jasmine: ^4
     jasmine-spec-reporter: ^6
     karma: ^6.3.14
     karma-chrome-launcher: ^3.1.0
     karma-firefox-launcher: ^2.1.0
-    karma-jasmine: ^4.0.1
+    karma-jasmine: ^5
     karma-jasmine-html-reporter: ^1.5.4
     nyc: ^15.1.0
     prettier: ^2.4.1
@@ -1022,7 +1022,7 @@ __metadata:
     source-map-support: ^0.5.19
     ts-node: ^8
     typedoc: ^0.22
-    typescript: ~4.4
+    typescript: ~4.6
     webpack: ^5.32.0
     webpack-cli: ^4.6.0
   languageName: unknown
@@ -1085,12 +1085,64 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@koa/cors@npm:^3.0.0":
+"@jridgewell/gen-mapping@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@jridgewell/gen-mapping@npm:0.3.2"
+  dependencies:
+    "@jridgewell/set-array": ^1.0.1
+    "@jridgewell/sourcemap-codec": ^1.4.10
+    "@jridgewell/trace-mapping": ^0.3.9
+  checksum: 1832707a1c476afebe4d0fbbd4b9434fdb51a4c3e009ab1e9938648e21b7a97049fa6009393bdf05cab7504108413441df26d8a3c12193996e65493a4efb6882
+  languageName: node
+  linkType: hard
+
+"@jridgewell/resolve-uri@npm:^3.0.3":
   version: 3.1.0
-  resolution: "@koa/cors@npm:3.1.0"
+  resolution: "@jridgewell/resolve-uri@npm:3.1.0"
+  checksum: b5ceaaf9a110fcb2780d1d8f8d4a0bfd216702f31c988d8042e5f8fbe353c55d9b0f55a1733afdc64806f8e79c485d2464680ac48a0d9fcadb9548ee6b81d267
+  languageName: node
+  linkType: hard
+
+"@jridgewell/set-array@npm:^1.0.1":
+  version: 1.1.2
+  resolution: "@jridgewell/set-array@npm:1.1.2"
+  checksum: 69a84d5980385f396ff60a175f7177af0b8da4ddb81824cb7016a9ef914eee9806c72b6b65942003c63f7983d4f39a5c6c27185bbca88eb4690b62075602e28e
+  languageName: node
+  linkType: hard
+
+"@jridgewell/source-map@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@jridgewell/source-map@npm:0.3.2"
+  dependencies:
+    "@jridgewell/gen-mapping": ^0.3.0
+    "@jridgewell/trace-mapping": ^0.3.9
+  checksum: 1b83f0eb944e77b70559a394d5d3b3f98a81fcc186946aceb3ef42d036762b52ef71493c6c0a3b7c1d2f08785f53ba2df1277fe629a06e6109588ff4cdcf7482
+  languageName: node
+  linkType: hard
+
+"@jridgewell/sourcemap-codec@npm:^1.4.10":
+  version: 1.4.14
+  resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
+  checksum: 61100637b6d173d3ba786a5dff019e1a74b1f394f323c1fee337ff390239f053b87266c7a948777f4b1ee68c01a8ad0ab61e5ff4abb5a012a0b091bec391ab97
+  languageName: node
+  linkType: hard
+
+"@jridgewell/trace-mapping@npm:^0.3.9":
+  version: 0.3.14
+  resolution: "@jridgewell/trace-mapping@npm:0.3.14"
+  dependencies:
+    "@jridgewell/resolve-uri": ^3.0.3
+    "@jridgewell/sourcemap-codec": ^1.4.10
+  checksum: b9537b9630ffb631aef9651a085fe361881cde1772cd482c257fe3c78c8fd5388d681f504a9c9fe1081b1c05e8f75edf55ee10fdb58d92bbaa8dbf6a7bd6b18c
+  languageName: node
+  linkType: hard
+
+"@koa/cors@npm:^3.3":
+  version: 3.3.0
+  resolution: "@koa/cors@npm:3.3.0"
   dependencies:
     vary: ^1.1.2
-  checksum: b6f18de404a967696fe19c9a8d35816e2a845be51f9aa49f1a8d31bbea095eaa20c35eceafe1b764a7e3a912052ca6eaf1965ac34b00020b1ec2823cb60a9b5d
+  checksum: bb49c680e0d151aec1b19c24c14d61b65f430eb379e63d83789602cc7d8e52706ebcd74867cdb60b1d50ddb6f3d59be04e1c46328fae5721aeaf50e0d4fc2d28
   languageName: node
   linkType: hard
 
@@ -1456,25 +1508,25 @@ __metadata:
   linkType: hard
 
 "@types/express-serve-static-core@npm:^4.17.18":
-  version: 4.17.19
-  resolution: "@types/express-serve-static-core@npm:4.17.19"
+  version: 4.17.30
+  resolution: "@types/express-serve-static-core@npm:4.17.30"
   dependencies:
     "@types/node": "*"
     "@types/qs": "*"
     "@types/range-parser": "*"
-  checksum: fb00b18ab1dc9a4763e88ec2c4000c28e24f3396cf3106498b00320308541b54a2e33e2518c18eb069be4ebb4068b6436a7dc246b1cb093a079e81f9ea31cfc3
+  checksum: c40d9027884ab9e97fa29d9d41d1b75a5966109312e26594cf03c61b278b5bf8e095f53589e47899b34a2e224291a44043617695c3e8bd22284f988e48582ee6
   languageName: node
   linkType: hard
 
 "@types/express@npm:*":
-  version: 4.17.11
-  resolution: "@types/express@npm:4.17.11"
+  version: 4.17.13
+  resolution: "@types/express@npm:4.17.13"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^4.17.18
     "@types/qs": "*"
     "@types/serve-static": "*"
-  checksum: 4f57fb2a3c6dcc8d0eb70fc7714bef986424a2f934ef41a3478d039e7a1d258cbea2fc077067d1b246e1c7968190cf229026dc478ca53a7a05d3a0ddc47b3be9
+  checksum: 12a2a0e6c4b993fc0854bec665906788aea0d8ee4392389d7a98a5de1eefdd33c9e1e40a91f3afd274011119c506f7b4126acb97fae62ae20b654974d44cba12
   languageName: node
   linkType: hard
 
@@ -1492,21 +1544,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jasmine@npm:*, @types/jasmine@npm:^3.8":
-  version: 3.10.6
-  resolution: "@types/jasmine@npm:3.10.6"
-  checksum: dff2c26a9ecbc8198d2f5bf1860275b0b323c80db772c2417d7217afa28bd05fee4b98ab3673dcb18d859f2cd0e084b0dcbd33629fcbe6945b08a72f8e5c36d2
+"@types/jasmine@npm:*, @types/jasmine@npm:^4":
+  version: 4.0.3
+  resolution: "@types/jasmine@npm:4.0.3"
+  checksum: 9d2af9ddb5750667bc9a3b439542fc9457c6eac2ab2c74801f598b03b9bc5cee1338fa8e75e6804dff1856e64539e8b0e3962ed8664a702f362d3db62eb9cd3a
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.6":
-  version: 7.0.7
-  resolution: "@types/json-schema@npm:7.0.7"
-  checksum: ea3b409235862d28122751158f4054e729e31ad844bd7b8b23868f38c518047b1c0e8e4e7cc293e02c31a2fb8cfc8a4506c2de2a745cf78b218e064fb8898cd4
-  languageName: node
-  linkType: hard
-
-"@types/json-schema@npm:^7.0.9":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.6, @types/json-schema@npm:^7.0.9":
   version: 7.0.9
   resolution: "@types/json-schema@npm:7.0.9"
   checksum: 259d0e25f11a21ba5c708f7ea47196bd396e379fddb79c76f9f4f62c945879dc21657904914313ec2754e443c5018ea8372362f323f30e0792897fdb2098a705
@@ -1539,12 +1584,12 @@ __metadata:
   linkType: hard
 
 "@types/karma-jasmine@npm:^4":
-  version: 4.0.0
-  resolution: "@types/karma-jasmine@npm:4.0.0"
+  version: 4.0.2
+  resolution: "@types/karma-jasmine@npm:4.0.2"
   dependencies:
     "@types/jasmine": "*"
     "@types/karma": "*"
-  checksum: b33a5ff73bce2068eb449c0509934e886a858da3e00184c345ea87e30872c4dfa0ff32a930bed412bad7f7ece1fa3669b40efbd97369fce802f802356a99e3ad
+  checksum: 42b3221d682bb08e8550602990a5887d0540e8b296655c6d356d93a2c5d75a512a3a9d431dfb44d0bd127cd0f5932bf2744ece05ae8d5a9e6ad7c0389aaa5940
   languageName: node
   linkType: hard
 
@@ -1565,12 +1610,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa-bodyparser@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "@types/koa-bodyparser@npm:4.3.0"
+"@types/koa-bodyparser@npm:^4.3":
+  version: 4.3.7
+  resolution: "@types/koa-bodyparser@npm:4.3.7"
   dependencies:
     "@types/koa": "*"
-  checksum: b124fc80f738462e5303737b00889be10bdddbfc47e15121b48a09653b1b512aed0ea99a38cd427c9b62decfc6bec0c4ffd8786568ca6cec6fba5a98c678801e
+  checksum: 3a2cac14cb4a720d017d7708fbe9e8a310b5ecebbe62703a2606bb48c775fbeaf9fd601ba9cb7add03c7059f90327d8bcad3d70443eaea383b117b5c020054ec
   languageName: node
   linkType: hard
 
@@ -1583,9 +1628,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/koa@npm:*, @types/koa@npm:^2.11.0":
-  version: 2.13.1
-  resolution: "@types/koa@npm:2.13.1"
+"@types/koa@npm:*, @types/koa@npm:^2.13":
+  version: 2.13.4
+  resolution: "@types/koa@npm:2.13.4"
   dependencies:
     "@types/accepts": "*"
     "@types/content-disposition": "*"
@@ -1595,16 +1640,16 @@ __metadata:
     "@types/keygrip": "*"
     "@types/koa-compose": "*"
     "@types/node": "*"
-  checksum: d6f83b120ad0b8d9f3c7a7a0b2f09a2a149c1f83aaae3c754ac869a3bbc8a5a50f2e653e26817ba1648ed17da49202a19aaf69af0f4f9317c44fb172e548f838
+  checksum: 35a54e68944f74d6763537d55d01f8ed870d0ef816b5f27fce97a317b237540b7c249dc4a54abab44ad0afd0ce010b335122c9efb490b9589affe7929201d707
   languageName: node
   linkType: hard
 
-"@types/koa__cors@npm:^3.0.1":
-  version: 3.0.2
-  resolution: "@types/koa__cors@npm:3.0.2"
+"@types/koa__cors@npm:^3.3":
+  version: 3.3.0
+  resolution: "@types/koa__cors@npm:3.3.0"
   dependencies:
     "@types/koa": "*"
-  checksum: 6286f04c7aa67e273136e111d2c01b6230b7aedf5d78916af1e0313df8da40e26a07b488f2838bd4c1e45001790e1e2098d40f5a1adcb8d74933602a7c608770
+  checksum: c1aeb10b070e72b6c01a2f6abb4b0a936017794ef4eab3469697a4e24ef2054bc371519afa90c8e6c5ea9dbeda58395a64400bd499c3fda207cb593b751b44ca
   languageName: node
   linkType: hard
 
@@ -1668,14 +1713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:^15.0.1":
-  version: 15.3.1
-  resolution: "@types/node@npm:15.3.1"
-  checksum: b62091a7228a5725f257b113508661e92bd4da43626de1e6da8a73842f08cdbce61a7dd72204a0e153a70b6756ca61aaf30481e2e69e760da5e9290595484501
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:>=13.7.0":
+"@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:>=13.7.0, @types/node@npm:^15.0.1":
   version: 15.9.0
   resolution: "@types/node@npm:15.9.0"
   checksum: 6ba9033ee00cf2fd260755d7aeeb65d6287f507473e54c1bce0dbd687c03245aff636580c8dc9215bea16cc32096d60344d00a9cb0a110c9baaca885573dc402
@@ -2095,12 +2133,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.2.1":
-  version: 8.2.4
-  resolution: "acorn@npm:8.2.4"
+"acorn@npm:^8.2.1, acorn@npm:^8.5.0":
+  version: 8.7.1
+  resolution: "acorn@npm:8.7.1"
   bin:
     acorn: bin/acorn
-  checksum: cb4ffa2746bebd8ea808e98e139e2e497eaa254de45877abea6a2bad4e65a824fc37e23f6d163562b1e4ee12fcc8fa03948986c0a353b314bff78a0327168cb2
+  checksum: aca0aabf98826717920ac2583fdcad0a6fbe4e583fdb6e843af2594e907455aeafe30b1e14f1757cd83ce1776773cf8296ffc3a4acf13f0bd3dfebcf1db6ae80
   languageName: node
   linkType: hard
 
@@ -2210,13 +2248,6 @@ __metadata:
   dependencies:
     color-convert: ^2.0.1
   checksum: 513b44c3b2105dd14cc42a19271e80f386466c4be574bccf60b627432f9198571ebf4ab1e4c3ba17347658f4ee1711c163d574248c0c1cdc2d5917a0ad582ec4
-  languageName: node
-  linkType: hard
-
-"any-promise@npm:^1.1.0":
-  version: 1.3.0
-  resolution: "any-promise@npm:1.3.0"
-  checksum: 0ee8a9bdbe882c90464d75d1f55cf027f5458650c4bd1f0467e65aec38ccccda07ca5844969ee77ed46d04e7dded3eaceb027e8d32f385688523fe305fa7e1de
   languageName: node
   linkType: hard
 
@@ -2438,6 +2469,15 @@ __metadata:
     balanced-match: ^1.0.0
     concat-map: 0.0.1
   checksum: faf34a7bb0c3fcf4b59c7808bc5d2a96a40988addf2e7e09dfbb67a2251800e0d14cd2bfc1aa79174f2f5095c54ff27f46fb1289fe2d77dac755b5eb3434cc07
+  languageName: node
+  linkType: hard
+
+"brace-expansion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "brace-expansion@npm:2.0.1"
+  dependencies:
+    balanced-match: ^1.0.0
+  checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
   languageName: node
   linkType: hard
 
@@ -2891,25 +2931,25 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cosmjs-monorepo-root@workspace:."
   dependencies:
-    "@cosmjs/amino": "workspace:packages/amino"
-    "@cosmjs/cosmwasm-stargate": "workspace:packages/cosmwasm-stargate"
-    "@cosmjs/crypto": "workspace:packages/crypto"
-    "@cosmjs/encoding": "workspace:packages/encoding"
-    "@cosmjs/proto-signing": "workspace:packages/proto-signing"
-    "@cosmjs/stargate": "workspace:packages/stargate"
+    "@cosmjs/amino": "workspace:^"
+    "@cosmjs/cosmwasm-stargate": "workspace:^"
+    "@cosmjs/crypto": "workspace:^"
+    "@cosmjs/encoding": "workspace:^"
+    "@cosmjs/proto-signing": "workspace:^"
+    "@cosmjs/stargate": "workspace:^"
     eslint: ^7.5
     prettier: ^2.4.1
-    typescript: ~4.4
+    typescript: ~4.6
   languageName: unknown
   linkType: soft
 
-"cosmjs-types@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "cosmjs-types@npm:0.4.0"
+"cosmjs-types@npm:^0.5.0":
+  version: 0.5.1
+  resolution: "cosmjs-types@npm:0.5.1"
   dependencies:
     long: ^4.0.0
     protobufjs: ~6.11.2
-  checksum: ffc3e6451e85023f81e17ae55cc221d2be77fa01ac65cbd51ec69b695c49a7fba5ddd50a913e519db8aae821f02f0c1a231a2d20337d4646ca520bb3584631a1
+  checksum: 418622ea552ddac1334f99ab2151609c70b54992b380cd4dcbd768c32b3070ea97ae3152b23d4b66993fa41051cfe274817773916a076e0d6a3732830b525372
   languageName: node
   linkType: hard
 
@@ -2965,15 +3005,6 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
-  languageName: node
-  linkType: hard
-
-"debug@npm:~3.1.0":
-  version: 3.1.0
-  resolution: "debug@npm:3.1.0"
-  dependencies:
-    ms: 2.0.0
-  checksum: 0b52718ab957254a5b3ca07fc34543bc778f358620c206a08452251eb7fc193c3ea3505072acbf4350219c14e2d71ceb7bdaa0d3370aa630b50da790458d08b3
   languageName: node
   linkType: hard
 
@@ -3952,21 +3983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
-  version: 7.1.7
-  resolution: "glob@npm:7.1.7"
-  dependencies:
-    fs.realpath: ^1.0.0
-    inflight: ^1.0.4
-    inherits: 2
-    minimatch: ^3.0.4
-    once: ^1.3.0
-    path-is-absolute: ^1.0.0
-  checksum: b61f48973bbdcf5159997b0874a2165db572b368b931135832599875919c237fc05c12984e38fe828e69aa8a921eb0e8a4997266211c517c9cfaae8a93988bb8
-  languageName: node
-  linkType: hard
-
-"glob@npm:^7.1.7, glob@npm:^7.2.0":
+"glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7":
   version: 7.2.0
   resolution: "glob@npm:7.2.0"
   dependencies:
@@ -3977,6 +3994,19 @@ __metadata:
     once: ^1.3.0
     path-is-absolute: ^1.0.0
   checksum: 78a8ea942331f08ed2e055cb5b9e40fe6f46f579d7fd3d694f3412fe5db23223d29b7fee1575440202e9a7ff9a72ab106a39fee39934c7bedafe5e5f8ae20134
+  languageName: node
+  linkType: hard
+
+"glob@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "glob@npm:8.0.3"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^5.0.1
+    once: ^1.3.0
+  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
   languageName: node
   linkType: hard
 
@@ -4474,16 +4504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-glob@npm:^4.0.0, is-glob@npm:^4.0.1, is-glob@npm:~4.0.1":
-  version: 4.0.1
-  resolution: "is-glob@npm:4.0.1"
-  dependencies:
-    is-extglob: ^2.1.1
-  checksum: 84627cad11b4e745f5db5a163f32c47b711585a5ff6e14f8f8d026db87f4cdd3e2c95f6fa1f94ad22e469f36d819ae2814f03f9c668b164422ac3354a94672d3
-  languageName: node
-  linkType: hard
-
-"is-glob@npm:^4.0.3":
+"is-glob@npm:^4.0.0, is-glob@npm:^4.0.1, is-glob@npm:^4.0.3, is-glob@npm:~4.0.1":
   version: 4.0.3
   resolution: "is-glob@npm:4.0.3"
   dependencies:
@@ -4697,10 +4718,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:^3.6.0, jasmine-core@npm:~3.99.0":
-  version: 3.99.1
-  resolution: "jasmine-core@npm:3.99.1"
-  checksum: 4e4a89739d99e471b86c7ccc4c5c244a77cc6d1e17b2b0d87d81266b8415697354d8873f7e764790a10661744f73a753a6e9bcd9b3e48c66a0c9b8a092b071b7
+"jasmine-core@npm:^4.1.0, jasmine-core@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "jasmine-core@npm:4.2.0"
+  checksum: 86c731bb4d3d1f0149ced89f5b5729dccdeda963c6e844e6ec6ac21a76f46086e9aa47bcb1bd65024b48685af3c8c970368665682deaf81bc01203a3ff9ab03f
   languageName: node
   linkType: hard
 
@@ -4713,15 +4734,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine@npm:^3.99":
-  version: 3.99.0
-  resolution: "jasmine@npm:3.99.0"
+"jasmine@npm:^4":
+  version: 4.2.1
+  resolution: "jasmine@npm:4.2.1"
   dependencies:
     glob: ^7.1.6
-    jasmine-core: ~3.99.0
+    jasmine-core: ^4.2.0
   bin:
     jasmine: bin/jasmine.js
-  checksum: baa9a5d8555b844063cd6e11bb272d424a17fa3ebd31c62b211a80c9b8dbb4d9c26218b33212b4f8122e38204a443c2eefbcce89c1c72ee3f0044037ec651427
+  checksum: 3fe11afeadcccdb7bbdfc8c6436fce649d480ded2af64f8d6d1d297f3b7dda76aa3f104ff161bb374f3ab9ca9480e86a33e7d502524400c686eb91649224c55b
   languageName: node
   linkType: hard
 
@@ -4864,14 +4885,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"karma-jasmine@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "karma-jasmine@npm:4.0.1"
+"karma-jasmine@npm:^5":
+  version: 5.1.0
+  resolution: "karma-jasmine@npm:5.1.0"
   dependencies:
-    jasmine-core: ^3.6.0
+    jasmine-core: ^4.1.0
   peerDependencies:
-    karma: "*"
-  checksum: 28337c82941ed6c68e0c47ef432c2c91511214e84a336e78d9068daebd61a3c1cee6209207ddc5fe3ad78124597f58054b93aa0f973ff6dcc8a8fcd1951c9851
+    karma: ^6.0.0
+  checksum: ebefd1094e7c2b4c854027621d854908166c79cccaabb5a6ba0ace42cd785a9da0a9aad1aa41937956bd4848287eac04886eebfd7c851b927d2132d3563b7739
   languageName: node
   linkType: hard
 
@@ -4925,22 +4946,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-bodyparser@npm:^4.2.1":
+"koa-bodyparser@npm:^4.3":
   version: 4.3.0
   resolution: "koa-bodyparser@npm:4.3.0"
   dependencies:
     co-body: ^6.0.0
     copy-to: ^2.0.1
   checksum: c227fe0fb5a55b98fc91d865e80229b60178d216d53b732b07833eb38f48a7ed6aa768a083bc06e359db33298547e9a65842fbe9d3f0fdaf5149fe0becafc88f
-  languageName: node
-  linkType: hard
-
-"koa-compose@npm:^3.0.0":
-  version: 3.2.1
-  resolution: "koa-compose@npm:3.2.1"
-  dependencies:
-    any-promise: ^1.1.0
-  checksum: ff8e5fc0348455acf751179c6c613eb030a5fac6406d3b49ae9e00460b7ee8770db3ef62633fd3db0306cd4a6d2a0b5152399ebd5bb5e684418f9eeeb251c2de
   languageName: node
   linkType: hard
 
@@ -4951,26 +4963,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"koa-convert@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "koa-convert@npm:1.2.0"
+"koa-convert@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "koa-convert@npm:2.0.0"
   dependencies:
     co: ^4.6.0
-    koa-compose: ^3.0.0
-  checksum: a33944dbda4ed87565985f5b37ba1122a012db872724b216b6fd8f9176d4bba42c4a9bf3c129330e45f6474d28f50ca0ed28d41b9bccd2ab5d36d6436cf0d676
+    koa-compose: ^4.1.0
+  checksum: 7385b3391995f59c1312142e110d5dff677f9850dbfbcf387cd36a7b0af03b5d26e82b811eb9bb008b4f3e661cdab1f8817596e46b1929da2cf6e97a2f7456ed
   languageName: node
   linkType: hard
 
-"koa@npm:^2.11.0":
-  version: 2.13.1
-  resolution: "koa@npm:2.13.1"
+"koa@npm:^2.13":
+  version: 2.13.4
+  resolution: "koa@npm:2.13.4"
   dependencies:
     accepts: ^1.3.5
     cache-content-type: ^1.0.0
     content-disposition: ~0.5.2
     content-type: ^1.0.4
     cookies: ~0.8.0
-    debug: ~3.1.0
+    debug: ^4.3.2
     delegates: ^1.0.0
     depd: ^2.0.0
     destroy: ^1.0.4
@@ -4981,14 +4993,14 @@ __metadata:
     http-errors: ^1.6.3
     is-generator-function: ^1.0.7
     koa-compose: ^4.1.0
-    koa-convert: ^1.2.0
+    koa-convert: ^2.0.0
     on-finished: ^2.3.0
     only: ~0.0.2
     parseurl: ^1.3.2
     statuses: ^1.5.0
     type-is: ^1.6.16
     vary: ^1.1.2
-  checksum: c09c64eb32c6ab887527d3677a1b945bb7432f50d88de8b03d1d091baf51c827dafe3055763dd605b57c193b696414b1d597f58c829fb7bc47b2c6c5509670b4
+  checksum: c9a6f9c803433b2d143a0788308048c1432a71c5febcfea2af7f2e8bd732b9bfd75c2c220d553752ee9ab9a3f52490f006cfd521db97cd01d8461d67cc1ccc1f
   languageName: node
   linkType: hard
 
@@ -5171,12 +5183,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.0.10":
-  version: 4.0.10
-  resolution: "marked@npm:4.0.10"
+"marked@npm:^4.0.16":
+  version: 4.0.17
+  resolution: "marked@npm:4.0.17"
   bin:
     marked: bin/marked.js
-  checksum: 46cd8ef1a7cfcf5e461727c7f3e16dd4244369ef58f60485e75d3f5df9d53a8249b9609e96a336521eaa5c88d9531cbd296509a148718056e9375e69609f4442
+  checksum: 33a3c43a20b47bddaf045a59bfc7c3d41cc321931cc663ed231ca3b5b3b195fb2ac2973e687c2afd65b79539c14619baa07d19793f70130160f0af80c06d9b3a
   languageName: node
   linkType: hard
 
@@ -5270,6 +5282,15 @@ __metadata:
   dependencies:
     brace-expansion: ^1.1.7
   checksum: 66ac295f8a7b59788000ea3749938b0970344c841750abd96694f80269b926ebcafad3deeb3f1da2522978b119e6ae3a5869b63b13a7859a456b3408bd18a078
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "minimatch@npm:5.1.0"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
   languageName: node
   linkType: hard
 
@@ -6044,7 +6065,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.3":
+"protobufjs@npm:^6.8.8, protobufjs@npm:~6.11.2, protobufjs@npm:~6.11.3":
   version: 6.11.3
   resolution: "protobufjs@npm:6.11.3"
   dependencies:
@@ -6065,30 +6086,6 @@ __metadata:
     pbjs: bin/pbjs
     pbts: bin/pbts
   checksum: 4a6ce1964167e4c45c53fd8a312d7646415c777dd31b4ba346719947b88e61654912326101f927da387d6b6473ab52a7ea4f54d6f15d63b31130ce28e2e15070
-  languageName: node
-  linkType: hard
-
-"protobufjs@npm:~6.11.2":
-  version: 6.11.2
-  resolution: "protobufjs@npm:6.11.2"
-  dependencies:
-    "@protobufjs/aspromise": ^1.1.2
-    "@protobufjs/base64": ^1.1.2
-    "@protobufjs/codegen": ^2.0.4
-    "@protobufjs/eventemitter": ^1.1.0
-    "@protobufjs/fetch": ^1.1.0
-    "@protobufjs/float": ^1.0.2
-    "@protobufjs/inquire": ^1.1.0
-    "@protobufjs/path": ^1.1.2
-    "@protobufjs/pool": ^1.1.0
-    "@protobufjs/utf8": ^1.1.0
-    "@types/long": ^4.0.1
-    "@types/node": ">=13.7.0"
-    long: ^4.0.0
-  bin:
-    pbjs: bin/pbjs
-    pbts: bin/pbts
-  checksum: 80e9d9610c3eb66f9eae4e44a1ae30381cedb721b7d5f635d781fe4c507e2c77bb7c879addcd1dda79733d3ae589d9e66fd18d42baf99b35df7382a0f9920795
   languageName: node
   linkType: hard
 
@@ -6284,14 +6281,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regexpp@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "regexpp@npm:3.1.0"
-  checksum: 63bcb2c98d63274774c79bef256e03f716d25f1fa8427267d0302d1436a83fa0d905f4e8a172fdfa99fb4d84833df2fb3bf7da2a1a868f156e913174c32b1139
-  languageName: node
-  linkType: hard
-
-"regexpp@npm:^3.2.0":
+"regexpp@npm:^3.1.0, regexpp@npm:^3.2.0":
   version: 3.2.0
   resolution: "regexpp@npm:3.2.0"
   checksum: a78dc5c7158ad9ddcfe01aa9144f46e192ddbfa7b263895a70a5c6c73edd9ce85faf7c0430e59ac38839e1734e275b9c3de5c57ee3ab6edc0e0b1bdebefccef8
@@ -6572,14 +6562,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shiki@npm:^0.10.0":
-  version: 0.10.0
-  resolution: "shiki@npm:0.10.0"
+"shiki@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "shiki@npm:0.10.1"
   dependencies:
     jsonc-parser: ^3.0.0
     vscode-oniguruma: ^1.6.1
     vscode-textmate: 5.2.0
-  checksum: b72630a56c5e4384128a57443fc188ca8f6cf239c16defb6624b2aa500c0c953d41fb53e49f9d583cf093ddc522ff07e1b19fab8f0ae40a03304805c4fd5894b
+  checksum: fb746f3cb3de7e545e3b10a6cb658d3938f840e4ccc9a3c90ceb7e69a8f89dbb432171faac1e9f02a03f103684dad88ee5e54b5c4964fa6b579fca6e8e26424d
   languageName: node
   linkType: hard
 
@@ -6704,13 +6694,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-support@npm:^0.5.17, source-map-support@npm:^0.5.19, source-map-support@npm:~0.5.19":
-  version: 0.5.19
-  resolution: "source-map-support@npm:0.5.19"
+"source-map-support@npm:^0.5.17, source-map-support@npm:^0.5.19, source-map-support@npm:~0.5.20":
+  version: 0.5.21
+  resolution: "source-map-support@npm:0.5.21"
   dependencies:
     buffer-from: ^1.0.0
     source-map: ^0.6.0
-  checksum: c72802fdba9cb62b92baef18cc14cc4047608b77f0353e6c36dd993444149a466a2845332c5540d4a6630957254f0f68f4ef5a0120c33d2e83974c51a05afbac
+  checksum: 43e98d700d79af1d36f859bdb7318e601dfc918c7ba2e98456118ebc4c4872b327773e5a1df09b0524e9e5063bb18f0934538eace60cca2710d1fa687645d137
   languageName: node
   linkType: hard
 
@@ -6725,13 +6715,6 @@ __metadata:
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 59ce8640cf3f3124f64ac289012c2b8bd377c238e316fb323ea22fbfe83da07d81e000071d7242cad7a23cd91c7de98e4df8830ec3f133cb6133a5f6e9f67bc2
-  languageName: node
-  linkType: hard
-
-"source-map@npm:~0.7.2":
-  version: 0.7.3
-  resolution: "source-map@npm:0.7.3"
-  checksum: cd24efb3b8fa69b64bf28e3c1b1a500de77e84260c5b7f2b873f88284df17974157cc88d386ee9b6d081f08fdd8242f3fc05c953685a6ad81aad94c7393dedea
   languageName: node
   linkType: hard
 
@@ -7051,15 +7034,16 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.7.0":
-  version: 5.7.0
-  resolution: "terser@npm:5.7.0"
+  version: 5.14.2
+  resolution: "terser@npm:5.14.2"
   dependencies:
+    "@jridgewell/source-map": ^0.3.2
+    acorn: ^8.5.0
     commander: ^2.20.0
-    source-map: ~0.7.2
-    source-map-support: ~0.5.19
+    source-map-support: ~0.5.20
   bin:
     terser: bin/terser
-  checksum: 3abeb551865079b27e2890dbec866054967d1963fc80a81e5e14e414c43db88ff53a5e88844c145df11bed01b28040aa96afd82113c6d1a6ad28409b6cae4fde
+  checksum: cabb50a640d6c2cfb351e4f43dc7bf7436f649755bb83eb78b2cacda426d5e0979bd44e6f92d713f3ca0f0866e322739b9ced888ebbce6508ad872d08de74fcc
   languageName: node
   linkType: hard
 
@@ -7229,39 +7213,39 @@ __metadata:
   linkType: hard
 
 "typedoc@npm:^0.22":
-  version: 0.22.11
-  resolution: "typedoc@npm:0.22.11"
+  version: 0.22.18
+  resolution: "typedoc@npm:0.22.18"
   dependencies:
-    glob: ^7.2.0
+    glob: ^8.0.3
     lunr: ^2.3.9
-    marked: ^4.0.10
-    minimatch: ^3.0.4
-    shiki: ^0.10.0
+    marked: ^4.0.16
+    minimatch: ^5.1.0
+    shiki: ^0.10.1
   peerDependencies:
-    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x || 4.4.x || 4.5.x
+    typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x || 4.4.x || 4.5.x || 4.6.x || 4.7.x
   bin:
     typedoc: bin/typedoc
-  checksum: 7d29f4b771d3eadc612d0b35509ee88c153d7310b7adb57faf0740132765613d6ceceb94877148d674cfc8242ca3c2e22e3ae2060768b2d96842bf14659d1b1c
+  checksum: b813d8129682f6ed5a4e96bacaf019e4da1d2744ca89fef850d6bb4c034616567ce67e6a7f5cfc5f00aac573f0b45d44b1427aafa262ab88dce6b460cb9e744c
   languageName: node
   linkType: hard
 
-"typescript@npm:~4.4":
-  version: 4.4.4
-  resolution: "typescript@npm:4.4.4"
+"typescript@npm:~4.6":
+  version: 4.6.4
+  resolution: "typescript@npm:4.6.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 89ecb8436bb48ef5594d49289f5f89103071716b6e4844278f4fb3362856e31203e187a9c76d205c3f0b674d221a058fd28310dbcbcf5d95e9a57229bb5203f1
+  checksum: e7bfcc39cd4571a63a54e5ea21f16b8445268b9900bf55aee0e02ad981be576acc140eba24f1af5e3c1457767c96cea6d12861768fb386cf3ffb34013718631a
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.4#~builtin<compat/typescript>":
-  version: 4.4.4
-  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"
+"typescript@patch:typescript@~4.6#~builtin<compat/typescript>":
+  version: 4.6.4
+  resolution: "typescript@patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: bd629ad0da4a15d79aaad56baf3ee7d96f6a181760d430ae77f8c5325df7bffd9edee57544a3970e3651e8b796fe03a5838a7eb39c6d46cc3866c0b23d36a0dd
+  checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
   languageName: node
   linkType: hard
 

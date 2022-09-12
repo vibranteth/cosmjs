@@ -18,6 +18,7 @@ import {
   QueryConnectionChannelsResponse,
   QueryNextSequenceReceiveResponse,
   QueryPacketAcknowledgementResponse,
+  QueryPacketAcknowledgementsRequest,
   QueryPacketAcknowledgementsResponse,
   QueryPacketCommitmentResponse,
   QueryPacketCommitmentsResponse,
@@ -87,7 +88,7 @@ export interface IbcExtension {
       readonly packetCommitment: (
         portId: string,
         channelId: string,
-        sequence: Long,
+        sequence: number,
       ) => Promise<QueryPacketCommitmentResponse>;
       readonly packetCommitments: (
         portId: string,
@@ -261,11 +262,11 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             revisionNumber: Long.fromNumber(revisionNumber, true),
             revisionHeight: Long.fromNumber(revisionHeight, true),
           }),
-        packetCommitment: async (portId: string, channelId: string, sequence: Long) =>
+        packetCommitment: async (portId: string, channelId: string, sequence: number) =>
           channelQueryService.PacketCommitment({
             portId: portId,
             channelId: channelId,
-            sequence: sequence,
+            sequence: Long.fromNumber(sequence, true),
           }),
         packetCommitments: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
           channelQueryService.PacketCommitments({
@@ -303,22 +304,25 @@ export function setupIbcExtension(base: QueryClient): IbcExtension {
             channelId: channelId,
             sequence: Long.fromNumber(sequence, true),
           }),
-        packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) =>
-          channelQueryService.PacketAcknowledgements({
+        packetAcknowledgements: async (portId: string, channelId: string, paginationKey?: Uint8Array) => {
+          const request = QueryPacketAcknowledgementsRequest.fromPartial({
             portId: portId,
             channelId: channelId,
             pagination: createPagination(paginationKey),
-          }),
+          });
+          return channelQueryService.PacketAcknowledgements(request);
+        },
         allPacketAcknowledgements: async (portId: string, channelId: string) => {
           const acknowledgements = [];
           let response: QueryPacketAcknowledgementsResponse;
           let key: Uint8Array | undefined;
           do {
-            response = await channelQueryService.PacketAcknowledgements({
+            const request = QueryPacketAcknowledgementsRequest.fromPartial({
               channelId: channelId,
               portId: portId,
               pagination: createPagination(key),
             });
+            response = await channelQueryService.PacketAcknowledgements(request);
             acknowledgements.push(...response.acknowledgements);
             key = response.pagination?.nextKey;
           } while (key && key.length);

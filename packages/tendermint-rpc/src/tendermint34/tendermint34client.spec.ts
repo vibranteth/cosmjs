@@ -8,8 +8,8 @@ import { Stream } from "xstream";
 import { HttpClient, RpcClient, WebsocketClient } from "../rpcclients";
 import {
   buildKvTx,
-  chainIdMatcher,
   ExpectedValues,
+  nonNegativeIntegerMatcher,
   pendingWithoutTendermint,
   randomString,
   tendermintEnabled,
@@ -77,7 +77,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
       expect(response.hash.length).toEqual(32);
       // verify success
       expect(response.code).toBeFalsy();
-      expect(response.codeSpace).toBeFalsy();
+      expect(response.codespace).toBeFalsy();
 
       client.disconnect();
     });
@@ -108,23 +108,31 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
     client.disconnect();
   });
 
-  it("can query the state", async () => {
-    pendingWithoutTendermint();
-    const client = await Tendermint34Client.create(rpcFactory());
+  describe("abciQuery", () => {
+    it("can query the state", async () => {
+      pendingWithoutTendermint();
+      const client = await Tendermint34Client.create(rpcFactory());
 
-    const key = randomString();
-    const value = randomString();
-    await client.broadcastTxCommit({ tx: buildKvTx(key, value) });
+      const key = randomString();
+      const value = randomString();
+      await client.broadcastTxCommit({ tx: buildKvTx(key, value) });
 
-    const binKey = toAscii(key);
-    const binValue = toAscii(value);
-    const queryParams = { path: "/key", data: binKey, prove: true };
-    const response = await client.abciQuery(queryParams);
-    expect(response.key).toEqual(binKey);
-    expect(response.value).toEqual(binValue);
-    expect(response.code).toBeFalsy();
+      const binKey = toAscii(key);
+      const binValue = toAscii(value);
+      const queryParams = { path: "/key", data: binKey, prove: true };
+      const response = await client.abciQuery(queryParams);
+      expect(response.key).toEqual(binKey);
+      expect(response.value).toEqual(binValue);
+      expect(response.code).toEqual(0);
+      expect(response.codespace).toEqual("");
+      expect(response.index).toEqual(-1);
+      expect(response.proof).toBeUndefined();
+      expect(response.log).toEqual("exists");
+      expect(response.info).toEqual("");
+      expect(response.height).toMatch(nonNegativeIntegerMatcher);
 
-    client.disconnect();
+      client.disconnect();
+    });
   });
 
   it("can get a commit", async () => {
@@ -203,7 +211,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
         block: expected.blockVersion,
         app: expected.appVersion,
       });
-      expect(status.nodeInfo.network).toMatch(chainIdMatcher);
+      expect(status.nodeInfo.network).toMatch(expected.chainId);
       expect(status.nodeInfo.other.size).toBeGreaterThanOrEqual(2);
       expect(status.nodeInfo.other.get("tx_index")).toEqual("on");
 
@@ -391,7 +399,7 @@ function defaultTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValues)
             block: expected.blockVersion,
             app: expected.appVersion,
           },
-          chainId: jasmine.stringMatching(chainIdMatcher),
+          chainId: jasmine.stringMatching(expected.chainId),
         }),
       );
       expect(meta.numTxs).toBeInstanceOf(Number);
@@ -570,7 +578,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
       expect(stream).toBeTruthy();
       const subscription = stream.subscribe({
         next: (event) => {
-          expect(event.chainId).toMatch(chainIdMatcher);
+          expect(event.chainId).toMatch(expected.chainId);
           expect(event.height).toBeGreaterThan(0);
           // seems that tendermint just guarantees within the last second for timestamp
           expect(event.time.getTime()).toBeGreaterThan(testStart - 1000);
@@ -627,7 +635,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
     const stream = client.subscribeNewBlock();
     const subscription = stream.subscribe({
       next: (event) => {
-        expect(event.header.chainId).toMatch(chainIdMatcher);
+        expect(event.header.chainId).toMatch(expected.chainId);
         expect(event.header.height).toBeGreaterThan(0);
         // seems that tendermint just guarantees within the last second for timestamp
         expect(event.header.time.getTime()).toBeGreaterThan(testStart - 1000);
@@ -807,7 +815,7 @@ function websocketTestSuite(rpcFactory: () => RpcClient, expected: ExpectedValue
 }
 
 describe("Tendermint34Client", () => {
-  const { url, expected } = tendermintInstances[0];
+  const { url, expected } = tendermintInstances[34];
 
   it("can connect to a given url", async () => {
     pendingWithoutTendermint();

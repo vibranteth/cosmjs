@@ -1,6 +1,7 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
 export { createAuthzAminoConverters } from "./authz/aminomessages";
 export { authzTypes } from "./authz/messages";
+export { setupAuthzExtension } from "./authz/queries";
 export {
   AminoMsgMultiSend,
   AminoMsgSend,
@@ -37,25 +38,30 @@ export {
   createEvidenceAminoConverters,
   isAminoMsgSubmitEvidence,
 } from "./evidence/aminomessages";
-export { createFreegrantAminoConverters } from "./feegrant/aminomessages";
+export { createFeegrantAminoConverters } from "./feegrant/aminomessages";
 export { feegrantTypes } from "./feegrant/messages";
+export { FeegrantExtension, setupFeegrantExtension } from "./feegrant/queries";
 export {
   AminoMsgDeposit,
   AminoMsgSubmitProposal,
   AminoMsgVote,
+  AminoMsgVoteWeighted,
   createGovAminoConverters,
   isAminoMsgDeposit,
   isAminoMsgSubmitProposal,
   isAminoMsgVote,
+  isAminoMsgVoteWeighted,
 } from "./gov/aminomessages";
 export {
   govTypes,
   isMsgDepositEncodeObject,
   isMsgSubmitProposalEncodeObject,
   isMsgVoteEncodeObject,
+  isMsgVoteWeightedEncodeObject,
   MsgDepositEncodeObject,
   MsgSubmitProposalEncodeObject,
   MsgVoteEncodeObject,
+  MsgVoteWeightedEncodeObject,
 } from "./gov/messages";
 export { GovExtension, GovParamsType, GovProposalId, setupGovExtension } from "./gov/queries";
 export { AminoMsgTransfer, createIbcAminoConverters, isAminoMsgTransfer } from "./ibc/aminomessages";
@@ -86,5 +92,9 @@ export {
 } from "./staking/messages";
 export { setupStakingExtension, StakingExtension } from "./staking/queries";
 export { setupTxExtension, TxExtension } from "./tx/queries";
-export { createVestingAminoConverters } from "./vesting/aminomessages";
+export {
+  AminoMsgCreateVestingAccount,
+  createVestingAminoConverters,
+  isAminoMsgCreateVestingAccount,
+} from "./vesting/aminomessages";
 export { vestingTypes } from "./vesting/messages";
