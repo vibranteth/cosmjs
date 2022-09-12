@@ -63,6 +63,7 @@ export {
   MsgVoteEncodeObject,
   MsgWithdrawDelegatorRewardEncodeObject,
   setupAuthExtension,
+  setupAuthzExtension,
   setupBankExtension,
   setupDistributionExtension,
   setupGovExtension,

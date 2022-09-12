@@ -1,6 +1,15 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
 export { createAuthzAminoConverters } from "./authz/aminomessages";
-export { authzTypes } from "./authz/messages";
+export {
+  authzTypes,
+  isMsgExecEncodeObject,
+  isMsgGrantEncodeObject,
+  isMsgRevokeEncodeObject,
+  MsgExecEncodeObject,
+  MsgGrantEncodeObject,
+  MsgRevokeEncodeObject,
+} from "./authz/messages";
+export { AuthzExtension, setupAuthzExtension } from "./authz/queries";
 export {
   AminoMsgMultiSend,
   AminoMsgSend,

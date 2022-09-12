@@ -4,6 +4,13 @@ import { MsgMultiSend, MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 
 // eslint-disable-next-line import/no-cycle
 import { AminoConverters } from "../../aminotypes";
+import { AminoAuthorization } from "../authz/aminomessages";
+
+export interface SendAuthorization extends AminoAuthorization {
+  "@type": "/cosmos.bank.v1beta1.SendAuthorization";
+  spend_limit: Coin[];
+  allow_list: string[];
+}
 
 /** A high level transaction of the coin module */
 export interface AminoMsgSend extends AminoMsg {
