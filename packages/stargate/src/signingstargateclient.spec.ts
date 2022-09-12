@@ -18,8 +18,8 @@ import { BasicAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/feegrant";
 import { MsgGrantAllowance } from "cosmjs-types/cosmos/feegrant/v1beta1/tx";
 import { DeepPartial, MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 import { AuthInfo, TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
-import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 import { Any } from "cosmjs-types/google/protobuf/any";
+import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 import Long from "long";
 import protobuf from "protobufjs/minimal";
 
@@ -27,12 +27,13 @@ import { AminoTypes } from "./aminotypes";
 import {
   AminoMsgDelegate,
   MsgDelegateEncodeObject,
-  MsgSendEncodeObject,
   MsgExecEncodeObject,
   MsgGrantEncodeObject,
   MsgRevokeEncodeObject,
+  MsgSendEncodeObject,
   setupFeegrantExtension,
 } from "./modules";
+import { QueryClient } from "./queryclient";
 import { PrivateSigningStargateClient, SigningStargateClient } from "./signingstargateclient";
 import { assertIsDeliverTxFailure, assertIsDeliverTxSuccess, isDeliverTxFailure } from "./stargateclient";
 import {
