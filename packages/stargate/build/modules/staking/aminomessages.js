@@ -1,10 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createStakingAminoConverters = exports.isAminoMsgUndelegate = exports.isAminoMsgBeginRedelegate = exports.isAminoMsgDelegate = exports.isAminoMsgEditValidator = exports.isAminoMsgCreateValidator = void 0;
+exports.createStakingAminoConverters = exports.isAminoMsgUndelegate = exports.isAminoMsgBeginRedelegate = exports.isAminoMsgDelegate = exports.isAminoMsgEditValidator = exports.isAminoMsgCreateValidator = exports.AuthorizationType = void 0;
 /* eslint-disable @typescript-eslint/naming-convention */
 const amino_1 = require("@cosmjs/amino");
 const encoding_1 = require("@cosmjs/encoding");
 const utils_1 = require("@cosmjs/utils");
+var AuthorizationType;
+(function (AuthorizationType) {
+    AuthorizationType["AUTHORIZATION_TYPE_UNSPECIFIED"] = "AUTHORIZATION_TYPE_UNSPECIFIED";
+    AuthorizationType["AUTHORIZATION_TYPE_DELEGATE"] = "AUTHORIZATION_TYPE_DELEGATE";
+    AuthorizationType["AUTHORIZATION_TYPE_UNDELEGATE"] = "AUTHORIZATION_TYPE_UNDELEGATE";
+    AuthorizationType["AUTHORIZATION_TYPE_REDELEGATE"] = "AUTHORIZATION_TYPE_REDELEGATE";
+})(AuthorizationType = exports.AuthorizationType || (exports.AuthorizationType = {}));
 function isAminoMsgCreateValidator(msg) {
     return msg.type === "cosmos-sdk/MsgCreateValidator";
 }

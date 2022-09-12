@@ -1,25 +1,31 @@
-import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 import { AminoConverters } from "../../aminotypes";
-export interface AminoMsgGrant {
+export interface AminoAny {
+    readonly "@type": string;
+    readonly [x: string | number | symbol]: unknown;
+}
+export interface AminoAuthorization extends AminoAny {
+    readonly "@type": string;
+}
+export interface AminoGenericAuthorization extends AminoAuthorization {
+    readonly "@type": string;
+    readonly msg: string;
+}
+export interface AminoGrant {
+    readonly authorization?: AminoAuthorization;
+    readonly expiration?: string;
+}
+export interface AminoMsgGrant extends AminoAny {
     readonly granter: string;
     readonly grantee: string;
-    readonly grant?: {
-        readonly authorization?: GenericAuthorization;
-        readonly expiration?: string;
-    };
+    readonly grant?: AminoGrant;
 }
-export interface AminoMsgExec {
+export interface AminoMsgExec extends AminoAny {
     readonly grantee: string;
     readonly msgs: readonly any[];
 }
-export interface AminoMsgRevoke {
+export interface AminoMsgRevoke extends AminoAny {
     readonly granter: string;
     readonly grantee: string;
     readonly msg_type_url: string;
-}
-export interface AminoAuthorization {
-}
-export interface AminoGenericAuthorization extends AminoAuthorization {
-    readonly msg: string;
 }
 export declare function createAuthzAminoConverters(): AminoConverters;

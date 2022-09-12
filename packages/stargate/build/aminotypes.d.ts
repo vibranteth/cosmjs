@@ -1,9 +1,8 @@
-import { AminoMsg } from "@cosmjs/amino";
-import { EncodeObject, Registry } from "@cosmjs/proto-signing";
+import { EncodeObject } from "@cosmjs/proto-signing";
 export interface AminoConverter {
     readonly aminoType: string;
-    readonly toAmino: (value: any, types: AminoConverters, registry: Registry) => any;
-    readonly fromAmino: (value: any) => any;
+    readonly toAmino: (value: any, aminoTypes: AminoTypes) => any;
+    readonly fromAmino: (value: any, aminoTypes: AminoTypes) => any;
     readonly requiresCustomAminoType?: boolean;
 }
 /** A map from protobuf type URL to the AminoConverter implementation if supported on chain */
@@ -15,8 +14,7 @@ export declare function tryGetConverter(typeUrl: string, register: AminoConverte
  */
 export declare class AminoTypes {
     private readonly register;
-    private readonly registry;
-    constructor(types: AminoConverters, registry?: Registry);
+    constructor(types: AminoConverters);
     toAmino({ typeUrl, value }: EncodeObject): any;
-    fromAmino({ type, value }: AminoMsg): EncodeObject;
+    fromAmino(amino: any): EncodeObject;
 }

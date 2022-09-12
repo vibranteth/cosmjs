@@ -1,16 +1,29 @@
-import { Grant, GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
-import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
+/* eslint-disable @typescript-eslint/naming-convention */
+import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
+import { MsgGrant } from "cosmjs-types/cosmos/authz/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
 import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 import Long from "long";
-import { AminoConverters, tryGetConverter } from "../../aminotypes";
-import { EncodeObject, Registry } from "@cosmjs/proto-signing";
-import { fromBase64 } from "@cosmjs/encoding";
 
-function toTimestamp(date: Date): Timestamp {
-  const seconds = Long.fromNumber(date.getTime() / 1_000);
-  const nanos = (date.getTime() % 1_000) * 1_000_000;
-  return { seconds, nanos };
+import { AminoConverters, AminoTypes } from "../../aminotypes";
+
+export interface AminoAny {
+  readonly "@type": string;
+  readonly [x: string | number | symbol]: unknown;
+}
+
+export interface AminoAuthorization extends AminoAny {
+  readonly "@type": string;
+}
+
+export interface AminoGenericAuthorization extends AminoAuthorization {
+  readonly "@type": string;
+  readonly msg: string;
+}
+
+export interface AminoGrant {
+  readonly authorization?: AminoAuthorization;
+  readonly expiration?: string;
 }
 
 function fromTimestamp(t: Timestamp): Date {
@@ -19,117 +32,77 @@ function fromTimestamp(t: Timestamp): Date {
   return new Date(millis);
 }
 
-export interface AminoMsgGrant {
-  readonly granter: string;
-  readonly grantee: string;
-  readonly grant?: {
-    readonly authorization?: GenericAuthorization,
-    readonly expiration?: string;
-  };
+function toTimestamp(date: Date): Timestamp {
+  const seconds = Long.fromNumber(date.getTime() / 1_000);
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
 }
 
-export interface AminoMsgExec {
+export interface AminoMsgGrant extends AminoAny {
+  // readonly "@type": string;
+  readonly granter: string;
+  readonly grantee: string;
+  readonly grant?: AminoGrant;
+}
+
+export interface AminoMsgExec extends AminoAny {
+  // readonly "@type": string;
   readonly grantee: string;
   readonly msgs: readonly any[];
 }
 
-export interface AminoMsgRevoke {
+export interface AminoMsgRevoke extends AminoAny {
+  // readonly "@type": string;
   readonly granter: string;
   readonly grantee: string;
   readonly msg_type_url: string;
 }
 
-export interface AminoAuthorization {
-}
-
-export interface AminoGenericAuthorization extends AminoAuthorization {
-  readonly msg: string;
-}
-
-function toAminoAuthorization(authorization: Any): AminoGenericAuthorization {
-  const { typeUrl, value } = authorization;
-
-  switch (typeUrl) {
-    case "/cosmos.authz.v1beta1.GenericAuthorization":
-      return GenericAuthorization.decode(value);
-    default:
-      throw new Error("Grant authorization types other than GenericAuthorization are not supported at this time.")
-  }
-}
-
-function fromAminoAuthorization(authorization: any): Any {
-  if (!authorization.msgs) {
-    throw new Error("Grant authorization types other than GenericAuthorization are not supported at this time.")
-  }
-
-  return {
-    typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
-    value: authorization.msgs
-  }
-}
-
 export function createAuthzAminoConverters(): AminoConverters {
   return {
+    "/cosmos.authz.v1beta1.GenericAuthorization": {
+      requiresCustomAminoType: true,
+      aminoType: "cosmos-sdk/GenericAuthorization",
+      toAmino(bytes: Any["value"]): AminoGenericAuthorization {
+        return {
+          "@type": "/cosmos.authz.v1beta1.GenericAuthorization",
+          msg: Any.decode(bytes).typeUrl,
+        };
+      },
+      fromAmino({ msg }: AminoGenericAuthorization): Any["value"] {
+        return GenericAuthorization.encode(
+          GenericAuthorization.fromPartial({
+            msg: msg,
+          }),
+        ).finish();
+      },
+    },
     "/cosmos.authz.v1beta1.MsgGrant": {
       requiresCustomAminoType: true,
       aminoType: "cosmos-sdk/MsgGrant",
-      toAmino: ({ grant, granter, grantee }: MsgGrant): AminoMsgGrant => {
+      toAmino({ granter, grantee, grant }: MsgGrant, aminoTypes: AminoTypes): AminoMsgGrant {
         return {
-          grant: (!grant) ? undefined : {
-            authorization: (grant.authorization) ? toAminoAuthorization(grant.authorization) : undefined,
-            expiration: (grant.expiration) ? fromTimestamp(grant.expiration).toISOString() : undefined
-          },
-          granter: granter,
-          grantee: grantee
-        }
-      },
-      fromAmino: ({ grant, granter, grantee }: AminoMsgGrant): MsgGrant => {
-        return {
-          grant: (!grant) ? undefined : Grant.fromPartial({
-            authorization: (grant.authorization) ? fromAminoAuthorization(grant.authorization) : undefined,
-            expiration: (grant.expiration) ? toTimestamp(new Date(grant.expiration)) : undefined
-          }),
-          granter: granter,
-          grantee: grantee
-        }
-      },
-    },
-    "/cosmos.authz.v1beta1.MsgExec": {
-      requiresCustomAminoType: true,
-      aminoType: "cosmos-sdk/MsgExec",
-      toAmino: ({ grantee, msgs }: MsgExec, register: AminoConverters, registry: Registry): AminoMsgExec => {
-        return {
-          msgs: Array.isArray(msgs) ? msgs.map((msg: Any) => {
-            let encodeObject = Any.toJSON(msg) as EncodeObject;
-            let generatedType = registry.lookupType(encodeObject.typeUrl)?.decode(fromBase64(encodeObject.value));
-            let converter = tryGetConverter(encodeObject.typeUrl, register);
-            return converter.toAmino(generatedType, register, registry);
-          }) : [],
-          grantee: grantee,
-        };
-      },
-      fromAmino: ({ msgs, grantee }: AminoMsgExec): MsgExec => {
-        return {
-          msgs: Array.isArray(msgs) ? msgs.map((e: any) => Any.fromJSON(e)) : [],
-          grantee: grantee
-        };
-      },
-    },
-    "/cosmos.authz.v1beta1.MsgRevoke": {
-      requiresCustomAminoType: true,
-      aminoType: "cosmos-sdk/MsgRevoke",
-      toAmino: ({ msgTypeUrl, granter, grantee }: MsgRevoke): AminoMsgRevoke => {
-        return {
-          msg_type_url: msgTypeUrl,
+          "@type": "/cosmos.authz.v1beta1.MsgGrant",
           granter: granter,
           grantee: grantee,
+          grant: grant
+            ? {
+                authorization: grant.authorization ? aminoTypes.toAmino(grant.authorization) : undefined,
+                expiration: grant.expiration ? fromTimestamp(grant.expiration).toISOString() : undefined,
+              }
+            : undefined,
         };
       },
-      fromAmino: ({ msg_type_url, granter, grantee }: AminoMsgRevoke): MsgRevoke => {
+      fromAmino({ granter, grantee, grant }: AminoMsgGrant, aminoTypes: AminoTypes): MsgGrant {
         return {
-          msgTypeUrl: msg_type_url,
           granter: granter,
           grantee: grantee,
+          grant: grant
+            ? {
+                authorization: grant.authorization ? aminoTypes.fromAmino(grant.authorization) : undefined,
+                expiration: grant.expiration ? toTimestamp(new Date(grant.expiration)) : undefined,
+              }
+            : undefined,
         };
       },
     },

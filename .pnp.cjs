@@ -945,7 +945,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "caniuse-lite",\
-        "npm:1.0.30001393"\
+        "npm:1.0.30001396"\
       ],\
       [\
         "chalk",\
@@ -1149,7 +1149,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "electron-to-chromium",\
-        "npm:1.4.245"\
+        "npm:1.4.247"\
       ],\
       [\
         "elliptic",\
@@ -1329,7 +1329,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ],\
       [\
         "fast-glob",\
-        "npm:3.2.11"\
+        "npm:3.2.12"\
       ],\
       [\
         "fast-json-stable-stringify",\
@@ -6498,8 +6498,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/browserslist-npm-4.21.3-7dabe86a57-ff512a7bcc.zip/node_modules/browserslist/",\
           "packageDependencies": [\
             ["browserslist", "npm:4.21.3"],\
-            ["caniuse-lite", "npm:1.0.30001393"],\
-            ["electron-to-chromium", "npm:1.4.245"],\
+            ["caniuse-lite", "npm:1.0.30001396"],\
+            ["electron-to-chromium", "npm:1.4.247"],\
             ["node-releases", "npm:2.0.6"],\
             ["update-browserslist-db", "virtual:7dabe86a57e66f38602a3318a9a679c09cef5315077ee4afa3dbf7e16ac6eadfd7834360e07fea78c56290801aa035a0803a3e03041c77287c222df384f2a179#npm:1.0.7"]\
           ],\
@@ -6625,10 +6625,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["caniuse-lite", [\
-        ["npm:1.0.30001393", {\
-          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001393-fabe41ad77-72b7cd81c5.zip/node_modules/caniuse-lite/",\
+        ["npm:1.0.30001396", {\
+          "packageLocation": "./.yarn/cache/caniuse-lite-npm-1.0.30001396-a21640b37c-089a254629.zip/node_modules/caniuse-lite/",\
           "packageDependencies": [\
-            ["caniuse-lite", "npm:1.0.30001393"]\
+            ["caniuse-lite", "npm:1.0.30001396"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7268,10 +7268,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["electron-to-chromium", [\
-        ["npm:1.4.245", {\
-          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.245-ea57dc9b51-fcb7bb3e42.zip/node_modules/electron-to-chromium/",\
+        ["npm:1.4.247", {\
+          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.4.247-096b06aa2d-cbe17a6164.zip/node_modules/electron-to-chromium/",\
           "packageDependencies": [\
-            ["electron-to-chromium", "npm:1.4.245"]\
+            ["electron-to-chromium", "npm:1.4.247"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7929,10 +7929,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["fast-glob", [\
-        ["npm:3.2.11", {\
-          "packageLocation": "./.yarn/cache/fast-glob-npm-3.2.11-bc01135fef-f473105324.zip/node_modules/fast-glob/",\
+        ["npm:3.2.12", {\
+          "packageLocation": "./.yarn/cache/fast-glob-npm-3.2.12-162763bbae-0b1990f6ce.zip/node_modules/fast-glob/",\
           "packageDependencies": [\
-            ["fast-glob", "npm:3.2.11"],\
+            ["fast-glob", "npm:3.2.12"],\
             ["@nodelib/fs.stat", "npm:2.0.5"],\
             ["@nodelib/fs.walk", "npm:1.2.8"],\
             ["glob-parent", "npm:5.1.2"],\
@@ -8379,7 +8379,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["globby", "npm:11.1.0"],\
             ["array-union", "npm:2.1.0"],\
             ["dir-glob", "npm:3.0.1"],\
-            ["fast-glob", "npm:3.2.11"],\
+            ["fast-glob", "npm:3.2.12"],\
             ["ignore", "npm:5.2.0"],\
             ["merge2", "npm:1.4.1"],\
             ["slash", "npm:3.0.0"]\

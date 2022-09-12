@@ -1,5 +1,20 @@
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { AminoConverter } from "../..";
+import { AminoAuthorization } from "../authz/aminomessages";
+export declare enum AuthorizationType {
+    AUTHORIZATION_TYPE_UNSPECIFIED = "AUTHORIZATION_TYPE_UNSPECIFIED",
+    AUTHORIZATION_TYPE_DELEGATE = "AUTHORIZATION_TYPE_DELEGATE",
+    AUTHORIZATION_TYPE_UNDELEGATE = "AUTHORIZATION_TYPE_UNDELEGATE",
+    AUTHORIZATION_TYPE_REDELEGATE = "AUTHORIZATION_TYPE_REDELEGATE"
+}
+export interface StakeAuthorization extends AminoAuthorization {
+    "@type": "/cosmos.staking.v1beta1.StakeAuthorization";
+    max_tokens: Coin[];
+    deny_list: {
+        address: string[];
+    };
+    authorization_type: AuthorizationType;
+}
 /** The initial commission rates to be used for creating a validator */
 interface CommissionRates {
     readonly rate: string;

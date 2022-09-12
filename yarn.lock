@@ -2694,9 +2694,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001370":
-  version: 1.0.30001393
-  resolution: "caniuse-lite@npm:1.0.30001393"
-  checksum: 72b7cd81c51f41965f2fbdbb20729d71f2bd5e376d9b4effa22616dd2707640b8676862e8db3db83b76c3bcf2aaefc9ebd5991a10eeb483b460322de5548b98e
+  version: 1.0.30001396
+  resolution: "caniuse-lite@npm:1.0.30001396"
+  checksum: 089a254629d07fc5fc32a7d5c3f06eac967940bf99cca3e22f374eee4aac6e0b07b1f9292374c0213ab44784e2ede4c40cfed6039f7b4bdb358cefc425730983
   languageName: node
   linkType: hard
 
@@ -3230,9 +3230,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.202":
-  version: 1.4.245
-  resolution: "electron-to-chromium@npm:1.4.245"
-  checksum: fcb7bb3e42b63cfc72f8c68a2d49d6e3646a4143b05bf1eedc2cda82ba89982138b5b9a2e3fe1bcd9c480d8937bc5b0cf377f80e63a8b5ed3904d2b614cbf848
+  version: 1.4.247
+  resolution: "electron-to-chromium@npm:1.4.247"
+  checksum: cbe17a6164f5baceb91b09d7d0f09b3d2ce1f0fc3a3c2494622694cb518aa5192cf490aac597ee6dc4cbfb004109d0a214b465c9047e53130a89282aa14b752e
   languageName: node
   linkType: hard
 
@@ -3741,15 +3741,15 @@ __metadata:
   linkType: hard
 
 "fast-glob@npm:^3.2.9":
-  version: 3.2.11
-  resolution: "fast-glob@npm:3.2.11"
+  version: 3.2.12
+  resolution: "fast-glob@npm:3.2.12"
   dependencies:
     "@nodelib/fs.stat": ^2.0.2
     "@nodelib/fs.walk": ^1.2.3
     glob-parent: ^5.1.2
     merge2: ^1.3.0
     micromatch: ^4.0.4
-  checksum: f473105324a7780a20c06de842e15ddbb41d3cb7e71d1e4fe6e8373204f22245d54f5ab9e2061e6a1c613047345954d29b022e0e76f5c28b1df9858179a0e6d7
+  checksum: 0b1990f6ce831c7e28c4d505edcdaad8e27e88ab9fa65eedadb730438cfc7cde4910d6c975d6b7b8dc8a73da4773702ebcfcd6e3518e73938bb1383badfe01c2
   languageName: node
   linkType: hard
 

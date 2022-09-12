@@ -1,6 +1,7 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
-export { authzTypes } from "./authz/messages";
-export { AminoMsgGrant, AminoMsgExec, AminoMsgRevoke, createAuthzAminoConverters } from "./authz/aminomessages";
+export { createAuthzAminoConverters } from "./authz/aminomessages";
+export { authzTypes, isMsgExecEncodeObject, isMsgGrantEncodeObject, isMsgRevokeEncodeObject, MsgExecEncodeObject, MsgGrantEncodeObject, MsgRevokeEncodeObject, } from "./authz/messages";
+export { AuthzExtension, setupAuthzExtension } from "./authz/queries";
 export { AminoMsgMultiSend, AminoMsgSend, createBankAminoConverters, isAminoMsgMultiSend, isAminoMsgSend, } from "./bank/aminomessages";
 export { bankTypes, isMsgSendEncodeObject, MsgSendEncodeObject } from "./bank/messages";
 export { BankExtension, setupBankExtension } from "./bank/queries";

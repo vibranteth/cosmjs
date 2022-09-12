@@ -1,5 +1,11 @@
 import { AminoMsg, Coin } from "@cosmjs/amino";
 import { AminoConverters } from "../../aminotypes";
+import { AminoAuthorization } from "../authz/aminomessages";
+export interface SendAuthorization extends AminoAuthorization {
+    "@type": "/cosmos.bank.v1beta1.SendAuthorization";
+    spend_limit: Coin[];
+    allow_list: string[];
+}
 /** A high level transaction of the coin module */
 export interface AminoMsgSend extends AminoMsg {
     readonly type: "cosmos-sdk/MsgSend";
