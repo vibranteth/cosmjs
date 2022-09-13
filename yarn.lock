@@ -1554,25 +1554,25 @@ __metadata:
   linkType: hard
 
 "@types/express-serve-static-core@npm:^4.17.18":
-  version: 4.17.30
-  resolution: "@types/express-serve-static-core@npm:4.17.30"
+  version: 4.17.31
+  resolution: "@types/express-serve-static-core@npm:4.17.31"
   dependencies:
     "@types/node": "*"
     "@types/qs": "*"
     "@types/range-parser": "*"
-  checksum: c40d9027884ab9e97fa29d9d41d1b75a5966109312e26594cf03c61b278b5bf8e095f53589e47899b34a2e224291a44043617695c3e8bd22284f988e48582ee6
+  checksum: 009bfbe1070837454a1056aa710d0390ee5fb8c05dfe5a1691cc3e2ca88dc256f80e1ca27cb51a978681631d2f6431bfc9ec352ea46dd0c6eb183d0170bde5df
   languageName: node
   linkType: hard
 
 "@types/express@npm:*":
-  version: 4.17.13
-  resolution: "@types/express@npm:4.17.13"
+  version: 4.17.14
+  resolution: "@types/express@npm:4.17.14"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^4.17.18
     "@types/qs": "*"
     "@types/serve-static": "*"
-  checksum: 12a2a0e6c4b993fc0854bec665906788aea0d8ee4392389d7a98a5de1eefdd33c9e1e40a91f3afd274011119c506f7b4126acb97fae62ae20b654974d44cba12
+  checksum: 15c1af46d02de834e4a225eccaa9d85c0370fdbb3ed4e1bc2d323d24872309961542b993ae236335aeb3e278630224a6ea002078d39e651d78a3b0356b1eaa79
   languageName: node
   linkType: hard
 
@@ -3862,12 +3862,12 @@ __metadata:
   linkType: hard
 
 "follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0":
-  version: 1.15.1
-  resolution: "follow-redirects@npm:1.15.1"
+  version: 1.15.2
+  resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 6aa4e3e3cdfa3b9314801a1cd192ba756a53479d9d8cca65bf4db3a3e8834e62139245cd2f9566147c8dfe2efff1700d3e6aefd103de4004a7b99985e71dd533
+  checksum: faa66059b66358ba65c234c2f2a37fcec029dc22775f35d9ad6abac56003268baf41e55f9ee645957b32c7d9f62baf1f0b906e68267276f54ec4b4c597c2b190
   languageName: node
   linkType: hard
 
@@ -7171,8 +7171,8 @@ __metadata:
   linkType: hard
 
 "update-browserslist-db@npm:^1.0.5":
-  version: 1.0.8
-  resolution: "update-browserslist-db@npm:1.0.8"
+  version: 1.0.9
+  resolution: "update-browserslist-db@npm:1.0.9"
   dependencies:
     escalade: ^3.1.1
     picocolors: ^1.0.0
@@ -7180,7 +7180,7 @@ __metadata:
     browserslist: ">= 4.21.0"
   bin:
     browserslist-lint: cli.js
-  checksum: 6d799b48a696a61277dc84b95d63d44d4504372dfba58458d2198af0dbe7b79c801f54627a0ac22243297ead3a2f6407318fa276a5afb36b2f6e7fcf96e0040a
+  checksum: f625899b236f6a4d7f62b56be1b8da230c5563d1fef84d3ef148f2e1a3f11a5a4b3be4fd7e3703e51274c116194017775b10afb4de09eb2c0d09d36b90f1f578
   languageName: node
   linkType: hard
 
