@@ -166,6 +166,9 @@ class SigningStargateClient extends stargateclient_1.StargateClient {
         }
         const txRaw = await this.sign(signerAddress, messages, usedFee, memo);
         const txBytes = tx_3.TxRaw.encode(txRaw).finish();
+        console.log("txRaw unencoded and stringified ", JSON.stringify(tx_3.TxRaw.toJSON(txRaw)));
+        console.log("txRaw decoded by CosmJS: ", JSON.stringify((0, proto_signing_1.decodeTxRaw)(txBytes)));
+        console.log("txRaw encoded (hex format)", (0, encoding_1.toHex)(txBytes));
         return this.broadcastTx(txBytes, this.broadcastTimeoutMs, this.broadcastPollIntervalMs);
     }
     /**
@@ -207,6 +210,7 @@ class SigningStargateClient extends stargateclient_1.StargateClient {
         const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
         const signDoc = (0, amino_1.makeSignDoc)(msgs, fee, chainId, memo, accountNumber, sequence);
         const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+        console.log("signed StdDoc: ", JSON.stringify(signed));
         const signedTxBody = {
             messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
             memo: signed.memo,
@@ -219,11 +223,43 @@ class SigningStargateClient extends stargateclient_1.StargateClient {
         const signedGasLimit = math_1.Int53.fromString(signed.fee.gas).toNumber();
         const signedSequence = math_1.Int53.fromString(signed.sequence).toNumber();
         const signedAuthInfoBytes = (0, proto_signing_1.makeAuthInfoBytes)([{ pubkey, sequence: signedSequence }], signed.fee.amount, signedGasLimit, signed.fee.granter, signed.fee.payer, signMode);
-        return tx_3.TxRaw.fromPartial({
+        const txRaw = tx_3.TxRaw.fromPartial({
             bodyBytes: signedTxBodyBytes,
             authInfoBytes: signedAuthInfoBytes,
             signatures: [(0, encoding_1.fromBase64)(signature.signature)],
         });
+        return txRaw;
+    }
+    async signAmino2(signerAddress, messages, fee, memo, { accountNumber, sequence, chainId }) {
+        (0, utils_1.assert)(!(0, proto_signing_1.isOfflineDirectSigner)(this.signer));
+        const accountFromSigner = (await this.signer.getAccounts()).find((account) => account.address === signerAddress);
+        if (!accountFromSigner) {
+            throw new Error("Failed to retrieve account from signer");
+        }
+        const pubkey = (0, proto_signing_1.encodePubkey)((0, amino_1.encodeSecp256k1Pubkey)(accountFromSigner.pubkey));
+        const signMode = signing_1.SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
+        const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
+        const signDoc = (0, amino_1.makeSignDoc)(msgs, fee, chainId, memo, accountNumber, sequence);
+        const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+        console.log("signed StdDoc: ", JSON.stringify(signed));
+        const signedTxBody = {
+            messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
+            memo: signed.memo,
+        };
+        const signedTxBodyEncodeObject = {
+            typeUrl: "/cosmos.tx.v1beta1.TxBody",
+            value: signedTxBody,
+        };
+        const signedTxBodyBytes = this.registry.encode(signedTxBodyEncodeObject);
+        const signedGasLimit = math_1.Int53.fromString(signed.fee.gas).toNumber();
+        const signedSequence = math_1.Int53.fromString(signed.sequence).toNumber();
+        const signedAuthInfoBytes = (0, proto_signing_1.makeAuthInfoBytes)([{ pubkey, sequence: signedSequence }], signed.fee.amount, signedGasLimit, signed.fee.granter, signed.fee.payer, signMode);
+        const txRaw = tx_3.TxRaw.fromPartial({
+            bodyBytes: signedTxBodyBytes,
+            authInfoBytes: signedAuthInfoBytes,
+            signatures: [(0, encoding_1.fromBase64)(signature.signature)],
+        });
+        return txRaw;
     }
     async signDirect(signerAddress, messages, fee, memo, { accountNumber, sequence, chainId }) {
         (0, utils_1.assert)((0, proto_signing_1.isOfflineDirectSigner)(this.signer));

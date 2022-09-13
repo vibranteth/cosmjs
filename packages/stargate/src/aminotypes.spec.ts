@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { coin } from "@cosmjs/proto-signing";
 import { MsgDelegate } from "cosmjs-types/cosmos/staking/v1beta1/tx";
 

@@ -96,6 +96,39 @@ describe("encoding", () => {
       });
     });
 
+    it("works with any", () => {
+      const chainId = "testspace-12";
+      const msg1: any = {
+        "@type": "/cosmos.staking.v1beta1.MsgDelegate",
+        delegator_address: testAddress,
+        validator_address: testValidatorAddress,
+        amount: { amount: "1234", denom: "ustake" },
+      };
+      const msg2: any = {
+        "@type": "/cosmos.bank.v1beta1.MsgSend",
+        from_address: testAddress,
+        to_address: makeRandomAddress(),
+        amount: [{ amount: "1234567", denom: "ucosm" }],
+      };
+      const fee = {
+        amount: [{ amount: "2000", denom: "ucosm" }],
+        gas: "180000", // 180k
+      };
+      const memo = "Use your power wisely";
+      const accountNumber = 15;
+      const sequence = 16;
+
+      const signDoc = makeSignDoc([msg1, msg2], fee, chainId, memo, accountNumber, sequence);
+      expect(signDoc).toEqual({
+        msgs: [msg1, msg2],
+        fee: fee,
+        chain_id: chainId,
+        account_number: accountNumber.toString(),
+        sequence: sequence.toString(),
+        memo: memo,
+      });
+    });
+
     it("works with undefined memo", () => {
       const chainId = "testspace-12";
       const msg1: AminoMsg = {

@@ -130,7 +130,48 @@ describe("LedgerSigner", () => {
 
         const [firstAccount] = await signer.getAccounts();
 
-        const msgs: readonly AminoMsg[] = [
+        const msgs: readonly any[] = [
+          {
+            type: "cosmos-sdk/MsgSend",
+            value: {
+              amount: coins(1234567, "ucosm"),
+              from_address: firstAccount.address,
+              to_address: defaultLedgerAddress,
+            },
+          },
+        ];
+        const signDoc = makeSignDoc(
+          msgs,
+          defaultFee,
+          defaultChainId,
+          defaultMemo,
+          defaultAccountNumber,
+          defaultSequence,
+        );
+        const { signed, signature } = await signer.signAmino(firstAccount.address, signDoc);
+        expect(signed).toEqual(signDoc);
+        const valid = await Secp256k1.verifySignature(
+          Secp256k1Signature.fromFixedLength(fromBase64(signature.signature)),
+          sha256(serializeSignDoc(signed)),
+          firstAccount.pubkey,
+        );
+        expect(valid).toEqual(true);
+      },
+      interactiveTimeout,
+    );
+
+    it(
+      "returns valid signature when msgs are any",
+      async () => {
+        pendingWithoutLedger();
+        const signer = new LedgerSigner(transport, {
+          testModeAllowed: true,
+          hdPaths: [makeCosmoshubPath(0), makeCosmoshubPath(1), makeCosmoshubPath(10)],
+        });
+
+        const [firstAccount] = await signer.getAccounts();
+
+        const msgs: readonly any[] = [
           {
             type: "cosmos-sdk/MsgSend",
             value: {

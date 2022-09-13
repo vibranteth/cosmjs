@@ -1,5 +1,5 @@
 import { StdSignature } from "./signature";
-import { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
+import { StdFee, StdSignDoc } from "./signdoc";
 
 /**
  * A Cosmos SDK StdTx
@@ -7,7 +7,7 @@ import { AminoMsg, StdFee, StdSignDoc } from "./signdoc";
  * @see https://docs.cosmos.network/master/modules/auth/03_types.html#stdtx
  */
 export interface StdTx {
-  readonly msg: readonly AminoMsg[];
+  readonly msg: readonly any[];
   readonly fee: StdFee;
   readonly signatures: readonly StdSignature[];
   readonly memo: string | undefined;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/naming-convention */
 const proto_signing_1 = require("@cosmjs/proto-signing");
 const aminotypes_1 = require("./aminotypes");
 const modules_1 = require("./modules");

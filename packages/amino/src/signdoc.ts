@@ -28,7 +28,7 @@ export interface StdSignDoc {
   readonly account_number: string;
   readonly sequence: string;
   readonly fee: StdFee;
-  readonly msgs: readonly AminoMsg[];
+  readonly msgs: readonly any[];
   readonly memo: string;
 }
 
@@ -55,7 +55,7 @@ export function sortedJsonStringify(obj: any): string {
 }
 
 export function makeSignDoc(
-  msgs: readonly AminoMsg[],
+  msgs: readonly any[],
   fee: StdFee,
   chainId: string,
   memo: string | undefined,

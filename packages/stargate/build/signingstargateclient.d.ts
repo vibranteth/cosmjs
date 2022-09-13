@@ -70,5 +70,6 @@ export declare class SigningStargateClient extends StargateClient {
      */
     sign(signerAddress: string, messages: readonly EncodeObject[], fee: StdFee, memo: string, explicitSignerData?: SignerData): Promise<TxRaw>;
     private signAmino;
+    private signAmino2;
     private signDirect;
 }
