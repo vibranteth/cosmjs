@@ -62,7 +62,7 @@ class StargateClient {
     constructor(tmClient, options) {
         if (tmClient) {
             this.tmClient = tmClient;
-            this.queryClient = queryclient_1.QueryClient.withExtensions(tmClient, modules_1.setupAuthExtension, modules_1.setupBankExtension, modules_1.setupStakingExtension, modules_1.setupTxExtension);
+            this.queryClient = queryclient_1.QueryClient.withExtensions(tmClient, modules_1.setupAuthExtension, modules_1.setupAuthzExtension, modules_1.setupBankExtension, modules_1.setupStakingExtension, modules_1.setupTxExtension);
         }
         const { accountParser = accounts_1.accountFromAny } = options;
         this.accountParser = accountParser;

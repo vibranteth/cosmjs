@@ -2,7 +2,7 @@ import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { MsgData } from "cosmjs-types/cosmos/base/abci/v1beta1/abci";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { Account, AccountParser } from "./accounts";
-import { AuthExtension, BankExtension, StakingExtension, TxExtension } from "./modules";
+import { AuthExtension, AuthzExtension, BankExtension, StakingExtension, TxExtension } from "./modules";
 import { QueryClient } from "./queryclient";
 import { SearchTxFilter, SearchTxQuery } from "./search";
 export declare class TimeoutError extends Error {
@@ -107,8 +107,8 @@ export declare class StargateClient {
     protected constructor(tmClient: Tendermint34Client | undefined, options: StargateClientOptions);
     protected getTmClient(): Tendermint34Client | undefined;
     protected forceGetTmClient(): Tendermint34Client;
-    protected getQueryClient(): (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension) | undefined;
-    protected forceGetQueryClient(): QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension;
+    protected getQueryClient(): (QueryClient & AuthExtension & AuthzExtension & BankExtension & StakingExtension & TxExtension) | undefined;
+    protected forceGetQueryClient(): QueryClient & AuthExtension & AuthzExtension & BankExtension & StakingExtension & TxExtension;
     getChainId(): Promise<string>;
     getHeight(): Promise<number>;
     getAccount(searchAddress: string): Promise<Account | null>;

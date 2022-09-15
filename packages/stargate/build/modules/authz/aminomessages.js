@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAuthzAminoConverters = void 0;
-/* eslint-disable @typescript-eslint/naming-convention */
 const authz_1 = require("cosmjs-types/cosmos/authz/v1beta1/authz");
 const any_1 = require("cosmjs-types/google/protobuf/any");
 const long_1 = __importDefault(require("long"));
@@ -21,7 +20,7 @@ function toTimestamp(date) {
 function createAuthzAminoConverters() {
     return {
         "/cosmos.authz.v1beta1.GenericAuthorization": {
-            requiresCustomAminoType: true,
+            encodeAsAminoAny: true,
             aminoType: "cosmos-sdk/GenericAuthorization",
             toAmino(bytes) {
                 return {
@@ -36,7 +35,7 @@ function createAuthzAminoConverters() {
             },
         },
         "/cosmos.authz.v1beta1.MsgGrant": {
-            requiresCustomAminoType: true,
+            encodeAsAminoAny: true,
             aminoType: "cosmos-sdk/MsgGrant",
             toAmino({ granter, grantee, grant }, aminoTypes) {
                 return {

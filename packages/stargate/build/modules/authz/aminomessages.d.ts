@@ -1,13 +1,8 @@
+import { AminoAny } from "@cosmjs/amino";
 import { AminoConverters } from "../../aminotypes";
-export interface AminoAny {
-    readonly "@type": string;
-    readonly [x: string | number | symbol]: unknown;
-}
 export interface AminoAuthorization extends AminoAny {
-    readonly "@type": string;
 }
 export interface AminoGenericAuthorization extends AminoAuthorization {
-    readonly "@type": string;
     readonly msg: string;
 }
 export interface AminoGrant {

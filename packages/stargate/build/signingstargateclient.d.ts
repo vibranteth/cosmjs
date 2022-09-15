@@ -29,6 +29,7 @@ export interface SigningStargateClientOptions extends StargateClientOptions {
     readonly broadcastTimeoutMs?: number;
     readonly broadcastPollIntervalMs?: number;
     readonly gasPrice?: GasPrice;
+    readonly signAminoJsonTxEnabled?: boolean;
 }
 export declare class SigningStargateClient extends StargateClient {
     readonly registry: Registry;
@@ -37,6 +38,7 @@ export declare class SigningStargateClient extends StargateClient {
     private readonly signer;
     private readonly aminoTypes;
     private readonly gasPrice;
+    private readonly signAminoJsonTxEnabled;
     static connectWithSigner(endpoint: string | HttpEndpoint, signer: OfflineSigner, options?: SigningStargateClientOptions): Promise<SigningStargateClient>;
     /**
      * Creates a client in offline mode.
@@ -69,7 +71,6 @@ export declare class SigningStargateClient extends StargateClient {
      * (See the SigningStargateClient.offline constructor).
      */
     sign(signerAddress: string, messages: readonly EncodeObject[], fee: StdFee, memo: string, explicitSignerData?: SignerData): Promise<TxRaw>;
-    private signAmino;
-    private signAmino2;
     private signDirect;
+    private signAmino;
 }

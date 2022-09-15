@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { AminoAny } from "@cosmjs/amino";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 import { MsgGrant } from "cosmjs-types/cosmos/authz/v1beta1/tx";
 import { Any } from "cosmjs-types/google/protobuf/any";
@@ -7,23 +8,10 @@ import Long from "long";
 
 import { AminoConverters, AminoTypes } from "../../aminotypes";
 
-export interface AminoAny {
-  readonly "@type": string;
-  readonly [x: string | number | symbol]: unknown;
-}
-
-export interface AminoAuthorization extends AminoAny {
-  readonly "@type": string;
-}
+export interface AminoAuthorization extends AminoAny {}
 
 export interface AminoGenericAuthorization extends AminoAuthorization {
-  readonly "@type": string;
   readonly msg: string;
-}
-
-export interface AminoGrant {
-  readonly authorization?: AminoAuthorization;
-  readonly expiration?: string;
 }
 
 function fromTimestamp(t: Timestamp): Date {
@@ -38,21 +26,23 @@ function toTimestamp(date: Date): Timestamp {
   return { seconds, nanos };
 }
 
+export interface AminoGrant {
+  readonly authorization?: AminoAuthorization;
+  readonly expiration?: string;
+}
+
 export interface AminoMsgGrant extends AminoAny {
-  // readonly "@type": string;
   readonly granter: string;
   readonly grantee: string;
   readonly grant?: AminoGrant;
 }
 
 export interface AminoMsgExec extends AminoAny {
-  // readonly "@type": string;
   readonly grantee: string;
   readonly msgs: readonly any[];
 }
 
 export interface AminoMsgRevoke extends AminoAny {
-  // readonly "@type": string;
   readonly granter: string;
   readonly grantee: string;
   readonly msg_type_url: string;
@@ -61,7 +51,7 @@ export interface AminoMsgRevoke extends AminoAny {
 export function createAuthzAminoConverters(): AminoConverters {
   return {
     "/cosmos.authz.v1beta1.GenericAuthorization": {
-      requiresCustomAminoType: true,
+      encodeAsAminoAny: true,
       aminoType: "cosmos-sdk/GenericAuthorization",
       toAmino(bytes: Any["value"]): AminoGenericAuthorization {
         return {
@@ -78,7 +68,7 @@ export function createAuthzAminoConverters(): AminoConverters {
       },
     },
     "/cosmos.authz.v1beta1.MsgGrant": {
-      requiresCustomAminoType: true,
+      encodeAsAminoAny: true,
       aminoType: "cosmos-sdk/MsgGrant",
       toAmino({ granter, grantee, grant }: MsgGrant, aminoTypes: AminoTypes): AminoMsgGrant {
         return {

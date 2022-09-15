@@ -308,37 +308,107 @@ describe("SigningStargateClient", () => {
             });
         });
         describe("legacy Amino mode", () => {
-            it("works with authz MsgGrant", async () => {
-                (0, testutils_spec_1.pendingWithoutSimapp)();
-                const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-                const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
-                const msgGrant = {
-                    granter: testutils_spec_1.faucet.address0,
-                    grantee: (0, testutils_spec_1.makeRandomAddress)(),
-                    grant: {
-                        authorization: {
-                            typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
-                            value: authz_1.GenericAuthorization.encode({
-                                msg: "/cosmos.gov.v1beta1.MsgVote",
-                            }).finish(),
-                        },
-                        expiration: timestamp_1.Timestamp.fromPartial({
-                            seconds: 1762589483,
-                        }),
-                    },
-                };
-                const msgAny = {
-                    typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-                    value: msgGrant,
-                };
-                const fee = {
-                    amount: (0, proto_signing_1.coins)(2000, "ucosm"),
-                    gas: "200000",
-                };
-                const memo = "Use your tokens wisely";
-                const result = await client.signAndBroadcast(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
-                (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
-            });
+            // it("simapp44 returns DeliverTxSuccess with authz MsgGrant with explicit client option signAsAminoTx=true", async () => {
+            //   pendingWithoutSimapp();
+            //   const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+            //   const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, {
+            //     ...defaultSigningClientOptions,
+            //     signAminoJsonTxEnabled: true,
+            //   });
+            //   const msgGrant: MsgGrant = {
+            //     granter: faucet.address0,
+            //     grantee: makeRandomAddress(),
+            //     grant: {
+            //       authorization: {
+            //         typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+            //         value: GenericAuthorization.encode({
+            //           msg: "/cosmos.gov.v1beta1.MsgVote",
+            //         }).finish(),
+            //       },
+            //       expiration: Timestamp.fromPartial({
+            //         seconds: 1762589483,
+            //       }),
+            //     },
+            //   };
+            //   const msgAny: MsgGrantEncodeObject = {
+            //     typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+            //     value: msgGrant,
+            //   };
+            //   const fee = {
+            //     amount: coins(2000, "ucosm"),
+            //     gas: "200000",
+            //   };
+            //   const memo = "Use your tokens wisely";
+            //   const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+            //   assertIsDeliverTxSuccess(result);
+            // });
+            // it("simapp44 returns DeliverTxFailure with authz MsgGrant with implicit default client option signAsAminoTx=false", async () => {
+            //   pendingWithoutSimapp();
+            //   const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+            //   const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, {
+            //     ...defaultSigningClientOptions,
+            //   });
+            //   const msgGrant: MsgGrant = {
+            //     granter: faucet.address0,
+            //     grantee: makeRandomAddress(),
+            //     grant: {
+            //       authorization: {
+            //         typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+            //         value: GenericAuthorization.encode({
+            //           msg: "/cosmos.gov.v1beta1.MsgVote",
+            //         }).finish(),
+            //       },
+            //       expiration: Timestamp.fromPartial({
+            //         seconds: 1762589483,
+            //       }),
+            //     },
+            //   };
+            //   const msgAny: MsgGrantEncodeObject = {
+            //     typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+            //     value: msgGrant,
+            //   };
+            //   const fee = {
+            //     amount: coins(2000, "ucosm"),
+            //     gas: "200000",
+            //   };
+            //   const memo = "Use your tokens wisely";
+            //   const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+            //   assertIsDeliverTxFailure(result);
+            // });
+            // it("simapp44 returns DeliverTxFailure with authz MsgGrant with explicit client option signAsAminoTx=false", async () => {
+            //   pendingWithoutSimapp();
+            //   const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+            //   const client = await SigningStargateClient.connectWithSigner(simapp.tendermintUrl, wallet, {
+            //     ...defaultSigningClientOptions,
+            //     signAminoJsonTxEnabled: false,
+            //   });
+            //   const msgGrant: MsgGrant = {
+            //     granter: faucet.address0,
+            //     grantee: makeRandomAddress(),
+            //     grant: {
+            //       authorization: {
+            //         typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+            //         value: GenericAuthorization.encode({
+            //           msg: "/cosmos.gov.v1beta1.MsgVote",
+            //         }).finish(),
+            //       },
+            //       expiration: Timestamp.fromPartial({
+            //         seconds: 1762589483,
+            //       }),
+            //     },
+            //   };
+            //   const msgAny: MsgGrantEncodeObject = {
+            //     typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+            //     value: msgGrant,
+            //   };
+            //   const fee = {
+            //     amount: coins(2000, "ucosm"),
+            //     gas: "200000",
+            //   };
+            //   const memo = "Use your tokens wisely";
+            //   const result = await client.signAndBroadcast(faucet.address0, [msgAny], fee, memo);
+            //   assertIsDeliverTxFailure(result);
+            // });
             it("works with bank MsgSend", async () => {
                 (0, testutils_spec_1.pendingWithoutSimapp)();
                 const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
@@ -511,6 +581,41 @@ describe("SigningStargateClient", () => {
             });
         });
     });
+    describe("signTx", () => {
+        it("simapp44 returns DeliverTxSuccess with authz MsgGrant", async () => {
+            (0, testutils_spec_1.pendingWithoutSimapp)();
+            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
+            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet);
+            const msgGrant = {
+                granter: testutils_spec_1.faucet.address0,
+                grantee: (0, testutils_spec_1.makeRandomAddress)(),
+                grant: {
+                    authorization: {
+                        typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+                        value: authz_1.GenericAuthorization.encode({
+                            msg: "/cosmos.gov.v1beta1.MsgVote",
+                        }).finish(),
+                    },
+                    expiration: timestamp_1.Timestamp.fromPartial({
+                        seconds: 1762589483,
+                    }),
+                },
+            };
+            const msgAny = {
+                typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+                value: msgGrant,
+            };
+            const fee = {
+                amount: (0, proto_signing_1.coins)(2000, "ucosm"),
+                gas: "200000",
+            };
+            const memo = "Use your tokens wisely";
+            const signedTx = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
+            const signedTxBytes = Uint8Array.from(tx_4.TxRaw.encode(signedTx).finish());
+            const result = await client.broadcastTx(signedTxBytes);
+            (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
+        });
+    });
     describe("sign", () => {
         describe("direct mode", () => {
             it("works", async () => {
@@ -565,247 +670,210 @@ describe("SigningStargateClient", () => {
                 const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
                 (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
             });
-        });
-        // it("works with authz MsgExec", async () => {
-        //   pendingWithoutSimapp();
-        //   const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-        //   const client = await SigningStargateClient.connectWithSigner(
-        //     simapp.tendermintUrl,
-        //     wallet,
-        //     defaultSigningClientOptions,
-        //   );
-        //   const msgExec: MsgExec = {
-        //     grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-        //     msgs: [
-        //       {
-        //         typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-        //         value: MsgSend.encode(
-        //           MsgSend.fromPartial({
-        //             fromAddress: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-        //             toAddress: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-        //             amount: coins(1234, "ucosm"),
-        //           }),
-        //         ).finish(),
-        //       },
-        //     ],
-        //   };
-        //   const msgAny: MsgExecEncodeObject = {
-        //     typeUrl: "/cosmos.authz.v1beta1.MsgExec",
-        //     value: msgExec,
-        //   };
-        //   const fee = {
-        //     amount: coins(2000, "ucosm"),
-        //     gas: "200000",
-        //   };
-        //   const memo = "Use your tokens wisely";
-        //   const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
-        //   // ensure signature is valid
-        //   const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        //   assertIsDeliverTxSuccess(result);
-        // });
-        // it("works with authz MsgRevoke", async () => {
-        //   pendingWithoutSimapp();
-        //   const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
-        //   const client = await SigningStargateClient.connectWithSigner(
-        //     simapp.tendermintUrl,
-        //     wallet,
-        //     defaultSigningClientOptions,
-        //   );
-        //   const msgRevoke: MsgRevoke = {
-        //     grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-        //     granter: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-        //     msgTypeUrl: "/osmosis.superfluid.MsgLockAndSuperfluidDelegate",
-        //   };
-        //   const msgAny: MsgRevokeEncodeObject = {
-        //     typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
-        //     value: msgRevoke,
-        //   };
-        //   const fee = {
-        //     amount: coins(2000, "ucosm"),
-        //     gas: "200000",
-        //   };
-        //   const memo = "Use your tokens wisely";
-        //   const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
-        //   // ensure signature is valid
-        //   const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
-        //   assertIsDeliverTxSuccess(result);
-        // });
-        it("works with bank MsgSend", async () => {
-            (0, testutils_spec_1.pendingWithoutSimapp)();
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
-            const msgSend = {
-                fromAddress: testutils_spec_1.faucet.address0,
-                toAddress: (0, testutils_spec_1.makeRandomAddress)(),
-                amount: (0, proto_signing_1.coins)(1234, "ucosm"),
-            };
-            const msgAny = {
-                typeUrl: "/cosmos.bank.v1beta1.MsgSend",
-                value: msgSend,
-            };
-            const fee = {
-                amount: (0, proto_signing_1.coins)(2000, "ucosm"),
-                gas: "200000",
-            };
-            const memo = "Use your tokens wisely";
-            const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
-            // ensure signature is valid
-            const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
-            (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
-        });
-        it("works with staking MsgDelegate", async () => {
-            (0, testutils_spec_1.pendingWithoutSimapp)();
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
-            const msgDelegate = {
-                delegatorAddress: testutils_spec_1.faucet.address0,
-                validatorAddress: testutils_spec_1.validator.validatorAddress,
-                amount: (0, proto_signing_1.coin)(1234, "ustake"),
-            };
-            const msgAny = {
-                typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-                value: msgDelegate,
-            };
-            const fee = {
-                amount: (0, proto_signing_1.coins)(2000, "ustake"),
-                gas: "200000",
-            };
-            const memo = "Use your tokens wisely";
-            const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
-            // ensure signature is valid
-            const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
-            (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
-        });
-        it("works with a custom registry and custom message", async () => {
-            (0, testutils_spec_1.pendingWithoutSimapp)();
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const customRegistry = new proto_signing_1.Registry();
-            const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
-            const baseCustomMsgDelegate = {
-                customDelegatorAddress: "",
-                customValidatorAddress: "",
-            };
-            const CustomMsgDelegate = {
-                // Adapted from autogenerated MsgDelegate implementation
-                encode(message, writer = minimal_1.default.Writer.create()) {
-                    var _a, _b;
-                    writer.uint32(10).string((_a = message.customDelegatorAddress) !== null && _a !== void 0 ? _a : "");
-                    writer.uint32(18).string((_b = message.customValidatorAddress) !== null && _b !== void 0 ? _b : "");
-                    if (message.customAmount !== undefined && message.customAmount !== undefined) {
-                        coin_1.Coin.encode(message.customAmount, writer.uint32(26).fork()).ldelim();
-                    }
-                    return writer;
-                },
-                decode() {
-                    throw new Error("decode method should not be required");
-                },
-                fromJSON() {
-                    throw new Error("fromJSON method should not be required");
-                },
-                fromPartial(object) {
-                    const message = { ...baseCustomMsgDelegate };
-                    if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
-                        message.customDelegatorAddress = object.customDelegatorAddress;
-                    }
-                    else {
-                        message.customDelegatorAddress = "";
-                    }
-                    if (object.customValidatorAddress !== undefined && object.customValidatorAddress !== null) {
-                        message.customValidatorAddress = object.customValidatorAddress;
-                    }
-                    else {
-                        message.customValidatorAddress = "";
-                    }
-                    if (object.customAmount !== undefined && object.customAmount !== null) {
-                        message.customAmount = coin_1.Coin.fromPartial(object.customAmount);
-                    }
-                    else {
-                        message.customAmount = undefined;
-                    }
-                    return message;
-                },
-                toJSON() {
-                    throw new Error("toJSON method should not be required");
-                },
-            };
-            customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
-            const customAminoTypes = new aminotypes_1.AminoTypes({
-                "/cosmos.staking.v1beta1.MsgDelegate": {
-                    aminoType: "cosmos-sdk/MsgDelegate",
-                    toAmino: ({ customDelegatorAddress, customValidatorAddress, customAmount, }) => {
-                        (0, utils_1.assert)(customDelegatorAddress, "missing customDelegatorAddress");
-                        (0, utils_1.assert)(customValidatorAddress, "missing validatorAddress");
-                        (0, utils_1.assert)(customAmount, "missing amount");
-                        return {
-                            delegator_address: customDelegatorAddress,
-                            validator_address: customValidatorAddress,
-                            amount: {
-                                amount: customAmount.amount,
-                                denom: customAmount.denom,
-                            },
-                        };
-                    },
-                    fromAmino: ({ delegator_address, validator_address, amount, }) => ({
-                        customDelegatorAddress: delegator_address,
-                        customValidatorAddress: validator_address,
-                        customAmount: coin_1.Coin.fromPartial(amount),
-                    }),
-                },
+            it("works with bank MsgSend", async () => {
+                (0, testutils_spec_1.pendingWithoutSimapp)();
+                const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
+                const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
+                const msgSend = {
+                    fromAddress: testutils_spec_1.faucet.address0,
+                    toAddress: (0, testutils_spec_1.makeRandomAddress)(),
+                    amount: (0, proto_signing_1.coins)(1234, "ucosm"),
+                };
+                const msgAny = {
+                    typeUrl: "/cosmos.bank.v1beta1.MsgSend",
+                    value: msgSend,
+                };
+                const fee = {
+                    amount: (0, proto_signing_1.coins)(2000, "ucosm"),
+                    gas: "200000",
+                };
+                const memo = "Use your tokens wisely";
+                const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
+                // ensure signature is valid
+                const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
+                (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
             });
-            const options = {
-                ...testutils_spec_1.defaultSigningClientOptions,
-                registry: customRegistry,
-                aminoTypes: customAminoTypes,
-            };
-            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, options);
-            const msg = {
-                customDelegatorAddress: testutils_spec_1.faucet.address0,
-                customValidatorAddress: testutils_spec_1.validator.validatorAddress,
-                customAmount: (0, proto_signing_1.coin)(1234, "ustake"),
-            };
-            const msgAny = {
-                typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-                value: msg,
-            };
-            const fee = {
-                amount: (0, proto_signing_1.coins)(2000, "ucosm"),
-                gas: "200000",
-            };
-            const memo = "Use your power wisely";
-            const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
-            // ensure signature is valid
-            const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
-            (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
-        });
-        it("works with a modifying signer", async () => {
-            (0, testutils_spec_1.pendingWithoutSimapp)();
-            const wallet = await testutils_spec_1.ModifyingSecp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
-            const msg = {
-                delegatorAddress: testutils_spec_1.faucet.address0,
-                validatorAddress: testutils_spec_1.validator.validatorAddress,
-                amount: (0, proto_signing_1.coin)(1234, "ustake"),
-            };
-            const msgAny = {
-                typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
-                value: msg,
-            };
-            const fee = {
-                amount: (0, proto_signing_1.coins)(2000, "ucosm"),
-                gas: "200000",
-            };
-            const memo = "Use your power wisely";
-            const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
-            const body = tx_4.TxBody.decode(signed.bodyBytes);
-            const authInfo = tx_4.AuthInfo.decode(signed.authInfoBytes);
-            // From ModifyingSecp256k1HdWallet
-            expect(body.memo).toEqual("This was modified");
-            expect({ ...authInfo.fee.amount[0] }).toEqual((0, proto_signing_1.coin)(3000, "ucosm"));
-            expect(authInfo.fee.gasLimit.toNumber()).toEqual(333333);
-            // ensure signature is valid
-            const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
-            (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
+            it("works with staking MsgDelegate", async () => {
+                (0, testutils_spec_1.pendingWithoutSimapp)();
+                const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
+                const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
+                const msgDelegate = {
+                    delegatorAddress: testutils_spec_1.faucet.address0,
+                    validatorAddress: testutils_spec_1.validator.validatorAddress,
+                    amount: (0, proto_signing_1.coin)(1234, "ustake"),
+                };
+                const msgAny = {
+                    typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+                    value: msgDelegate,
+                };
+                const fee = {
+                    amount: (0, proto_signing_1.coins)(2000, "ustake"),
+                    gas: "200000",
+                };
+                const memo = "Use your tokens wisely";
+                const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
+                // ensure signature is valid
+                const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
+                (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
+            });
+            it("works with a custom registry and custom message", async () => {
+                (0, testutils_spec_1.pendingWithoutSimapp)();
+                const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
+                const customRegistry = new proto_signing_1.Registry();
+                const msgDelegateTypeUrl = "/cosmos.staking.v1beta1.MsgDelegate";
+                const baseCustomMsgDelegate = {
+                    customDelegatorAddress: "",
+                    customValidatorAddress: "",
+                };
+                const CustomMsgDelegate = {
+                    // Adapted from autogenerated MsgDelegate implementation
+                    encode(message, writer = minimal_1.default.Writer.create()) {
+                        var _a, _b;
+                        writer.uint32(10).string((_a = message.customDelegatorAddress) !== null && _a !== void 0 ? _a : "");
+                        writer.uint32(18).string((_b = message.customValidatorAddress) !== null && _b !== void 0 ? _b : "");
+                        if (message.customAmount !== undefined && message.customAmount !== undefined) {
+                            coin_1.Coin.encode(message.customAmount, writer.uint32(26).fork()).ldelim();
+                        }
+                        return writer;
+                    },
+                    decode() {
+                        throw new Error("decode method should not be required");
+                    },
+                    fromJSON() {
+                        throw new Error("fromJSON method should not be required");
+                    },
+                    fromPartial(object) {
+                        const message = { ...baseCustomMsgDelegate };
+                        if (object.customDelegatorAddress !== undefined && object.customDelegatorAddress !== null) {
+                            message.customDelegatorAddress = object.customDelegatorAddress;
+                        }
+                        else {
+                            message.customDelegatorAddress = "";
+                        }
+                        if (object.customValidatorAddress !== undefined && object.customValidatorAddress !== null) {
+                            message.customValidatorAddress = object.customValidatorAddress;
+                        }
+                        else {
+                            message.customValidatorAddress = "";
+                        }
+                        if (object.customAmount !== undefined && object.customAmount !== null) {
+                            message.customAmount = coin_1.Coin.fromPartial(object.customAmount);
+                        }
+                        else {
+                            message.customAmount = undefined;
+                        }
+                        return message;
+                    },
+                    toJSON() {
+                        throw new Error("toJSON method should not be required");
+                    },
+                };
+                customRegistry.register(msgDelegateTypeUrl, CustomMsgDelegate);
+                const customAminoTypes = new aminotypes_1.AminoTypes({
+                    "/cosmos.staking.v1beta1.MsgDelegate": {
+                        aminoType: "cosmos-sdk/MsgDelegate",
+                        toAmino: ({ customDelegatorAddress, customValidatorAddress, customAmount, }) => {
+                            (0, utils_1.assert)(customDelegatorAddress, "missing customDelegatorAddress");
+                            (0, utils_1.assert)(customValidatorAddress, "missing validatorAddress");
+                            (0, utils_1.assert)(customAmount, "missing amount");
+                            return {
+                                delegator_address: customDelegatorAddress,
+                                validator_address: customValidatorAddress,
+                                amount: {
+                                    amount: customAmount.amount,
+                                    denom: customAmount.denom,
+                                },
+                            };
+                        },
+                        fromAmino: ({ delegator_address, validator_address, amount, }) => ({
+                            customDelegatorAddress: delegator_address,
+                            customValidatorAddress: validator_address,
+                            customAmount: coin_1.Coin.fromPartial(amount),
+                        }),
+                    },
+                });
+                const options = {
+                    ...testutils_spec_1.defaultSigningClientOptions,
+                    registry: customRegistry,
+                    aminoTypes: customAminoTypes,
+                };
+                const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, options);
+                const msg = {
+                    customDelegatorAddress: testutils_spec_1.faucet.address0,
+                    customValidatorAddress: testutils_spec_1.validator.validatorAddress,
+                    customAmount: (0, proto_signing_1.coin)(1234, "ustake"),
+                };
+                const msgAny = {
+                    typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+                    value: msg,
+                };
+                const fee = {
+                    amount: (0, proto_signing_1.coins)(2000, "ucosm"),
+                    gas: "200000",
+                };
+                const memo = "Use your power wisely";
+                const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
+                // ensure signature is valid
+                const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
+                (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
+            });
+            it("works with a modifying signer", async () => {
+                (0, testutils_spec_1.pendingWithoutSimapp)();
+                const wallet = await testutils_spec_1.ModifyingSecp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
+                const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, testutils_spec_1.defaultSigningClientOptions);
+                const msg = {
+                    delegatorAddress: testutils_spec_1.faucet.address0,
+                    validatorAddress: testutils_spec_1.validator.validatorAddress,
+                    amount: (0, proto_signing_1.coin)(1234, "ustake"),
+                };
+                const msgAny = {
+                    typeUrl: "/cosmos.staking.v1beta1.MsgDelegate",
+                    value: msg,
+                };
+                const fee = {
+                    amount: (0, proto_signing_1.coins)(2000, "ucosm"),
+                    gas: "200000",
+                };
+                const memo = "Use your power wisely";
+                const signed = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
+                const body = tx_4.TxBody.decode(signed.bodyBytes);
+                const authInfo = tx_4.AuthInfo.decode(signed.authInfoBytes);
+                // From ModifyingSecp256k1HdWallet
+                expect(body.memo).toEqual("This was modified");
+                expect({ ...authInfo.fee.amount[0] }).toEqual((0, proto_signing_1.coin)(3000, "ucosm"));
+                expect(authInfo.fee.gasLimit.toNumber()).toEqual(333333);
+                // ensure signature is valid
+                const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
+                (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
+            });
         });
     });
 });
+// it("works with authz MsgRevoke", async () => {
+//   pendingWithoutSimapp();
+//   const wallet = await Secp256k1HdWallet.fromMnemonic(faucet.mnemonic);
+//   const client = await SigningStargateClient.connectWithSigner(
+//     simapp.tendermintUrl,
+//     wallet,
+//     defaultSigningClientOptions,
+//   );
+//   const msgRevoke: MsgRevoke = {
+//     grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+//     granter: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+//     msgTypeUrl: "/osmosis.superfluid.MsgLockAndSuperfluidDelegate",
+//   };
+//   const msgAny: MsgRevokeEncodeObject = {
+//     typeUrl: "/cosmos.authz.v1beta1.MsgRevoke",
+//     value: msgRevoke,
+//   };
+//   const fee = {
+//     amount: coins(2000, "ucosm"),
+//     gas: "200000",
+//   };
+//   const memo = "Use your tokens wisely";
+//   const signed = await client.sign(faucet.address0, [msgAny], fee, memo);
+//   // ensure signature is valid
+//   const result = await client.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+//   assertIsDeliverTxSuccess(result);
+// });
 //# sourceMappingURL=signingstargateclient.spec.js.map

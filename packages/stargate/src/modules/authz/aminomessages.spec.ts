@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { coins } from "@cosmjs/proto-signing";
 import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
-import { MsgExec, MsgGrant, MsgRevoke } from "cosmjs-types/cosmos/authz/v1beta1/tx";
-import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
+import { MsgGrant } from "cosmjs-types/cosmos/authz/v1beta1/tx";
 import { Timestamp } from "cosmjs-types/google/protobuf/timestamp";
 
 import { AminoTypes } from "../../aminotypes";
-import { createBankAminoConverters } from "../bank/aminomessages";
 import { createAuthzAminoConverters } from "./aminomessages";
 
 describe("AminoTypes", () => {
@@ -112,41 +109,64 @@ describe("AminoTypes", () => {
     //   expect(aminoMsg).toEqual(expected);
     // });
   });
-});
-
-describe("fromAmino", () => {
-  it("works for MsgGrant", () => {
-    const aminoMsg = {
-      "@type": "/cosmos.authz.v1beta1.MsgGrant",
-      granter: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-      grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-      grant: {
-        authorization: {
-          "@type": "/cosmos.authz.v1beta1.GenericAuthorization",
-          msg: "/cosmos.gov.v1beta1.MsgVote",
-        },
-        expiration: "2025-11-08T08:11:23.000Z",
-      },
-    };
-    const msg = new AminoTypes(createAuthzAminoConverters()).fromAmino(aminoMsg);
-    const expectedValue: MsgGrant = {
-      granter: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-      grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
-      grant: {
-        authorization: {
-          typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
-          value: GenericAuthorization.encode({
+  describe("fromAmino", () => {
+    it("works for MsgGrant", () => {
+      const aminoMsg = {
+        "@type": "/cosmos.authz.v1beta1.MsgGrant",
+        granter: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        grant: {
+          authorization: {
+            "@type": "/cosmos.authz.v1beta1.GenericAuthorization",
             msg: "/cosmos.gov.v1beta1.MsgVote",
-          }).finish(),
+          },
+          expiration: "2025-11-08T08:11:23.000Z",
         },
-        expiration: Timestamp.fromPartial({
-          seconds: 1762589483,
-        }),
-      },
-    };
-    expect(msg).toEqual({
-      typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
-      value: expectedValue,
+      };
+      const msg = new AminoTypes(createAuthzAminoConverters()).fromAmino(aminoMsg);
+      const expectedValue: MsgGrant = {
+        granter: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
+        grantee: "cosmos10dyr9899g6t0pelew4nvf4j5c3jcgv0r73qga5",
+        grant: {
+          authorization: {
+            typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
+            value: GenericAuthorization.encode({
+              msg: "/cosmos.gov.v1beta1.MsgVote",
+            }).finish(),
+          },
+          expiration: Timestamp.fromPartial({
+            seconds: 1762589483,
+          }),
+        },
+      };
+      expect(msg).toEqual({
+        typeUrl: "/cosmos.authz.v1beta1.MsgGrant",
+        value: expectedValue,
+      });
     });
   });
+
+  // func TestAminoCodecFullDecodeAndEncode(t *testing.T) {
+  //   // This tx comes from https://github.com/cosmos/cosmos-sdk/issues/8117.
+  //   txSigned := `{"type":"cosmos-sdk/StdTx","value":{"msg":[{"type":"cosmos-sdk/MsgCreateValidator","value":{"description":{"moniker":"fulltest","identity":"satoshi","website":"example.com","details":"example inc"},"commission":{"rate":"0.500000000000000000","max_rate":"1.000000000000000000","max_change_rate":"0.200000000000000000"},"min_self_delegation":"1000000","delegator_address":"cosmos14pt0q5cwf38zt08uu0n6yrstf3rndzr5057jys","validator_address":"cosmosvaloper14pt0q5cwf38zt08uu0n6yrstf3rndzr52q28gr","pubkey":{"type":"tendermint/PubKeyEd25519","value":"CYrOiM3HtS7uv1B1OAkknZnFYSRpQYSYII8AtMMtev0="},"value":{"denom":"umuon","amount":"700000000"}}}],"fee":{"amount":[{"denom":"umuon","amount":"6000"}],"gas":"160000"},"signatures":[{"pub_key":{"type":"tendermint/PubKeySecp256k1","value":"AwAOXeWgNf1FjMaayrSnrOOKz+Fivr6DiI/i0x0sZCHw"},"signature":"RcnfS/u2yl7uIShTrSUlDWvsXo2p2dYu6WJC8VDVHMBLEQZWc8bsINSCjOnlsIVkUNNe1q/WCA9n3Gy1+0zhYA=="}],"memo":"","timeout_height":"0"}}`
+  //   _, legacyCdc := simapp.MakeCodecs()
+
+  //   var tx legacytx.StdTx
+  //   err := legacyCdc.UnmarshalJSON([]byte(txSigned), &tx)
+  //   require.NoError(t, err)
+
+  //   // Marshalling/unmarshalling the tx should work.
+  //   marshaledTx, err := legacyCdc.MarshalJSON(tx)
+  //   require.NoError(t, err)
+  //   require.Equal(t, string(marshaledTx), txSigned)
+
+  //   // Marshalling/unmarshalling the tx wrapped in a struct should work.
+  //   txRequest := &rest.BroadcastReq{
+  //     Mode: "block",
+  //     Tx:   tx,
+  //   }
+  //   _, err = legacyCdc.MarshalJSON(txRequest)
+  //   require.NoError(t, err)
+  // }
+  // const json = "{"type":"cosmos-sdk/StdTx","value":{"msg":[{"type":"cosmos-sdk/MsgCreateValidator","value":{"description":{"moniker":"fulltest","identity":"satoshi","website":"example.com","details":"example inc"},"commission":{"rate":"0.500000000000000000","max_rate":"1.000000000000000000","max_change_rate":"0.200000000000000000"},"min_self_delegation":"1000000","delegator_address":"cosmos14pt0q5cwf38zt08uu0n6yrstf3rndzr5057jys","validator_address":"cosmosvaloper14pt0q5cwf38zt08uu0n6yrstf3rndzr52q28gr","pubkey":{"type":"tendermint/PubKeyEd25519","value":"CYrOiM3HtS7uv1B1OAkknZnFYSRpQYSYII8AtMMtev0="},"value":{"denom":"umuon","amount":"700000000"}}}],"fee":{"amount":[{"denom":"umuon","amount":"6000"}],"gas":"160000"},"signatures":[{"pub_key":{"type":"tendermint/PubKeySecp256k1","value":"AwAOXeWgNf1FjMaayrSnrOOKz+Fivr6DiI/i0x0sZCHw"},"signature":"RcnfS/u2yl7uIShTrSUlDWvsXo2p2dYu6WJC8VDVHMBLEQZWc8bsINSCjOnlsIVkUNNe1q/WCA9n3Gy1+0zhYA=="}],"memo":"","timeout_height":"0"}};
 });

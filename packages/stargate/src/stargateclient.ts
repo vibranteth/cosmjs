@@ -12,8 +12,10 @@ import { DelegationResponse } from "cosmjs-types/cosmos/staking/v1beta1/staking"
 import { Account, accountFromAny, AccountParser } from "./accounts";
 import {
   AuthExtension,
+  AuthzExtension,
   BankExtension,
   setupAuthExtension,
+  setupAuthzExtension,
   setupBankExtension,
   setupStakingExtension,
   setupTxExtension,
@@ -164,7 +166,7 @@ export interface StargateClientOptions {
 export class StargateClient {
   private readonly tmClient: Tendermint34Client | undefined;
   private readonly queryClient:
-    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
+    | (QueryClient & AuthExtension & AuthzExtension & BankExtension & StakingExtension & TxExtension)
     | undefined;
   private chainId: string | undefined;
   private readonly accountParser: AccountParser;
@@ -183,6 +185,7 @@ export class StargateClient {
       this.queryClient = QueryClient.withExtensions(
         tmClient,
         setupAuthExtension,
+        setupAuthzExtension,
         setupBankExtension,
         setupStakingExtension,
         setupTxExtension,
@@ -206,13 +209,14 @@ export class StargateClient {
   }
 
   protected getQueryClient():
-    | (QueryClient & AuthExtension & BankExtension & StakingExtension & TxExtension)
+    | (QueryClient & AuthExtension & AuthzExtension & BankExtension & StakingExtension & TxExtension)
     | undefined {
     return this.queryClient;
   }
 
   protected forceGetQueryClient(): QueryClient &
     AuthExtension &
+    AuthzExtension &
     BankExtension &
     StakingExtension &
     TxExtension {

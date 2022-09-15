@@ -8,6 +8,17 @@ export interface AminoMsg {
   readonly type: string;
   readonly value: any;
 }
+export function isAminoMsg(msg: any): msg is AminoMsg {
+  return "type" in msg;
+}
+
+export interface AminoAny {
+  readonly "@type": string;
+  readonly [x: string | number | symbol]: unknown;
+}
+export function isAminoAny(msg: any): msg is AminoAny {
+  return "@type" in msg;
+}
 
 export interface StdFee {
   readonly amount: readonly Coin[];
