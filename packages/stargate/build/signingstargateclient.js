@@ -3,8 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SigningStargateClient = exports.defaultRegistryTypes = void 0;
+exports.SigningStargateClient = exports.isMsgSignData = exports.defaultRegistryTypes = void 0;
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 const amino_1 = require("@cosmjs/amino");
+const crypto_1 = require("@cosmjs/crypto");
 const encoding_1 = require("@cosmjs/encoding");
 const math_1 = require("@cosmjs/math");
 const proto_signing_1 = require("@cosmjs/proto-signing");
@@ -16,6 +18,7 @@ const tx_2 = require("cosmjs-types/cosmos/staking/v1beta1/tx");
 const signing_1 = require("cosmjs-types/cosmos/tx/signing/v1beta1/signing");
 const tx_3 = require("cosmjs-types/cosmos/tx/v1beta1/tx");
 const tx_4 = require("cosmjs-types/ibc/applications/transfer/v1/tx");
+const fast_deep_equal_1 = __importDefault(require("fast-deep-equal"));
 const long_1 = __importDefault(require("long"));
 const aminotypes_1 = require("./aminotypes");
 const fee_1 = require("./fee");
@@ -36,6 +39,19 @@ exports.defaultRegistryTypes = [
 function createDefaultRegistry() {
     return new proto_signing_1.Registry(exports.defaultRegistryTypes);
 }
+function isMsgSignData(msg) {
+    const castedMsg = msg;
+    if (castedMsg.type !== "sign/MsgSignData")
+        return false;
+    if (!(0, utils_1.isNonNullObject)(castedMsg.value))
+        return false;
+    if (typeof castedMsg.value.signer !== "string")
+        return false;
+    if (typeof castedMsg.value.data !== "string")
+        return false;
+    return true;
+}
+exports.isMsgSignData = isMsgSignData;
 function createDefaultTypes(prefix) {
     return {
         ...(0, modules_2.createAuthzAminoConverters)(),
@@ -197,6 +213,115 @@ class SigningStargateClient extends stargateclient_1.StargateClient {
             ? this.signDirect(signerAddress, messages, fee, memo, signerData)
             : this.signAmino(signerAddress, messages, fee, memo, signerData);
     }
+    async experimentalAdr36Sign(signerAddress, data) {
+        const accountNumber = 0;
+        const sequence = 0;
+        const chainId = "";
+        const fee = {
+            gas: "0",
+            amount: [],
+        };
+        const memo = "";
+        const datas = Array.isArray(data) ? data : [data];
+        const msgs = datas.map((d) => ({
+            type: "sign/MsgSignData",
+            value: {
+                signer: signerAddress,
+                data: (0, encoding_1.toBase64)(d),
+            },
+        }));
+        (0, utils_1.assert)(!(0, proto_signing_1.isOfflineDirectSigner)(this.signer));
+        const accountFromSigner = (await this.signer.getAccounts()).find((account) => account.address === signerAddress);
+        if (!accountFromSigner) {
+            throw new Error("Failed to retrieve account from signer");
+        }
+        const signDoc = (0, amino_1.makeSignDoc)(msgs, fee, chainId, memo, accountNumber, sequence);
+        const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+        if (!(0, fast_deep_equal_1.default)(signDoc, signed)) {
+            throw new Error("The signed document differs from the signing instruction. This is not supported for ADR-036.");
+        }
+        return (0, amino_1.makeStdTx)(signDoc, signature);
+    }
+    static async experimentalAdr36Verify(signed) {
+        // Restrictions from ADR-036
+        if (signed.memo !== "")
+            throw new Error("Memo must be empty.");
+        if (signed.fee.gas !== "0")
+            throw new Error("Fee gas must 0.");
+        if (signed.fee.amount.length !== 0)
+            throw new Error("Fee amount must be an empty array.");
+        const accountNumber = 0;
+        const sequence = 0;
+        const chainId = "";
+        // Check `msg` array
+        const signedMessages = signed.msg;
+        if (!signedMessages.every(isMsgSignData)) {
+            throw new Error(`Found message that is not the expected type.`);
+        }
+        if (signedMessages.length === 0) {
+            throw new Error("No message found. Without messages we cannot determine the signer address.");
+        }
+        // TODO: restrict number of messages?
+        const signatures = signed.signatures;
+        if (signatures.length !== 1)
+            throw new Error("Must have exactly one signature to be supported.");
+        const signature = signatures[0];
+        if (!(0, amino_1.isSecp256k1Pubkey)(signature.pub_key)) {
+            throw new Error("Only secp256k1 signatures are supported.");
+        }
+        const signBytes = (0, amino_1.serializeSignDoc)((0, amino_1.makeSignDoc)(signed.msg, signed.fee, chainId, signed.memo, accountNumber, sequence));
+        const prehashed = (0, crypto_1.sha256)(signBytes);
+        const secpSignature = crypto_1.Secp256k1Signature.fromFixedLength((0, encoding_1.fromBase64)(signature.signature));
+        const rawSecp256k1Pubkey = (0, encoding_1.fromBase64)(signature.pub_key.value);
+        const rawSignerAddress = (0, amino_1.rawSecp256k1PubkeyToRawAddress)(rawSecp256k1Pubkey);
+        if (signedMessages.some((msg) => !(0, utils_1.arrayContentEquals)(encoding_1.Bech32.decode(msg.value.signer).data, rawSignerAddress))) {
+            throw new Error("Found mismatch between signer in message and public key");
+        }
+        const ok = await crypto_1.Secp256k1.verifySignature(secpSignature, prehashed, rawSecp256k1Pubkey);
+        return ok;
+    }
+    // private async signAmino(
+    //   signerAddress: string,
+    //   messages: readonly EncodeObject[],
+    //   fee: StdFee,
+    //   memo: string,
+    //   { accountNumber, sequence, chainId }: SignerData,
+    // ): Promise<TxRaw> {
+    //   assert(!isOfflineDirectSigner(this.signer));
+    //   const accountFromSigner = (await this.signer.getAccounts()).find(
+    //     (account) => account.address === signerAddress,
+    //   );
+    //   if (!accountFromSigner) {
+    //     throw new Error("Failed to retrieve account from signer");
+    //   }
+    //   const pubkey = encodePubkey(encodeSecp256k1Pubkey(accountFromSigner.pubkey));
+    //   const signMode = SignMode.SIGN_MODE_LEGACY_AMINO_JSON;
+    //   const msgs = messages.map((msg) => this.aminoTypes.toAmino(msg));
+    //   const signDoc = makeSignDocAmino(msgs, fee, chainId, memo, accountNumber, sequence);
+    //   const { signature, signed } = await this.signer.signAmino(signerAddress, signDoc);
+    //   const signedTxBody = {
+    //     messages: signed.msgs.map((msg) => this.aminoTypes.fromAmino(msg)),
+    //     memo: signed.memo,
+    //   };
+    //   const signedTxBodyEncodeObject: TxBodyEncodeObject = {
+    //     typeUrl: "/cosmos.tx.v1beta1.TxBody",
+    //     value: signedTxBody,
+    //   };
+    //   const signedTxBodyBytes = this.registry.encode(signedTxBodyEncodeObject);
+    //   const signedGasLimit = Int53.fromString(signed.fee.gas).toNumber();
+    //   const signedSequence = Int53.fromString(signed.sequence).toNumber();
+    //   const signedAuthInfoBytes = makeAuthInfoBytes(
+    //     [{ pubkey, sequence: signedSequence }],
+    //     signed.fee.amount,
+    //     signedGasLimit,
+    //     signMode,
+    //   );
+    //   return TxRaw.fromPartial({
+    //     bodyBytes: signedTxBodyBytes,
+    //     authInfoBytes: signedAuthInfoBytes,
+    //     signatures: [fromBase64(signature.signature)],
+    //   });
+    // }
     async signDirect(signerAddress, messages, fee, memo, { accountNumber, sequence, chainId }) {
         (0, utils_1.assert)((0, proto_signing_1.isOfflineDirectSigner)(this.signer));
         const accountFromSigner = (await this.signer.getAccounts()).find((account) => account.address === signerAddress);

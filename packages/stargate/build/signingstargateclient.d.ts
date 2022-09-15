@@ -1,4 +1,4 @@
-import { StdFee } from "@cosmjs/amino";
+import { AminoMsg, StdFee, StdTx } from "@cosmjs/amino";
 import { EncodeObject, GeneratedType, OfflineSigner, Registry } from "@cosmjs/proto-signing";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -8,6 +8,19 @@ import { AminoTypes } from "./aminotypes";
 import { GasPrice } from "./fee";
 import { DeliverTxResponse, StargateClient, StargateClientOptions } from "./stargateclient";
 export declare const defaultRegistryTypes: ReadonlyArray<[string, GeneratedType]>;
+/**
+ * See ADR-036
+ */
+interface MsgSignData extends AminoMsg {
+    readonly type: "sign/MsgSignData";
+    readonly value: {
+        /** Bech32 account address */
+        signer: string;
+        /** Base64 encoded data */
+        data: string;
+    };
+}
+export declare function isMsgSignData(msg: AminoMsg): msg is MsgSignData;
 /**
  * Signing information for a single signer that is not included in the transaction.
  *
@@ -71,6 +84,9 @@ export declare class SigningStargateClient extends StargateClient {
      * (See the SigningStargateClient.offline constructor).
      */
     sign(signerAddress: string, messages: readonly EncodeObject[], fee: StdFee, memo: string, explicitSignerData?: SignerData): Promise<TxRaw>;
+    experimentalAdr36Sign(signerAddress: string, data: Uint8Array | Uint8Array[]): Promise<StdTx>;
+    static experimentalAdr36Verify(signed: StdTx): Promise<boolean>;
     private signDirect;
     private signAmino;
 }
+export {};
