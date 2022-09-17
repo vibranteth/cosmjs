@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { GenericAuthorization } from "cosmjs-types/cosmos/authz/v1beta1/authz";
 import { MsgSend } from "cosmjs-types/cosmos/bank/v1beta1/tx";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
 import { TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
@@ -40,6 +41,7 @@ export function isPbjsGeneratedType(type: GeneratedType): type is PbjsGeneratedT
 }
 
 const defaultTypeUrls = {
+  cosmosGenericAuthorization: "/cosmos.authz.v1beta1.GenericAuthorization",
   cosmosCoin: "/cosmos.base.v1beta1.Coin",
   cosmosMsgSend: "/cosmos.bank.v1beta1.MsgSend",
   cosmosTxBody: "/cosmos.tx.v1beta1.TxBody",
@@ -89,12 +91,13 @@ export class Registry {
    * 2. Using the `register()` method
    */
   public constructor(customTypes?: Iterable<[string, GeneratedType]>) {
-    const { cosmosCoin, cosmosMsgSend } = defaultTypeUrls;
+    const { cosmosCoin, cosmosMsgSend, cosmosGenericAuthorization } = defaultTypeUrls;
     this.types = customTypes
       ? new Map<string, GeneratedType>([...customTypes])
       : new Map<string, GeneratedType>([
           [cosmosCoin, Coin],
           [cosmosMsgSend, MsgSend],
+          [cosmosGenericAuthorization, GenericAuthorization],
         ]);
   }
 

@@ -1,4 +1,4 @@
-import { EncodeObject } from "@cosmjs/proto-signing";
+import { EncodeObject, Registry } from "@cosmjs/proto-signing";
 export interface AminoConverter {
     readonly aminoType: string;
     readonly toAmino: (value: any, aminoTypes: AminoTypes) => any;
@@ -24,7 +24,8 @@ export declare function isAminoAny(msg: any): msg is AminoAny;
  */
 export declare class AminoTypes {
     private readonly aminoTypes;
-    constructor(types: AminoConverters);
+    private readonly registry;
+    constructor(types: AminoConverters, registry?: Registry);
     toAmino({ typeUrl, value }: EncodeObject): any;
     fromAmino(msg: any): EncodeObject;
     fromAminoMsg(msg: AminoMsg): EncodeObject;

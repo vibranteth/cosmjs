@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/naming-convention,no-bitwise */
 const amino_1 = require("@cosmjs/amino");
-const encoding_1 = require("@cosmjs/encoding");
 const proto_signing_1 = require("@cosmjs/proto-signing");
 const tendermint_rpc_1 = require("@cosmjs/tendermint-rpc");
 const utils_1 = require("@cosmjs/utils");
@@ -586,7 +585,10 @@ describe("SigningStargateClient", () => {
         it("simapp44 returns DeliverTxSuccess with authz MsgGrant", async () => {
             (0, testutils_spec_1.pendingWithoutSimapp)();
             const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet);
+            const options = {
+                signAminoJsonTxEnabled: true,
+            };
+            const client = await signingstargateclient_1.SigningStargateClient.connectWithSigner(testutils_spec_1.simapp.tendermintUrl, wallet, options);
             const msgGrant = {
                 granter: testutils_spec_1.faucet.address0,
                 grantee: (0, testutils_spec_1.makeRandomAddress)(),
@@ -611,10 +613,11 @@ describe("SigningStargateClient", () => {
                 gas: "200000",
             };
             const memo = "Use your tokens wisely";
-            const signedTx = await client.sign(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
-            const signedTxBytes = Uint8Array.from(tx_4.TxRaw.encode(signedTx).finish());
-            const result = await client.broadcastTx(signedTxBytes);
-            (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
+            // const signedTx = await client.sign(faucet.address0, [msgAny], fee, memo);
+            // const signedTxBytes = Uint8Array.from(TxRaw.encode(signedTx).finish());
+            // const result = await client.broadcastTx(signedTxBytes);
+            const res = await client.signAndBroadcast(testutils_spec_1.faucet.address0, [msgAny], fee, memo);
+            (0, stargateclient_1.assertIsDeliverTxSuccess)(res);
         });
     });
     describe("sign", () => {
@@ -847,101 +850,6 @@ describe("SigningStargateClient", () => {
                 const result = await client.broadcastTx(Uint8Array.from(tx_4.TxRaw.encode(signed).finish()));
                 (0, stargateclient_1.assertIsDeliverTxSuccess)(result);
             });
-        });
-    });
-    describe("experimentalAdr36Sign", () => {
-        it("works", async () => {
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.offline(wallet);
-            const [firstAccount] = await wallet.getAccounts();
-            const data = (0, encoding_1.toAscii)("Hello, world");
-            const signed = await client.experimentalAdr36Sign(firstAccount.address, data);
-            expect(signed).toEqual({
-                msg: [
-                    {
-                        type: "sign/MsgSignData",
-                        value: {
-                            signer: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-                            data: "SGVsbG8sIHdvcmxk", // echo -n "Hello, world" | base64
-                        },
-                    },
-                ],
-                fee: {
-                    amount: [],
-                    gas: "0",
-                },
-                signatures: [
-                    {
-                        pub_key: {
-                            type: "tendermint/PubKeySecp256k1",
-                            value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-                        },
-                        signature: "x9jjSFv8/n1F8gOSRjddakYDbvroQm8ZoDWht/Imc1t5xUW49+Xaq7gwcsE+LCpqYoTBxnaXLg/xgJjYymCWvw==",
-                    },
-                ],
-                memo: "",
-            });
-        });
-        it("works for multiple datas", async () => {
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.offline(wallet);
-            const [firstAccount] = await wallet.getAccounts();
-            const data1 = (0, encoding_1.toAscii)("Hello");
-            const data2 = (0, encoding_1.toAscii)("World");
-            const signed = await client.experimentalAdr36Sign(firstAccount.address, [data1, data2]);
-            expect(signed).toEqual({
-                msg: [
-                    {
-                        type: "sign/MsgSignData",
-                        value: {
-                            signer: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-                            data: "SGVsbG8=", // echo -n "Hello" | base64
-                        },
-                    },
-                    {
-                        type: "sign/MsgSignData",
-                        value: {
-                            signer: "cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6",
-                            data: "V29ybGQ=", // echo -n "World" | base64
-                        },
-                    },
-                ],
-                fee: {
-                    amount: [],
-                    gas: "0",
-                },
-                signatures: [
-                    {
-                        pub_key: {
-                            type: "tendermint/PubKeySecp256k1",
-                            value: "A08EGB7ro1ORuFhjOnZcSgwYlpe0DSFjVNUIkNNQxwKQ",
-                        },
-                        signature: "KvN9FM/WSfsJERv4PS91Ey7SUrnVJ/XHpHmMDh0sC94Niz2JLfF9KKE1QMfL5KtVFSRdMkJJsMtgl+aCaUyOCw==",
-                    },
-                ],
-                memo: "",
-            });
-        });
-    });
-    describe("experimentalAdr36Verify", () => {
-        it("works", async () => {
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.offline(wallet);
-            const [firstAccount] = await wallet.getAccounts();
-            const data = (0, encoding_1.toAscii)("Hello, world");
-            const signed = await client.experimentalAdr36Sign(firstAccount.address, data);
-            const ok = await signingstargateclient_1.SigningStargateClient.experimentalAdr36Verify(signed);
-            expect(ok).toEqual(true);
-        });
-        it("works with multiple datas", async () => {
-            const wallet = await amino_1.Secp256k1HdWallet.fromMnemonic(testutils_spec_1.faucet.mnemonic);
-            const client = await signingstargateclient_1.SigningStargateClient.offline(wallet);
-            const [firstAccount] = await wallet.getAccounts();
-            const data1 = (0, encoding_1.toAscii)("Hello");
-            const data2 = (0, encoding_1.toAscii)("World");
-            const signed = await client.experimentalAdr36Sign(firstAccount.address, [data1, data2]);
-            const ok = await signingstargateclient_1.SigningStargateClient.experimentalAdr36Verify(signed);
-            expect(ok).toEqual(true);
         });
     });
 });

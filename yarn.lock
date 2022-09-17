@@ -2575,16 +2575,16 @@ __metadata:
   linkType: hard
 
 "browserslist@npm:^4.14.5, browserslist@npm:^4.21.3":
-  version: 4.21.3
-  resolution: "browserslist@npm:4.21.3"
+  version: 4.21.4
+  resolution: "browserslist@npm:4.21.4"
   dependencies:
-    caniuse-lite: ^1.0.30001370
-    electron-to-chromium: ^1.4.202
+    caniuse-lite: ^1.0.30001400
+    electron-to-chromium: ^1.4.251
     node-releases: ^2.0.6
-    update-browserslist-db: ^1.0.5
+    update-browserslist-db: ^1.0.9
   bin:
     browserslist: cli.js
-  checksum: ff512a7bcca1c530e2854bbdfc7be2791d0fb524097a6340e56e1d5924164c7e4e0a9b070de04cdc4c149d15cb4d4275cb7c626ebbce954278a2823aaad2452a
+  checksum: 4af3793704dbb4615bcd29059ab472344dc7961c8680aa6c4bb84f05340e14038d06a5aead58724eae69455b8fade8b8c69f1638016e87e5578969d74c078b79
   languageName: node
   linkType: hard
 
@@ -2694,10 +2694,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001370":
-  version: 1.0.30001400
-  resolution: "caniuse-lite@npm:1.0.30001400"
-  checksum: 984e29d3c02fd02a59cc92ef4a5e9390fce250de3791056362347cf901f0d91041246961a57cfa8fed800538d03ee341bc4f7eaed19bf7be0ef8a181d94cd848
+"caniuse-lite@npm:^1.0.30001400":
+  version: 1.0.30001402
+  resolution: "caniuse-lite@npm:1.0.30001402"
+  checksum: 6068ccccd64b357f75388cb2303cf351b686b20800571d0a845bff5c0e0d24f83df0133afbbdd8177a33eb087c93d39ecf359035a52b2feac5f182c946f706ee
   languageName: node
   linkType: hard
 
@@ -3230,10 +3230,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.4.202":
-  version: 1.4.251
-  resolution: "electron-to-chromium@npm:1.4.251"
-  checksum: 470a04dfe1d34814f8bc7e1dde606851b6f787a6d78655a57df063844fc71feb64ce793c52a3a130ceac1fc368b8d3e25a4c55c847a1e9c02c3090f9dcbf40ac
+"electron-to-chromium@npm:^1.4.251":
+  version: 1.4.254
+  resolution: "electron-to-chromium@npm:1.4.254"
+  checksum: 32f0ecb621db44d37fc93017f742a2b1da7302c778b4d6c0fa122cc662f9c50e6576d214048dcac5c9baf835340c954c624f09f2e02c6dea9049c4a839e862e2
   languageName: node
   linkType: hard
 
@@ -4514,9 +4514,9 @@ __metadata:
   linkType: hard
 
 "is-callable@npm:^1.1.4, is-callable@npm:^1.2.4":
-  version: 1.2.5
-  resolution: "is-callable@npm:1.2.5"
-  checksum: 308ec9787dddff8ac6d3cf706ace87c31707df627e322e50882f6d76a4d80f5844bc220fee79142fe97b53c7c421d0bc72c2106358e183f85b71a874d479f8c4
+  version: 1.2.6
+  resolution: "is-callable@npm:1.2.6"
+  checksum: 7667d6a6be66df00741cfa18c657877c46a00139ea7ea7765251e9db0182745c9ee173506941a329d6914e34e59e9cc80029fb3f68bbf8c22a6c155ee6ea77b3
   languageName: node
   linkType: hard
 
@@ -7171,7 +7171,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"update-browserslist-db@npm:^1.0.5":
+"update-browserslist-db@npm:^1.0.9":
   version: 1.0.9
   resolution: "update-browserslist-db@npm:1.0.9"
   dependencies:

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { EncodeObject } from "@cosmjs/proto-signing";
+import { EncodeObject, Registry } from "@cosmjs/proto-signing";
 
 export interface AminoConverter {
   readonly aminoType: string;
@@ -69,15 +69,17 @@ export class AminoTypes {
   // system or constructor. Instead it's the user's responsibility to ensure
   // there is no overlap when fromAmino is called.
   private readonly aminoTypes: Record<string, AminoConverter | "not_supported_by_chain">;
+  private readonly registry: Registry;
 
-  public constructor(types: AminoConverters) {
+  public constructor(types: AminoConverters, registry?: Registry) {
     this.aminoTypes = types;
+    this.registry = registry ?? new Registry();
   }
 
   public toAmino({ typeUrl, value }: EncodeObject): any {
     const converter = tryGetConverter(typeUrl, this.aminoTypes);
 
-    if (converter.encodeAsAminoAny) {
+    if (isAminoAnyConverter(converter)) {
       return converter.toAmino(value, this);
     }
 

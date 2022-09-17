@@ -1,16 +1,20 @@
 export { Account, accountFromAny, AccountParser } from "./accounts";
-export { AminoConverter, AminoConverters, AminoTypes } from "./aminotypes";
+export { AminoAny, AminoConverter, AminoConverters, AminoTypes } from "./aminotypes";
 export { calculateFee, GasPrice } from "./fee";
 export * as logs from "./logs";
 export {
+  AminoGrant,
   AminoMsgBeginRedelegate,
   AminoMsgCreateValidator,
   AminoMsgCreateVestingAccount,
   AminoMsgDelegate,
   AminoMsgDeposit,
   AminoMsgEditValidator,
+  AminoMsgExec,
   AminoMsgFundCommunityPool,
+  AminoMsgGrant,
   AminoMsgMultiSend,
+  AminoMsgRevoke,
   AminoMsgSend,
   AminoMsgSetWithdrawAddress,
   AminoMsgSubmitEvidence,
@@ -24,6 +28,7 @@ export {
   AminoMsgWithdrawDelegatorReward,
   AminoMsgWithdrawValidatorCommission,
   AuthExtension,
+  AuthzExtension,
   BankExtension,
   createAuthzAminoConverters,
   createBankAminoConverters,
@@ -35,11 +40,14 @@ export {
   createIbcAminoConverters,
   createSlashingAminoConverters,
   createStakingAminoConverters,
+  createTxAminoConverters,
   createVestingAminoConverters,
   DistributionExtension,
+  GenericAuthorizationEncodeObject,
   GovExtension,
   GovParamsType,
   GovProposalId,
+  GrantEncodeObject,
   IbcExtension,
   isAminoMsgBeginRedelegate,
   isAminoMsgCreateValidator,

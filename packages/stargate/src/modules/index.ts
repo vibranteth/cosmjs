@@ -1,7 +1,15 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
-export { createAuthzAminoConverters } from "./authz/aminomessages";
+export {
+  AminoGrant,
+  AminoMsgExec,
+  AminoMsgGrant,
+  AminoMsgRevoke,
+  createAuthzAminoConverters,
+} from "./authz/aminomessages";
 export {
   authzTypes,
+  GenericAuthorizationEncodeObject,
+  GrantEncodeObject,
   isMsgExecEncodeObject,
   isMsgGrantEncodeObject,
   isMsgRevokeEncodeObject,
@@ -99,6 +107,7 @@ export {
   stakingTypes,
 } from "./staking/messages";
 export { setupStakingExtension, StakingExtension } from "./staking/queries";
+export { createTxAminoConverters } from "./tx/aminomessages";
 export { setupTxExtension, TxExtension } from "./tx/queries";
 export {
   AminoMsgCreateVestingAccount,

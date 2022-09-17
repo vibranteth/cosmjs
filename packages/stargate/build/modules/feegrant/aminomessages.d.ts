@@ -1,2 +1,2 @@
-import { AminoConverters } from "../../aminotypes";
+import { AminoConverters } from "../..";
 export declare function createFeegrantAminoConverters(): AminoConverters;

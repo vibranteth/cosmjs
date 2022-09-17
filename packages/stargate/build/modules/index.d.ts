@@ -1,6 +1,6 @@
 export { AuthExtension, setupAuthExtension } from "./auth/queries";
-export { createAuthzAminoConverters } from "./authz/aminomessages";
-export { authzTypes, isMsgExecEncodeObject, isMsgGrantEncodeObject, isMsgRevokeEncodeObject, MsgExecEncodeObject, MsgGrantEncodeObject, MsgRevokeEncodeObject, } from "./authz/messages";
+export { AminoGrant, AminoMsgExec, AminoMsgGrant, AminoMsgRevoke, createAuthzAminoConverters, } from "./authz/aminomessages";
+export { authzTypes, GenericAuthorizationEncodeObject, GrantEncodeObject, isMsgExecEncodeObject, isMsgGrantEncodeObject, isMsgRevokeEncodeObject, MsgExecEncodeObject, MsgGrantEncodeObject, MsgRevokeEncodeObject, } from "./authz/messages";
 export { AuthzExtension, setupAuthzExtension } from "./authz/queries";
 export { AminoMsgMultiSend, AminoMsgSend, createBankAminoConverters, isAminoMsgMultiSend, isAminoMsgSend, } from "./bank/aminomessages";
 export { bankTypes, isMsgSendEncodeObject, MsgSendEncodeObject } from "./bank/messages";
@@ -25,6 +25,7 @@ export { setupSlashingExtension, SlashingExtension } from "./slashing/queries";
 export { AminoMsgBeginRedelegate, AminoMsgCreateValidator, AminoMsgDelegate, AminoMsgEditValidator, AminoMsgUndelegate, createStakingAminoConverters, isAminoMsgBeginRedelegate, isAminoMsgCreateValidator, isAminoMsgDelegate, isAminoMsgEditValidator, isAminoMsgUndelegate, } from "./staking/aminomessages";
 export { isMsgDelegateEncodeObject, isMsgUndelegateEncodeObject, MsgDelegateEncodeObject, MsgUndelegateEncodeObject, stakingTypes, } from "./staking/messages";
 export { setupStakingExtension, StakingExtension } from "./staking/queries";
+export { createTxAminoConverters } from "./tx/aminomessages";
 export { setupTxExtension, TxExtension } from "./tx/queries";
 export { AminoMsgCreateVestingAccount, createVestingAminoConverters, isAminoMsgCreateVestingAccount, } from "./vesting/aminomessages";
 export { vestingTypes } from "./vesting/messages";

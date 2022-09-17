@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isAminoMsgBeginRedelegate = exports.createStakingAminoConverters = exports.setupSlashingExtension = exports.isAminoMsgUnjail = exports.createSlashingAminoConverters = exports.setupMintExtension = exports.setupIbcExtension = exports.isMsgTransferEncodeObject = exports.ibcTypes = exports.isAminoMsgTransfer = exports.createIbcAminoConverters = exports.setupGovExtension = exports.isMsgVoteWeightedEncodeObject = exports.isMsgVoteEncodeObject = exports.isMsgSubmitProposalEncodeObject = exports.isMsgDepositEncodeObject = exports.govTypes = exports.isAminoMsgVoteWeighted = exports.isAminoMsgVote = exports.isAminoMsgSubmitProposal = exports.isAminoMsgDeposit = exports.createGovAminoConverters = exports.setupFeegrantExtension = exports.feegrantTypes = exports.createFeegrantAminoConverters = exports.isAminoMsgSubmitEvidence = exports.createEvidenceAminoConverters = exports.setupDistributionExtension = exports.isMsgWithdrawDelegatorRewardEncodeObject = exports.distributionTypes = exports.isAminoMsgWithdrawValidatorCommission = exports.isAminoMsgWithdrawDelegatorReward = exports.isAminoMsgSetWithdrawAddress = exports.isAminoMsgFundCommunityPool = exports.createDistributionAminoConverters = exports.isAminoMsgVerifyInvariant = exports.createCrysisAminoConverters = exports.setupBankExtension = exports.isMsgSendEncodeObject = exports.bankTypes = exports.isAminoMsgSend = exports.isAminoMsgMultiSend = exports.createBankAminoConverters = exports.setupAuthzExtension = exports.isMsgRevokeEncodeObject = exports.isMsgGrantEncodeObject = exports.isMsgExecEncodeObject = exports.authzTypes = exports.createAuthzAminoConverters = exports.setupAuthExtension = void 0;
-exports.vestingTypes = exports.isAminoMsgCreateVestingAccount = exports.createVestingAminoConverters = exports.setupTxExtension = exports.setupStakingExtension = exports.stakingTypes = exports.isMsgUndelegateEncodeObject = exports.isMsgDelegateEncodeObject = exports.isAminoMsgUndelegate = exports.isAminoMsgEditValidator = exports.isAminoMsgDelegate = exports.isAminoMsgCreateValidator = void 0;
+exports.vestingTypes = exports.isAminoMsgCreateVestingAccount = exports.createVestingAminoConverters = exports.setupTxExtension = exports.createTxAminoConverters = exports.setupStakingExtension = exports.stakingTypes = exports.isMsgUndelegateEncodeObject = exports.isMsgDelegateEncodeObject = exports.isAminoMsgUndelegate = exports.isAminoMsgEditValidator = exports.isAminoMsgDelegate = exports.isAminoMsgCreateValidator = void 0;
 var queries_1 = require("./auth/queries");
 Object.defineProperty(exports, "setupAuthExtension", { enumerable: true, get: function () { return queries_1.setupAuthExtension; } });
 var aminomessages_1 = require("./authz/aminomessages");
@@ -87,11 +87,13 @@ Object.defineProperty(exports, "isMsgUndelegateEncodeObject", { enumerable: true
 Object.defineProperty(exports, "stakingTypes", { enumerable: true, get: function () { return messages_7.stakingTypes; } });
 var queries_10 = require("./staking/queries");
 Object.defineProperty(exports, "setupStakingExtension", { enumerable: true, get: function () { return queries_10.setupStakingExtension; } });
+var aminomessages_11 = require("./tx/aminomessages");
+Object.defineProperty(exports, "createTxAminoConverters", { enumerable: true, get: function () { return aminomessages_11.createTxAminoConverters; } });
 var queries_11 = require("./tx/queries");
 Object.defineProperty(exports, "setupTxExtension", { enumerable: true, get: function () { return queries_11.setupTxExtension; } });
-var aminomessages_11 = require("./vesting/aminomessages");
-Object.defineProperty(exports, "createVestingAminoConverters", { enumerable: true, get: function () { return aminomessages_11.createVestingAminoConverters; } });
-Object.defineProperty(exports, "isAminoMsgCreateVestingAccount", { enumerable: true, get: function () { return aminomessages_11.isAminoMsgCreateVestingAccount; } });
+var aminomessages_12 = require("./vesting/aminomessages");
+Object.defineProperty(exports, "createVestingAminoConverters", { enumerable: true, get: function () { return aminomessages_12.createVestingAminoConverters; } });
+Object.defineProperty(exports, "isAminoMsgCreateVestingAccount", { enumerable: true, get: function () { return aminomessages_12.isAminoMsgCreateVestingAccount; } });
 var messages_8 = require("./vesting/messages");
 Object.defineProperty(exports, "vestingTypes", { enumerable: true, get: function () { return messages_8.vestingTypes; } });
 //# sourceMappingURL=index.js.map

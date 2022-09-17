@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AminoTypes = exports.isAminoAny = exports.isAminoMsg = exports.tryGetConverter = void 0;
+const proto_signing_1 = require("@cosmjs/proto-signing");
 function tryGetConverter(typeUrl, register) {
     const converter = register[typeUrl];
     if (converter === "not_supported_by_chain") {
@@ -38,12 +39,13 @@ exports.isAminoAny = isAminoAny;
  * to Amino types.
  */
 class AminoTypes {
-    constructor(types) {
+    constructor(types, registry) {
         this.aminoTypes = types;
+        this.registry = registry !== null && registry !== void 0 ? registry : new proto_signing_1.Registry();
     }
     toAmino({ typeUrl, value }) {
         const converter = tryGetConverter(typeUrl, this.aminoTypes);
-        if (converter.encodeAsAminoAny) {
+        if (isAminoAnyConverter(converter)) {
             return converter.toAmino(value, this);
         }
         return {

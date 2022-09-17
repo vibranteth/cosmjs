@@ -1,4 +1,4 @@
-import { AminoMsg, StdFee, StdTx } from "@cosmjs/amino";
+import { AminoMsg, StdFee } from "@cosmjs/amino";
 import { EncodeObject, GeneratedType, OfflineSigner, Registry } from "@cosmjs/proto-signing";
 import { HttpEndpoint, Tendermint34Client } from "@cosmjs/tendermint-rpc";
 import { Coin } from "cosmjs-types/cosmos/base/v1beta1/coin";
@@ -84,8 +84,7 @@ export declare class SigningStargateClient extends StargateClient {
      * (See the SigningStargateClient.offline constructor).
      */
     sign(signerAddress: string, messages: readonly EncodeObject[], fee: StdFee, memo: string, explicitSignerData?: SignerData): Promise<TxRaw>;
-    experimentalAdr36Sign(signerAddress: string, data: Uint8Array | Uint8Array[]): Promise<StdTx>;
-    static experimentalAdr36Verify(signed: StdTx): Promise<boolean>;
+    private signAmino2;
     private signDirect;
     private signAmino;
 }

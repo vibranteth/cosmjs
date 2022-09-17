@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAuthzAminoConverters = void 0;
 const authz_1 = require("cosmjs-types/cosmos/authz/v1beta1/authz");
-const any_1 = require("cosmjs-types/google/protobuf/any");
 const long_1 = __importDefault(require("long"));
 function fromTimestamp(t) {
     let millis = t.seconds.toNumber() * 1000;
@@ -19,19 +18,37 @@ function toTimestamp(date) {
 }
 function createAuthzAminoConverters() {
     return {
+        // "/cosmos.authz.v1beta1.Grant": {
+        //   encodeAsAminoAny: true,
+        //   aminoType: "cosmos-sdk/Grant",
+        //   toAmino(grant: Grant, aminoTypes: AminoTypes): AminoGrant {
+        //     return {
+        //       "@type": "/cosmos.authz.v1beta1.Grant",
+        //       authorization: grant.authorization ? aminoTypes.toAmino(grant.authorization) : undefined,
+        //       expiration: grant.expiration ? fromTimestamp(grant.expiration).toISOString() : undefined,
+        //     };
+        //   },
+        //   fromAmino(msg: AminoGrant, aminoTypes: AminoTypes): Grant {
+        //     return {
+        //       authorization: msg.authorization ? aminoTypes.fromAmino(msg.authorization) : undefined,
+        //       expiration: msg.expiration ? toTimestamp(new Date(msg.expiration)) : undefined,
+        //     };
+        //   },
+        // },
         "/cosmos.authz.v1beta1.GenericAuthorization": {
             encodeAsAminoAny: true,
             aminoType: "cosmos-sdk/GenericAuthorization",
             toAmino(bytes) {
+                const decoded = authz_1.GenericAuthorization.decode(bytes).msg;
                 return {
                     "@type": "/cosmos.authz.v1beta1.GenericAuthorization",
-                    msg: any_1.Any.decode(bytes).typeUrl,
+                    msg: decoded,
                 };
             },
             fromAmino({ msg }) {
-                return authz_1.GenericAuthorization.encode(authz_1.GenericAuthorization.fromPartial({
+                return authz_1.GenericAuthorization.encode({
                     msg: msg,
-                })).finish();
+                }).finish();
             },
         },
         "/cosmos.authz.v1beta1.MsgGrant": {
@@ -44,7 +61,10 @@ function createAuthzAminoConverters() {
                     grantee: grantee,
                     grant: grant
                         ? {
-                            authorization: grant.authorization ? aminoTypes.toAmino(grant.authorization) : undefined,
+                            "@type": "/cosmos.authz.v1beta1.Grant",
+                            authorization: grant.authorization // aminoTypes.toAmino(grant.authorization) : undefined,
+                                ? aminoTypes.toAmino(grant.authorization)
+                                : undefined,
                             expiration: grant.expiration ? fromTimestamp(grant.expiration).toISOString() : undefined,
                         }
                         : undefined,

@@ -36,8 +36,8 @@ exports.sortedJsonStringify = sortedJsonStringify;
 function makeSignDoc(msgs, fee, chainId, memo, accountNumber, sequence) {
     return {
         chain_id: chainId,
-        account_number: math_1.Uint53.fromString(accountNumber.toString()).toString(),
-        sequence: math_1.Uint53.fromString(sequence.toString()).toString(),
+        account_number: math_1.Uint64.fromString(accountNumber.toString()).toString(),
+        sequence: math_1.Uint64.fromString(sequence.toString()).toString(),
         fee: fee,
         msgs: msgs,
         memo: memo || "",
